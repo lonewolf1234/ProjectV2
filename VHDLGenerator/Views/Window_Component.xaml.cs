@@ -24,11 +24,6 @@ namespace VHDLGenerator.Views
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
             /*Port tempPort = new Port
@@ -79,7 +74,7 @@ namespace VHDLGenerator.Views
 
             _OutputJSON = JsonConvert.SerializeObject(dataPath1, Formatting.Indented);
             */
-            this.DialogResult = true;
+            //this.DialogResult = true;
 
             this.Close();
         }

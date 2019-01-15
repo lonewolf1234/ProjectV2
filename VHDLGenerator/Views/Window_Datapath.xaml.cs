@@ -21,37 +21,34 @@ namespace VHDLGenerator.Views
     /// </summary>
     public partial class Window_Datapath : Window
     {
-        int UID = 0;
-
-        public string OutputJSON { get { return _OutputJSON; } }
-
-        public string _OutputJSON { get; set; }
-
-        List<Port> ports = new List<Port>();
-
-        DataPath dataPath1 = new DataPath();
-
+        //JSON that contains the data entered in the datapath window
+        public string DP_ResultJSON { get; private set; }
+        //Unique ID of each port created
+        private int UID;
+        //List of all ports created
+        private List<Port> ports = new List<Port>();
+       
         public Window_Datapath()
         {
             InitializeComponent();
+            UID = 0;
         }
 
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
+            UID = UID + 1;
             Port tempPort = new Port
             {
-                ID = UID + 1,
+                ID = UID,
                 Name = PortName_TB.Text,
                 Direction = Direction_CB.Text,
                 Bus = (bool)Bus_CB.IsChecked,
                 MSB = MSB_TB.Text,
                 LSB = LSB_TB.Text
             };
-            UID = UID + 1;
 
             //add port to the data grid
             PortDataGrid.Items.Add(tempPort);
-
             //Add Port to list
             ports.Add(tempPort);
 
@@ -66,7 +63,6 @@ namespace VHDLGenerator.Views
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            
             this.Close();
         }
 
@@ -81,9 +77,7 @@ namespace VHDLGenerator.Views
                 Ports = ports
             };
 
-            dataPath1 = dataPathObj;
-
-            _OutputJSON = JsonConvert.SerializeObject(dataPath1, Formatting.Indented);
+            DP_ResultJSON = JsonConvert.SerializeObject(dataPathObj, Formatting.Indented);
 
             this.DialogResult = true;
 

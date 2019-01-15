@@ -130,6 +130,7 @@
                 Name="Cancel"
                 Content="Cancel"
                 Margin="575,10,150,22"
+                Click="Cancel_Click"
             />
 
             <Button
@@ -137,6 +138,7 @@
                 Name="Finish"
                 Content="Finish"
                 Margin="670,10,55,22"
+                Click="Finish_Click"
             />
         </Grid>
 

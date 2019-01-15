@@ -195,7 +195,6 @@
                 Content="Cancel"
                 Margin="575,10,150,22"
                 Click="Cancel_Click"
-                
             />
 
             <Button

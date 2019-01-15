@@ -27,11 +27,6 @@ namespace VHDLGenerator.Views
             //LSB_TextBox.IsReadOnly = true;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
         private void Bus_Checked(object sender, RoutedEventArgs e)
         {
             //MSB_TextBox.IsReadOnly = false;
@@ -49,6 +44,15 @@ namespace VHDLGenerator.Views
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-    
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Finish_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace VHDLGenerator.Views
             
             if( window_Datapath.ShowDialog()== true)
             {
-                var InputJSON = window_Datapath.OutputJSON;
+                var InputJSON = window_Datapath.DP_ResultJSON;
                 DataPath = JsonConvert.DeserializeObject<DataPath>(InputJSON);
 
                 Debug.WriteLine(InputJSON);
