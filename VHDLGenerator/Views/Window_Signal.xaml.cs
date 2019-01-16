@@ -23,26 +23,43 @@ namespace VHDLGenerator.Views
         public Window_Signal()
         {
             InitializeComponent();
-            //MSB_TextBox.IsReadOnly = true;
-            //LSB_TextBox.IsReadOnly = true;
+            //Default setting of the view items
+            Bus_CB.IsChecked = false;
+            MSB_TB.IsReadOnly = true;
+            LSB_TB.IsReadOnly = true;
         }
 
-        private void Bus_Checked(object sender, RoutedEventArgs e)
+        private void Bus_CB_Checked(object sender, RoutedEventArgs e)
         {
-            //MSB_TextBox.IsReadOnly = false;
-            //LSB_TextBox.IsReadOnly = false;
+            //if CheckBox is checked the MSB and LLSB feilds are editable
+            MSB_TB.IsReadOnly = false;
+            LSB_TB.IsReadOnly = false;
         }
 
-        private void LSB_TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        //Create a is not checked CB function to erase data from the MSB and LSB and disable editing
+        private void Bus_CB_Unchecked(object sender, RoutedEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+            MSB_TB.Clear();
+            LSB_TB.Clear();
+            MSB_TB.IsReadOnly = true;
+            LSB_TB.IsReadOnly = true;
+
         }
 
-        private void MSB_TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void MSB_TB_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+            //Interger Validation
+            //Regex regex = new Regex("[^0-9]+");
+            //e.Handled = regex.IsMatch(e.Text);
+            e.Handled = Validate_Int(e);
+        }
+
+        private void LSB_TB_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            //Interger Valdation
+            //Regex regex = new Regex("[^0-9]+");
+            //e.Handled = regex.IsMatch(e.Text);
+            e.Handled = Validate_Int(e);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -54,5 +71,13 @@ namespace VHDLGenerator.Views
         {
             this.Close();
         }
+
+        private bool Validate_Int(TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            //e.Handled = regex.IsMatch(e.Text);
+            return (regex.IsMatch(e.Text));
+        }
+     
     }
 }

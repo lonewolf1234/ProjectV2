@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace VHDLGenerator.Models
 {
-    class DataPath
+    class ComponentModel
     {
-        public int ID { get; set; }
+        //public Component() { }
+
+        public string ID { get; set; }
 
         public string Name { get; set; }
 
         public string ArchName { get; set; }
 
-        public List<Component> Components { get; set; }
-
-        public List<Port> Ports { get; set; }
-
+        public List<PortModel> Ports { get; set; }
     }
 }

@@ -92,10 +92,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Component.cs" />
-    <Compile Include="Models\DataPath.cs" />
-    <Compile Include="Models\Port.cs" />
-    <Compile Include="Models\Signal.cs" />
+    <Compile Include="Models\ComponentModel.cs" />
+    <Compile Include="Models\DataPathModel.cs" />
+    <Compile Include="Models\PortModel.cs" />
+    <Compile Include="Models\SignalModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

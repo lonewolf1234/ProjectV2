@@ -28,11 +28,11 @@ namespace VHDLGenerator.Views
         /// <summary>
         /// Main Data Produced by the windows
         /// </summary>
-        DataPath DataPath = new DataPath();
+        DataPathModel DataPath = new DataPathModel();
 
-        List<Component> components = new List<Component>();
+        List<ComponentModel> components = new List<ComponentModel>();
 
-        List<Signal> signals = new List<Signal>();
+        List<SignalModel> signals = new List<SignalModel>();
 
         public string DebugPath { get; set; }
 
@@ -55,7 +55,7 @@ namespace VHDLGenerator.Views
             if( window_Datapath.ShowDialog()== true)
             {
                 var InputJSON = window_Datapath.DP_ResultJSON;
-                DataPath = JsonConvert.DeserializeObject<DataPath>(InputJSON);
+                DataPath = JsonConvert.DeserializeObject<DataPathModel>(InputJSON);
 
                 Debug.WriteLine(InputJSON);
                
@@ -74,8 +74,8 @@ namespace VHDLGenerator.Views
             {
                 var InputJSON = window_Component.Comp_ResultJSON;
 
-                Component tempComponent = new Component();
-                tempComponent = JsonConvert.DeserializeObject<Component>(InputJSON);
+                ComponentModel tempComponent = new ComponentModel();
+                tempComponent = JsonConvert.DeserializeObject<ComponentModel>(InputJSON);
                 components.Add(tempComponent);
                 DataPath.Components = components;
 
@@ -103,7 +103,7 @@ namespace VHDLGenerator.Views
             TextBlock_test.Text = "Code Generated";
         }
 
-        private void GenerateCode(DataPath Data)
+        private void GenerateCode(DataPathModel Data)
         {
             List<string> port = new List<string>();
 
@@ -128,7 +128,7 @@ namespace VHDLGenerator.Views
                 if (DataPath.Ports.Count > 0)
                 {
 
-                    foreach (Port p in DataPath.Ports)
+                    foreach (PortModel p in DataPath.Ports)
                     {
                         string vector = "";
 

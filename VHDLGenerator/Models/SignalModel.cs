@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace VHDLGenerator.Models
 {
-    class Signal
+    class SignalModel
     {
-        public Signal () {}
+        public SignalModel() {}
 
         public string Name { get; set; }
 

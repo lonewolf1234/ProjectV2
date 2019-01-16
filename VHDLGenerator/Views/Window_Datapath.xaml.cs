@@ -26,7 +26,7 @@ namespace VHDLGenerator.Views
         //Unique ID of each port created
         private int UID;
         //List of all ports created
-        private List<Port> ports = new List<Port>();
+        private List<PortModel> ports = new List<PortModel>();
        
         public Window_Datapath()
         {
@@ -39,7 +39,7 @@ namespace VHDLGenerator.Views
             UID = UID + 1;
 
             //adding data into port model
-            Port tempPort = new Port
+            PortModel tempPort = new PortModel
             {
                 ID = UID,
                 Name = PortName_TB.Text,
@@ -70,7 +70,7 @@ namespace VHDLGenerator.Views
 
         private void Finish_Click(object sender, RoutedEventArgs e)
         {
-            DataPath dataPathObj = new DataPath()
+            DataPathModel dataPathObj = new DataPathModel()
             {
                 ID = 001,
                 Name = EntityNameTB.Text,
