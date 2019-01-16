@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VHDLGenerator.Models;
+using Newtonsoft.Json;
 
 namespace VHDLGenerator.Views
 {
@@ -19,27 +21,36 @@ namespace VHDLGenerator.Views
     /// </summary>
     public partial class Window_Component : Window
     {
+        //JSON that contains the data entered in the datapath window
+        public string Comp_ResultJSON { get; private set; }
+        //Unique ID of each port created
+        private int UID;
+        //List of all ports created
+        private List<Port> ports = new List<Port>();
+
         public Window_Component()
         {
             InitializeComponent();
+            UID = 0;
         }
 
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
-            /*Port tempPort = new Port
+            UID = UID + 1;
+
+            //adding data into port model
+            Port tempPort = new Port
             {
-                ID = UID + 1,
+                ID = UID,
                 Name = PortName_TB.Text,
                 Direction = Direction_CB.Text,
                 Bus = (bool)Bus_CB.IsChecked,
                 MSB = MSB_TB.Text,
                 LSB = LSB_TB.Text
             };
-            UID = UID + 1;
 
             //add port to the data grid
             PortDataGrid.Items.Add(tempPort);
-
             //Add Port to list
             ports.Add(tempPort);
 
@@ -50,7 +61,6 @@ namespace VHDLGenerator.Views
             Bus_CB.IsChecked = false;
             MSB_TB.Text = String.Empty;
             LSB_TB.Text = String.Empty;
-            */
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -61,21 +71,20 @@ namespace VHDLGenerator.Views
 
         private void Finish_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            DataPath dataPathObj = new DataPath()
+            Guid guid = Guid.NewGuid();
+
+            Component componentObj = new Component()
             {
-                ID = 001,
+                ID = guid.ToString(),
                 Name = EntityNameTB.Text,
                 ArchName = ArchNameTB.Text,
                 Ports = ports
             };
 
-            dataPath1 = dataPathObj;
+            Comp_ResultJSON = JsonConvert.SerializeObject(componentObj, Formatting.Indented);
 
-            _OutputJSON = JsonConvert.SerializeObject(dataPath1, Formatting.Indented);
-            */
-            //this.DialogResult = true;
-
+            this.DialogResult = true;
+          
             this.Close();
         }
     }

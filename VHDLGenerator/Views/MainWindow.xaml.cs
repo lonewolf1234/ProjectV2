@@ -59,7 +59,7 @@ namespace VHDLGenerator.Views
 
                 Debug.WriteLine(InputJSON);
                
-                System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"JSONFile.txt"), InputJSON);
+                System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"DatapathJSON.txt"), InputJSON);
                 
             }
         }
@@ -69,7 +69,24 @@ namespace VHDLGenerator.Views
             TextBlock_test.Text = "Create Component Selected";
 
             Window_Component window_Component = new Window_Component();
-            window_Component.Show();
+
+            if (window_Component.ShowDialog() == true)
+            {
+                var InputJSON = window_Component.Comp_ResultJSON;
+
+                Component tempComponent = new Component();
+                tempComponent = JsonConvert.DeserializeObject<Component>(InputJSON);
+                components.Add(tempComponent);
+                DataPath.Components = components;
+
+                //Degugging Stuff for component created
+                Debug.WriteLine(InputJSON);
+                System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "ComponentJSON.txt"), InputJSON);
+
+                //Degugging stuff for the updated Datapath object with the addition of the component
+                var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
+                System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathJSON.txt"), newDP_ResultJSON);
+            }
         }
 
         private void Btn_Signal_Click(object sender, RoutedEventArgs e)

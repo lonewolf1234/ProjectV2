@@ -14,6 +14,8 @@ namespace VHDLGenerator.Models
 
         public string ArchName { get; set; }
 
+        public List<Component> Components { get; set; }
+
         public List<Port> Ports { get; set; }
 
     }

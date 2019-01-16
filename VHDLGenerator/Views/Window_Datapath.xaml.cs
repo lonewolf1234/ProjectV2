@@ -37,6 +37,8 @@ namespace VHDLGenerator.Views
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
             UID = UID + 1;
+
+            //adding data into port model
             Port tempPort = new Port
             {
                 ID = UID,
@@ -68,7 +70,6 @@ namespace VHDLGenerator.Views
 
         private void Finish_Click(object sender, RoutedEventArgs e)
         {
-            
             DataPath dataPathObj = new DataPath()
             {
                 ID = 001,
