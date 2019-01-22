@@ -24,7 +24,7 @@ namespace VHDLGenerator.Views
         {
             InitializeComponent();
             //Default setting of the view items
-            Bus_CB.IsChecked = false;
+            SigBus_CB.IsChecked = false;
             MSB_TB.IsReadOnly = true;
             LSB_TB.IsReadOnly = true;
         }
