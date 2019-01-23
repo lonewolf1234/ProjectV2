@@ -23,25 +23,24 @@ namespace VHDLGenerator.Views
     {
         //JSON that contains the data entered in the datapath window
         public string Comp_ResultJSON { get; private set; }
-        //Unique ID of each port created
-        private int UID;
+
         //List of all ports created
-        private List<PortModel> ports = new List<PortModel>();
+        private List<PortModel> ports;
+        private PortModel port;
 
         public Window_Component()
         {
             InitializeComponent();
-            UID = 0;
+            port = new PortModel();
+            ports = new List<PortModel>();
+            
         }
 
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
-            UID = UID + 1;
-
             //adding data into port model
             PortModel tempPort = new PortModel
             {
-                ID = UID,
                 Name = PortName_TB.Text,
                 Direction = Direction_CB.Text,
                 Bus = (bool)Bus_CB.IsChecked,
@@ -75,7 +74,7 @@ namespace VHDLGenerator.Views
 
             ComponentModel componentObj = new ComponentModel()
             {
-                ID = guid.ToString(),
+                //ID = guid.ToString(),
                 Name = EntityNameTB.Text,
                 ArchName = ArchNameTB.Text,
                 Ports = ports

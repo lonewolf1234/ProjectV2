@@ -17,11 +17,5 @@ namespace VHDLGenerator.DataModels
             set { Signal.Name = value; }
         }
 
-        public bool SigBus_CB
-        {
-            
-        }
-
-
     }
 }

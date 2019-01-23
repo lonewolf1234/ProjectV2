@@ -18,11 +18,11 @@ namespace VHDLGenerator.Models
 
         public int LSB { get; set; }
 
-        public string Destination { get; set; }
+        public string Target_port { get; set; }
 
-        public string Destination_Comp { get; set; }
+        public string Target_Comp { get; set; }
 
-        public string Source { get; set; }
+        public string Source_port { get; set; }
 
         public string Source_Comp { get; set; }
     }

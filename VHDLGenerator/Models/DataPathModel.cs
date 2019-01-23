@@ -13,10 +13,12 @@ namespace VHDLGenerator.Models
         public string Name { get; set; }
 
         public string ArchName { get; set; }
+        
+        public List<PortModel> Ports { get; set; }
 
         public List<ComponentModel> Components { get; set; }
 
-        public List<PortModel> Ports { get; set; }
+        public List<SignalModel> Signals { get; set; }
 
     }
 }

@@ -41,7 +41,6 @@ namespace VHDLGenerator.Views
             //adding data into port model
             PortModel tempPort = new PortModel
             {
-                ID = UID,
                 Name = PortName_TB.Text,
                 Direction = Direction_CB.Text,
                 Bus = (bool)Bus_CB.IsChecked,

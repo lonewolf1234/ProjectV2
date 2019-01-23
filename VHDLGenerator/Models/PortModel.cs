@@ -10,8 +10,6 @@ namespace VHDLGenerator.Models
     {
         public PortModel() { }
 
-        public int ID { get; set; }
-
         public string Name { get; set; }
 
         public string Direction { get; set; }
@@ -21,6 +19,15 @@ namespace VHDLGenerator.Models
         public string MSB { get; set; }
 
         public string LSB { get; set; }
+
+        public void Clear()
+        {
+            this.Name = string.Empty;
+            this.Direction = string.Empty;
+            this.Bus = false;
+            this.MSB = string.Empty;
+            this.LSB = string.Empty;
+        }
 
     }
 }

@@ -8,9 +8,7 @@ namespace VHDLGenerator.Models
 {
     class ComponentModel
     {
-        //public Component() { }
-
-        public string ID { get; set; }
+        public ComponentModel() { }
 
         public string Name { get; set; }
 
