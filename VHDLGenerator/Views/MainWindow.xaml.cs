@@ -72,20 +72,31 @@ namespace VHDLGenerator.Views
 
             if (window_Component.ShowDialog() == true)
             {
-                var InputJSON = window_Component.Comp_ResultJSON;
+                #region Old code using JSON format to transfer data
+                //var InputJSON = window_Component.Comp_ResultJSON;
 
-                ComponentModel tempComponent = new ComponentModel();
-                tempComponent = JsonConvert.DeserializeObject<ComponentModel>(InputJSON);
-                components.Add(tempComponent);
-                DataPath.Components = components;
+                //ComponentModel tempComponent = new ComponentModel();
+                //tempComponent = JsonConvert.DeserializeObject<ComponentModel>(InputJSON);
+                //components.Add(tempComponent);
+                //DataPath.Components = components;
 
                 //Degugging Stuff for component created
-                Debug.WriteLine(InputJSON);
-                System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "ComponentJSON.txt"), InputJSON);
+                //Debug.WriteLine(InputJSON);
+                //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "ComponentJSON.txt"), InputJSON);
 
-                //Degugging stuff for the updated Datapath object with the addition of the component
-                var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
-                System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathJSON.txt"), newDP_ResultJSON);
+                ////Degugging stuff for the updated Datapath object with the addition of the component
+                //var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
+                //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathJSON.txt"), newDP_ResultJSON);
+                #endregion
+
+                //components.Add((ComponentModel)window_Component.DataContext);
+
+                try
+                {
+                    components.Add((ComponentModel)window_Component.DataContext);
+                }
+                catch (InvalidCastException) { }
+                    
             }
         }
 

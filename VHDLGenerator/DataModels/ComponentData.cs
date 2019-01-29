@@ -9,6 +9,7 @@ namespace VHDLGenerator.DataModels
 {
     class ComponentData
     {
+       
         private ComponentModel Component = new ComponentModel();
         private List<PortModel> Ports = new List<PortModel>();
         private PortModel Port = new PortModel();
@@ -72,30 +73,51 @@ namespace VHDLGenerator.DataModels
                 this.AddPort = value;
                 if (AddPortSel == true)
                 {
-                    Ports.Add(Port);
-                    Port.Clear();
-                }
-            }
-        }
-
-        // Finish Button Selected
-        public bool FinishedSel
-        {
-            get { return this.FinishedSel; }
-            set
-            {
-                this.FinishedSel = value;
-                if(FinishedSel == true)
-                {
+                    Ports.Add(GetPortData);
                     Component.Ports = Ports;
+                    this.AddPort = false;
+                    
                 }
             }
         }
 
-        public bool CancelSel
+        public PortModel GetPortData
         {
-            get { return this.AddPort; }
-            set { this.AddPort = value; }
+            get
+            {
+                PortModel TempPort = new PortModel
+                {
+                    Name = PortNameTxt,
+                    Direction = DirectionSel,
+                    Bus = BusSel,
+                    MSB = MsbTxt,
+                    LSB = LsbTxt,
+                };
+                
+                return TempPort;
+            }
         }
+
+        public List<string> GetDirections
+        {
+            get
+            {
+                List<string> Directions = new List<string>();
+                Directions.Add("in");
+                Directions.Add("out");
+                Directions.Add("inout");
+                return Directions;
+
+            }
+        }
+
+        public ComponentModel GetComponent
+        {
+            get
+            {
+                return this.Component;
+            }
+        }
+
     }
 }
