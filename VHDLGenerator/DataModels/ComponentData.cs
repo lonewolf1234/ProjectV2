@@ -15,10 +15,7 @@ namespace VHDLGenerator.DataModels
         private PortModel Port = new PortModel();
         private bool AddPort { get; set; }
 
-        public ComponentData()
-        {
-
-        }
+        public ComponentData(){}
 
         // Main Component Properties
         public string EntityNameTxt
@@ -39,25 +36,21 @@ namespace VHDLGenerator.DataModels
             get { return this.Port.Name; }
             set { this.Port.Name = value; }
         }
-
         public string DirectionSel
         {
             get { return this.Port.Direction; }
             set { this.Port.Direction = value; }
         }
-
         public bool BusSel
         {
             get { return this.Port.Bus; }
             set { this.Port.Bus = value; }
         }
-
         public string MsbTxt
         {
             get { return this.Port.MSB; }
             set { this.Port.MSB = value; }
         }
-
         public string LsbTxt
         {
             get { return this.Port.LSB; }
@@ -76,11 +69,11 @@ namespace VHDLGenerator.DataModels
                     Ports.Add(GetPortData);
                     Component.Ports = Ports;
                     this.AddPort = false;
-                    
                 }
             }
         }
 
+        //Gets the Port Data entered
         public PortModel GetPortData
         {
             get
@@ -93,31 +86,31 @@ namespace VHDLGenerator.DataModels
                     MSB = MsbTxt,
                     LSB = LsbTxt,
                 };
-                
                 return TempPort;
             }
         }
 
+        //Contains the list for the directions options
         public List<string> GetDirections
         {
             get
             {
-                List<string> Directions = new List<string>();
-                Directions.Add("in");
-                Directions.Add("out");
-                Directions.Add("inout");
+                List<string> Directions = new List<string>
+                {
+                    "in",
+                    "out",
+                    "inout"
+                };
                 return Directions;
-
             }
         }
 
+        // Gets the Component Constructed from the data entered
         public ComponentModel GetComponent
         {
-            get
-            {
-                return this.Component;
-            }
+            get {return this.Component;}
         }
+
 
     }
 }

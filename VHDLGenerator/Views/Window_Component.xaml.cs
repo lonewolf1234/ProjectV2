@@ -23,24 +23,24 @@ namespace VHDLGenerator.Views
     public partial class Window_Component : Window
     {
         //JSON that contains the data entered in the datapath window
-        //public string Comp_ResultJSON { get; private set; }
-
-        //List of all ports created
-        //private List<PortModel> ports;
-        //private PortModel port;
-
+        public string GetCompJSON
+        {
+            get
+            {
+                return JsonConvert.SerializeObject(this.Data.GetComponent, Formatting.Indented);
+            }
+        }
         private ComponentData Data;
 
         public Window_Component()
         {
             InitializeComponent();
             Data = new ComponentData();
-            //this.DataContext = Data;
+            this.DataContext = Data;
         }
 
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
-
             #region Old code that has been commented
             ////adding data into port model
             //PortModel tempPort = new PortModel
@@ -72,12 +72,12 @@ namespace VHDLGenerator.Views
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-
             this.Close();
         }
 
         private void Finish_Click(object sender, RoutedEventArgs e)
         {
+            #region Old Code
             //Guid guid = Guid.NewGuid();
 
             //ComponentModel componentObj = new ComponentModel()
@@ -88,11 +88,11 @@ namespace VHDLGenerator.Views
             //    Ports = ports
             //};
 
-            //Comp_ResultJSON = JsonConvert.SerializeObject(componentObj, Formatting.Indented);
-            this.DataContext = Data.GetComponent;
+            //Comp_ResultJSON = JsonConvert.SerializeObject(this.Data.GetComponent, Formatting.Indented);
+            //this.DataContext = Data.GetComponent;
+            #endregion
 
             this.DialogResult = true;
-          
             this.Close();
         }
     }

@@ -67,7 +67,6 @@ namespace VHDLGenerator.Views
         private void Btn_Component_Click(object sender, RoutedEventArgs e)
         {
             TextBlock_test.Text = "Create Component Selected";
-
             Window_Component window_Component = new Window_Component();
 
             if (window_Component.ShowDialog() == true)
@@ -88,15 +87,11 @@ namespace VHDLGenerator.Views
                 //var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
                 //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathJSON.txt"), newDP_ResultJSON);
                 #endregion
-
-                //components.Add((ComponentModel)window_Component.DataContext);
-
                 try
                 {
-                    components.Add((ComponentModel)window_Component.DataContext);
+                    components.Add(JsonConvert.DeserializeObject<ComponentModel>(window_Component.GetCompJSON));
                 }
-                catch (InvalidCastException) { }
-                    
+                catch (Exception) { }
             }
         }
 
