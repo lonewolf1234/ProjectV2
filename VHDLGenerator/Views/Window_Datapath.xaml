@@ -57,6 +57,7 @@
                 Grid.Column="2"
                 Margin="60,15,250,15"
                 Background="WhiteSmoke"
+                Text="{Binding Path=EntityNameTxt}"
             />
 
             <TextBox
@@ -65,7 +66,7 @@
                 Grid.Column="2"
                 Margin="60,15,250,15"
                 Background="WhiteSmoke"
-                Text="Behavioral"
+                Text="{Binding Path=ArchNameTxt}"
             />
 
         </Grid>
@@ -97,6 +98,7 @@
                        Name="PortName_TB"
                        Width="200"
                        Margin="30,5"
+                       Text="{Binding Path=PortNameTxt}"
                     />
                 </StackPanel>
 
@@ -107,11 +109,11 @@
                         Width="150"
                         HorizontalContentAlignment="Right"
                     />
-                    <ComboBox Name="Direction_CB" Width="100" Margin="30,5">
-                        <ComboBoxItem Content="in"/>
-                        <ComboBoxItem Content="out"/>
-                        <ComboBoxItem Content="inout"/>
-                    </ComboBox>
+                    
+                    <ComboBox Name="Direction_CB" Width="100" Margin="30,5" 
+                              SelectedValue="{Binding Path=DirectionSel}"
+                              ItemsSource="{Binding Path=GetDirections}"
+                    />
                 </StackPanel>
 
                 <!-- Third Stack Panel-->
@@ -124,6 +126,7 @@
                     <CheckBox
                         Name="Bus_CB" 
                         Margin="30,5"
+                        IsChecked="{Binding Path=BusSel}"
                     />
                 </StackPanel>
 
@@ -138,6 +141,7 @@
                        Name="MSB_TB"
                        Width="55"
                        Margin="30,5"
+                       Text="{Binding Path=MsbTxt}"
                     />
                 </StackPanel>
 
@@ -152,6 +156,7 @@
                        Name="LSB_TB"
                        Width="55"
                        Margin="30,5"
+                       Text="{Binding Path=LsbTxt}"
                     />
                 </StackPanel>
 
@@ -176,7 +181,6 @@
 
                 <!-- Column Header text and Binding-->
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Port ID" Width="100" Binding="{Binding ID}"/>
                     <DataGridTextColumn Header="Port Name" Width="100" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="Direction" Width="100" Binding="{Binding Direction}"/>
                     <DataGridTextColumn Header="Bus" Width="100" Binding="{Binding Bus}"/>

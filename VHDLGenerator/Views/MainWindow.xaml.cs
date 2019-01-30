@@ -54,13 +54,21 @@ namespace VHDLGenerator.Views
             
             if( window_Datapath.ShowDialog()== true)
             {
-                var InputJSON = window_Datapath.DP_ResultJSON;
-                DataPath = JsonConvert.DeserializeObject<DataPathModel>(InputJSON);
+                #region
+                //var InputJSON = window_Datapath.DP_ResultJSON;
+                //DataPath = JsonConvert.DeserializeObject<DataPathModel>(InputJSON);
 
-                Debug.WriteLine(InputJSON);
-               
-                System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"DatapathJSON.txt"), InputJSON);
-                
+                //Debug.WriteLine(InputJSON);
+
+                //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"DatapathJSON.txt"), InputJSON);
+                #endregion
+                try
+                {
+                    DataPath = JsonConvert.DeserializeObject<DataPathModel>(window_Datapath.GetDataPJSON);
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"DatapathJSON.txt"), window_Datapath.GetDataPJSON);
+                }
+                catch (Exception) { }
+
             }
         }
 
@@ -90,6 +98,11 @@ namespace VHDLGenerator.Views
                 try
                 {
                     components.Add(JsonConvert.DeserializeObject<ComponentModel>(window_Component.GetCompJSON));
+                    DataPath.Components = components;
+
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "ComponentJSON.txt"), window_Component.GetCompJSON);
+                    var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathJSON.txt"), newDP_ResultJSON);
                 }
                 catch (Exception) { }
             }

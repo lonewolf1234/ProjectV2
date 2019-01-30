@@ -8,8 +8,6 @@ namespace VHDLGenerator.Models
 {
     class DataPathModel
     {
-        public int ID { get; set; }
-
         public string Name { get; set; }
 
         public string ArchName { get; set; }

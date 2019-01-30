@@ -15,7 +15,10 @@ namespace VHDLGenerator.DataModels
         private PortModel Port = new PortModel();
         private bool AddPort { get; set; }
 
-        public ComponentData(){}
+        public ComponentData()
+        {
+            ArchNameTxt = "Behavioural";
+        }
 
         // Main Component Properties
         public string EntityNameTxt

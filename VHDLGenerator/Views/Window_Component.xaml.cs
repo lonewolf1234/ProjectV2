@@ -35,6 +35,7 @@ namespace VHDLGenerator.Views
         public Window_Component()
         {
             InitializeComponent();
+            //ArchNameTB.Text = "Behavioural";
             Data = new ComponentData();
             this.DataContext = Data;
         }
