@@ -10,6 +10,7 @@ namespace VHDLGenerator.DataModels
     class DataPathData
     {
         private DataPathModel DataPath = new DataPathModel();
+
         private List<PortModel> Ports = new List<PortModel>();
         private PortModel Port = new PortModel();
         private bool AddPort { get; set; }
@@ -42,7 +43,7 @@ namespace VHDLGenerator.DataModels
         {
             get { return this.Port.Direction; }
             set { this.Port.Direction = value; }
-        }
+        } 
         public bool BusSel
         {
             get { return this.Port.Bus; }

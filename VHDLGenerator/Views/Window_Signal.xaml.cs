@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using VHDLGenerator.DataModels;
+using Newtonsoft.Json;
 
 namespace VHDLGenerator.Views
 {
@@ -20,29 +22,41 @@ namespace VHDLGenerator.Views
     /// </summary>
     public partial class Window_Signal : Window
     {
-        public Window_Signal()
+        public string GetSignalJSON
+        {
+            get
+            {
+                return JsonConvert.SerializeObject(this.Data.GetSignal, Formatting.Indented);
+            }
+        }
+        private SignalData Data;
+
+        public Window_Signal(string DataPathJSON)
         {
             InitializeComponent();
-            //Default setting of the view items
-            Bus_CB.IsChecked = false;
-            MSB_TB.IsReadOnly = true;
-            LSB_TB.IsReadOnly = true;
+            Data = new SignalData(DataPathJSON);
+            this.DataContext = Data;
+
+            ////Default setting of the view items
+            //Bus_CB.IsChecked = false;
+            //MSB_TB.IsReadOnly = true;
+            //LSB_TB.IsReadOnly = true;
         }
 
         private void Bus_CB_Checked(object sender, RoutedEventArgs e)
         {
-            //if CheckBox is checked the MSB and LLSB feilds are editable
-            MSB_TB.IsReadOnly = false;
-            LSB_TB.IsReadOnly = false;
+            ////if CheckBox is checked the MSB and LLSB feilds are editable
+            //MSB_TB.IsReadOnly = false;
+            //LSB_TB.IsReadOnly = false;
         }
 
         //Create a is not checked CB function to erase data from the MSB and LSB and disable editing
         private void Bus_CB_Unchecked(object sender, RoutedEventArgs e)
         {
-            MSB_TB.Clear();
-            LSB_TB.Clear();
-            MSB_TB.IsReadOnly = true;
-            LSB_TB.IsReadOnly = true;
+            //MSB_TB.Clear();
+            //LSB_TB.Clear();
+            //MSB_TB.IsReadOnly = true;
+            //LSB_TB.IsReadOnly = true;
 
         }
 
@@ -69,6 +83,7 @@ namespace VHDLGenerator.Views
 
         private void Finish_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = true;
             this.Close();
         }
 

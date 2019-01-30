@@ -112,8 +112,37 @@ namespace VHDLGenerator.Views
         {
             TextBlock_test.Text = "Create Signal Selected";
 
-            Window_Signal window_Signal = new Window_Signal();
-            window_Signal.Show();
+            Window_Signal window_Signal = new Window_Signal(JsonConvert.SerializeObject(DataPath, Formatting.Indented));
+
+            if (window_Signal.ShowDialog() == true)
+            {
+                #region Old code using JSON format to transfer data
+                //var InputJSON = window_Component.Comp_ResultJSON;
+
+                //ComponentModel tempComponent = new ComponentModel();
+                //tempComponent = JsonConvert.DeserializeObject<ComponentModel>(InputJSON);
+                //components.Add(tempComponent);
+                //DataPath.Components = components;
+
+                //Degugging Stuff for component created
+                //Debug.WriteLine(InputJSON);
+                //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "ComponentJSON.txt"), InputJSON);
+
+                ////Degugging stuff for the updated Datapath object with the addition of the component
+                //var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
+                //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathJSON.txt"), newDP_ResultJSON);
+                #endregion
+                try
+                {
+                    signals.Add(JsonConvert.DeserializeObject<SignalModel>(window_Signal.GetSignalJSON));
+                    DataPath.Components = components;
+
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
+                    var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathw/sJSON.txt"), newDP_ResultJSON);
+                }
+                catch (Exception) { }
+            }
         }
 
         private void Generate_Click(object sender, RoutedEventArgs e)

@@ -14,9 +14,9 @@ namespace VHDLGenerator.Models
 
         public bool Bus { get; set; }
 
-        public int MSB { get; set; }
+        public string MSB { get; set; }
 
-        public int LSB { get; set; }
+        public string LSB { get; set; }
 
         public string Target_port { get; set; }
 

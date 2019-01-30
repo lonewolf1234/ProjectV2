@@ -34,7 +34,8 @@
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1">
-                <TextBox Name="EntityNameTB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke"/>
+                <TextBox Name="EntityNameTB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke"
+                         Text="{Binding Path=SigEntityNameTxt}"/>
             </Grid>
             
             <!---->
@@ -43,7 +44,8 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1">
-                <CheckBox Name ="Bus_CB" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="60,5" Checked="Bus_CB_Checked" Unchecked="Bus_CB_Unchecked"/>
+                <CheckBox Name ="Bus_CB" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="60,5" Checked="Bus_CB_Checked" Unchecked="Bus_CB_Unchecked"
+                          IsChecked="{Binding Path=SigBusCB}"/>
             </Grid>
 
             <!---->
@@ -52,7 +54,8 @@
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="2">
-                <TextBox Name ="MSB_TB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke" PreviewTextInput="MSB_TB_PreviewTextInput"/>
+                <TextBox Name ="MSB_TB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke" PreviewTextInput="MSB_TB_PreviewTextInput"
+                         Text="{Binding Path=MsbTxt}"/>
             </Grid>
 
             <!---->
@@ -61,7 +64,8 @@
             </Grid>
 
             <Grid Grid.Row="3" Grid.Column="1">
-                <TextBox Name="LSB_TB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke" PreviewTextInput="LSB_TB_PreviewTextInput"/>
+                <TextBox Name="LSB_TB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke" PreviewTextInput="LSB_TB_PreviewTextInput"
+                         Text="{Binding Path=LsbTxt}"/>
             </Grid>
 
         </Grid>
@@ -89,7 +93,11 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1">
-                <ComboBox Name="CompS_CB" Height="25"  Margin="20,5"/>
+                <ComboBox Name="CompS_CB" Height="25"  Margin="20,5" 
+                          ItemsSource="{Binding Path=ComponentNames}"
+                          SelectedValue="{Binding Path=SCompName}"
+                          
+                          />
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="0">
@@ -97,10 +105,12 @@
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="1">
-                <ComboBox Name="PortS_CB" Height="25" Margin="20,5"/>
+                <ComboBox Name="PortS_CB" Height="25" Margin="20,5"
+                          ItemsSource="{Binding Path=SCompPorts}"
+                          SelectedValue="{Binding Path=SCompPortName}"
+                          />
             </Grid>
-            
-            
+
 
             <Grid Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
                 <Label Content="Destination" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
@@ -111,7 +121,9 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="3">
-                <ComboBox Name="CompD_CB" Height="25"  Margin="20,5"/>
+                <ComboBox Name="CompD_CB" Height="25"  Margin="20,5" 
+                          ItemsSource="{Binding Path=ComponentNames}"
+                          SelectedValue="{Binding Path=TCompName}"/>
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="2">
@@ -119,7 +131,9 @@
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="3">
-                <ComboBox Name="PortD_CB" Height="25"  Margin="20,5"/>
+                <ComboBox Name="PortD_CB" Height="25"  Margin="20,5"
+                          ItemsSource="{Binding Path=TCompPorts}"
+                          SelectedValue="{Binding Path=TCompPortName}"/>
             </Grid>
 
         </Grid>

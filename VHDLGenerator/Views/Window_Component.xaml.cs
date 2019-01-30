@@ -30,6 +30,7 @@ namespace VHDLGenerator.Views
                 return JsonConvert.SerializeObject(this.Data.GetComponent, Formatting.Indented);
             }
         }
+
         private ComponentData Data;
 
         public Window_Component()

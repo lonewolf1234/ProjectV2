@@ -114,6 +114,5 @@ namespace VHDLGenerator.DataModels
             get {return this.Component;}
         }
 
-
     }
 }
