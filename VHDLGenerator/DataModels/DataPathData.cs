@@ -93,6 +93,14 @@ namespace VHDLGenerator.DataModels
             }
         }
 
+        public List<PortModel> GetPorts
+        {
+            get
+            {
+                return Ports;
+            }
+        }
+
         //Contains the list for the directions options
         public List<string> GetDirections
         {
