@@ -36,6 +36,7 @@ namespace VHDLGenerator.Views
             InitializeComponent();
             Data = new SignalData(DataPathJSON);
             this.DataContext = Data;
+            
 
             ////Default setting of the view items
             //Bus_CB.IsChecked = false;

@@ -5,11 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using VHDLGenerator.Models;
 using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace VHDLGenerator.DataModels
 {
-    class SignalData
+    class SignalData : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if(handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
         private SignalModel Signal = new SignalModel();
         private DataPathModel _Datapath = new DataPathModel();
         private List<string> SPorts = new List<string>();
@@ -41,22 +53,22 @@ namespace VHDLGenerator.DataModels
             get { return Signal.LSB; }
             set { Signal.LSB = value; }
         }
-        public bool prop { get; set; }
+        //public bool prop { get; set; }
 
-        public bool PropChanged
-        {
-            get { return this.prop; }
-            set
-            {
-                this.prop = value;
-                if(value == true)
-                {
-                    SCompPorts = GetPortNames(SCompName);
-                    TCompPorts = GetPortNames(TCompName);
-                    this.prop = false;
-                }
-            }
-        }
+        //public bool PropChanged
+        //{
+        //    get { return this.prop; }
+        //    set
+        //    {
+        //        this.prop = value;
+        //        if(value == true)
+        //        {
+        //            SCompPorts = GetPortNames(SCompName);
+        //            TCompPorts = GetPortNames(TCompName);
+        //            this.prop = false;
+        //        }
+        //    }
+        //}
 
         //item source - components
         //use as source for the combobox items
@@ -76,8 +88,9 @@ namespace VHDLGenerator.DataModels
             set
             {
                 this.Signal.Source_Comp = value;
-                this.PropChanged = true;
 
+                this.SPorts = GetPortNames(this.Signal.Source_Comp);
+                OnPropertyChanged("SCompPorts");
             }
         }
         //for selected item in traget cat
@@ -87,7 +100,8 @@ namespace VHDLGenerator.DataModels
             set
             {
                 this.Signal.Target_Comp = value;
-                this.PropChanged = true;
+                this.TPorts = GetPortNames(this.Signal.Target_Comp);
+                OnPropertyChanged("TCompPorts");
             }
         }
 
@@ -97,18 +111,17 @@ namespace VHDLGenerator.DataModels
         {
             get
             {
-                return GetPortNames(SCompName);
+                return this.SPorts;
             }
-            set { this.SCompPorts = value; }
         }
+
         //item source - target ports
         public List<string> TCompPorts
         {
             get
             {
-                return GetPortNames(TCompName);
+                return this.TPorts;
             }
-            set { this.TCompPorts = value; }
         }
 
         //for selected iten in source cat - port
