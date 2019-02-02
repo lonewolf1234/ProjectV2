@@ -87,7 +87,7 @@ namespace VHDLGenerator.ViewModels
             get { return this.Signal; }
         }
 
-        //item selected
+        //item selectedh
         //for selected item in source catsx
         public string SCompName
         {
