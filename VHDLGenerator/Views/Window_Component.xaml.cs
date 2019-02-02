@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VHDLGenerator.Models;
-using VHDLGenerator.DataModels;
+using VHDLGenerator.ViewModels;
 using Newtonsoft.Json;
 
 namespace VHDLGenerator.Views
@@ -31,13 +31,13 @@ namespace VHDLGenerator.Views
             }
         }
 
-        private ComponentData Data;
+        private ComponentViewModel Data;
 
         public Window_Component()
         {
             InitializeComponent();
             //ArchNameTB.Text = "Behavioural";
-            Data = new ComponentData();
+            Data = new ComponentViewModel();
             this.DataContext = Data;
         }
 

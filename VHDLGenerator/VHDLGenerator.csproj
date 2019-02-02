@@ -58,9 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataModels\ComponentData.cs" />
-    <Compile Include="DataModels\DataPathData.cs" />
-    <Compile Include="DataModels\SignalData.cs" />
+    <Compile Include="ViewModels\ComponentViewModel.cs" />
+    <Compile Include="ViewModels\DataPathViewModel.cs" />
+    <Compile Include="ViewModels\SignalViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

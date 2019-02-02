@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using VHDLGenerator.Models;
-using VHDLGenerator.DataModels;
+using VHDLGenerator.ViewModels;
 using Newtonsoft.Json;
 
 namespace VHDLGenerator.Views
@@ -31,7 +31,7 @@ namespace VHDLGenerator.Views
             }
         }
 
-        private DataPathData Data;
+        private DataPathViewModel Data;
         //Unique ID of each port created
         //private int UID;
         //List of all ports created
@@ -41,7 +41,7 @@ namespace VHDLGenerator.Views
         {
             InitializeComponent();
             //ArchNameTB.Text = "Behavioural";
-            Data = new DataPathData();
+            Data = new DataPathViewModel();
             this.DataContext = Data;
         }
 

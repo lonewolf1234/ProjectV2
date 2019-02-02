@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using VHDLGenerator.Models;
 
-namespace VHDLGenerator.DataModels
+namespace VHDLGenerator.ViewModels
 {
-    class DataPathData
+    class DataPathViewModel
     {
         private DataPathModel DataPath = new DataPathModel();
 
@@ -15,7 +15,7 @@ namespace VHDLGenerator.DataModels
         private PortModel Port = new PortModel();
         private bool AddPort { get; set; }
 
-        public DataPathData()
+        public DataPathViewModel()
         {
             ArchNameTxt = "Behavioural";
         }

@@ -7,12 +7,12 @@ using VHDLGenerator.Models;
 using Newtonsoft.Json;
 using System.ComponentModel;
 
-namespace VHDLGenerator.DataModels
+namespace VHDLGenerator.ViewModels
 {
-    class SignalData : INotifyPropertyChanged
+    class SignalViewModel : INotifyPropertyChanged
     {
+        #region Property Changed Interface
         public event PropertyChangedEventHandler PropertyChanged;
-        
         protected void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -21,18 +21,21 @@ namespace VHDLGenerator.DataModels
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+        #endregion
 
+        #region Private Variables
         private SignalModel Signal = new SignalModel();
         private DataPathModel _Datapath = new DataPathModel();
         private List<string> SPorts = new List<string>();
         private List<string> TPorts = new List<string>();
+        #endregion
 
-
-        public SignalData(string datapath)
+        public SignalViewModel(string datapath)
         {
            _Datapath = JsonConvert.DeserializeObject<DataPathModel>(datapath);
         }
 
+        #region Properties
         public string SigEntityNameTxt
         {
             get { return Signal.Name; }
@@ -78,6 +81,10 @@ namespace VHDLGenerator.DataModels
             {
                 return GetCompName();
             }
+        }
+        public SignalModel GetSignal
+        {
+            get { return this.Signal; }
         }
 
         //item selected
@@ -136,8 +143,9 @@ namespace VHDLGenerator.DataModels
             get { return Signal.Target_port; }
             set { this.Signal.Target_port = value; }
         }
+        #endregion
 
-
+        #region Methods
         private List<string> GetCompName()
         {
             List<string> names = new List<string>();
@@ -174,10 +182,7 @@ namespace VHDLGenerator.DataModels
             
             return names;
         }
+        #endregion
 
-        public SignalModel GetSignal
-        {
-            get { return this.Signal; }
-        }
     }
 }

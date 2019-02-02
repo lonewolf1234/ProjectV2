@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
-using VHDLGenerator.DataModels;
+using VHDLGenerator.ViewModels;
 using Newtonsoft.Json;
 
 namespace VHDLGenerator.Views
@@ -29,12 +29,12 @@ namespace VHDLGenerator.Views
                 return JsonConvert.SerializeObject(this.Data.GetSignal, Formatting.Indented);
             }
         }
-        private SignalData Data;
+        private SignalViewModel Data;
 
         public Window_Signal(string DataPathJSON)
         {
             InitializeComponent();
-            Data = new SignalData(DataPathJSON);
+            Data = new SignalViewModel(DataPathJSON);
             this.DataContext = Data;
             
 
