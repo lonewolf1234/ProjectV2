@@ -10,7 +10,6 @@ namespace VHDLGenerator.ViewModels
     class DataPathViewModel
     {
         private DataPathModel DataPath = new DataPathModel();
-
         private List<PortModel> Ports = new List<PortModel>();
         private PortModel Port = new PortModel();
         private bool AddPort { get; set; }
@@ -26,7 +25,6 @@ namespace VHDLGenerator.ViewModels
             get { return this.DataPath.Name; }
             set { this.DataPath.Name = value; }
         }
-
         public string ArchNameTxt
         {
             get { return this.DataPath.ArchName; }
@@ -92,7 +90,6 @@ namespace VHDLGenerator.ViewModels
                 return TempPort;
             }
         }
-
         public List<PortModel> GetPorts
         {
             get

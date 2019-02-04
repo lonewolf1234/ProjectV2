@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VHDLGenerator.Models
 {
-    class PortModel
+    public class PortModel
     {
         public PortModel() { }
 

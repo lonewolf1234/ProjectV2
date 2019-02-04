@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VHDLGenerator.Models
 {
-    class SignalModel
+    public class SignalModel
     {
         public SignalModel() {}
 

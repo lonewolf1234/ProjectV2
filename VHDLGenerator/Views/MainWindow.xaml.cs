@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using VHDLGenerator.Templates;
 
 namespace VHDLGenerator.Views
 {
@@ -147,7 +148,11 @@ namespace VHDLGenerator.Views
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
-            GenerateCode(DataPath);
+            //GenerateCode(DataPath);
+            DataPathTemplate DPTemplate = new DataPathTemplate(DataPath);
+            String s = DPTemplate.TransformText();
+            File.WriteAllText("GeneratedCode.txt", s);
+
             TextBlock_test.Text = "Code Generated";
         }
 

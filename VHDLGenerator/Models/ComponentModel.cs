@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VHDLGenerator.Models
 {
-    class ComponentModel
+    public class ComponentModel
     {
         public ComponentModel() { }
 
