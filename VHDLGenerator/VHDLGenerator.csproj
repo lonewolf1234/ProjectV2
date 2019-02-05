@@ -58,6 +58,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Templates\ComponentTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ComponentTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Templates\ComponentTemplateCode.cs" />
     <Compile Include="Templates\DataPathTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -136,6 +142,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Templates\ComponentTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ComponentTemplate.cs</LastGenOutput>
+      <CustomToolNamespace>VHDLGenerator.Templates</CustomToolNamespace>
+    </Content>
     <Content Include="Templates\DataPathTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>DataPathTemplate.cs</LastGenOutput>

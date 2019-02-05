@@ -12,16 +12,15 @@ namespace VHDLGenerator.Templates
     using System.Linq;
     using System.Text;
     using System.Collections.Generic;
-    using VHDLGenerator.Models;
     using System;
     
     /// <summary>
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+    #line 1 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\ComponentTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "15.0.0.0")]
-    public partial class DataPathTemplate : DataPathTemplateBase
+    public partial class ComponentTemplate : ComponentTemplateBase
     {
 #line hidden
         /// <summary>
@@ -31,45 +30,45 @@ namespace VHDLGenerator.Templates
         {
             this.Write("\r\nlibrary IEEE;\r\nuse IEEE.STD_LOGIC_1164.ALL;\r\n\r\nentity ");
             
-            #line 11 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 10 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\ComponentTemplate.tt"
 if(Name != null){
             
             #line default
             #line hidden
             
-            #line 11 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 10 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\ComponentTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 11 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 10 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\ComponentTemplate.tt"
 ;} 
             
             #line default
             #line hidden
             this.Write(" is\r\n  Port(");
             
-            #line 12 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 11 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\ComponentTemplate.tt"
  
 			if(Ports!= null)
 			{
-				foreach(string port in MainPortsData)
+				foreach(string port in CompPortsData)
 				{
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 16 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 15 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\ComponentTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(port));
             
             #line default
             #line hidden
             this.Write(" \r\n");
             
-            #line 17 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 16 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\ComponentTemplate.tt"
 				}
 			}
             
@@ -77,105 +76,28 @@ if(Name != null){
             #line hidden
             this.Write("end ");
             
-            #line 19 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 18 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\ComponentTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
             this.Write(";\r\n\r\narchitecture ");
             
-            #line 21 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 20 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\ComponentTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ArchName));
             
             #line default
             #line hidden
             this.Write(" of ");
             
-            #line 21 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 20 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\ComponentTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Name));
             
             #line default
             #line hidden
-            this.Write(" is\r\n\r\n");
+            this.Write(" is\r\nbegin\r\n\r\n\r\nend ");
             
-            #line 23 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-	foreach(ComponentModel component in Components)
-	{
-
-            
-            #line default
-            #line hidden
-            this.Write("component ");
-            
-            #line 27 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(component.Name));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n  Port(");
-            
-            #line 28 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-		foreach(string port in PortTranslation(component.Ports))
-		{
-
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 31 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(port));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 32 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-		}
-
-            
-            #line default
-            #line hidden
-            this.Write("end component;\r\n");
-            
-            #line 36 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-	}
-
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 40 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-	foreach(string signal in SignalData)
-	{
-
-            
-            #line default
-            #line hidden
-            
-            #line 44 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(signal));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 45 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-	}
-
-            
-            #line default
-            #line hidden
-            this.Write("\r\nbegin\r\n\r\nPortMapping.....\r\n\r\nend ");
-            
-            #line 53 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 24 "C:\Users\815006656\Desktop\Project repo\ProjectV2\VHDLGenerator\Templates\ComponentTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ArchName));
             
             #line default
@@ -192,7 +114,7 @@ if(Name != null){
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "15.0.0.0")]
-    public class DataPathTemplateBase
+    public class ComponentTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

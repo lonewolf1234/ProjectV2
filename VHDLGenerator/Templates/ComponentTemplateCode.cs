@@ -4,19 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VHDLGenerator.Models;
+using VHDLGenerator.Templates;
 
 namespace VHDLGenerator.Templates
 {
-    public partial class DataPathTemplate
+    public partial class ComponentTemplate
     {
-
-        public DataPathTemplate(DataPathModel data)
+        public ComponentTemplate(ComponentModel data)
         {
             this.Name = data.Name;
             this.ArchName = data.ArchName;
             this.Ports = data.Ports;
-            this.Components = data.Components;
-            this.Signals = data.Signals;
         }
 
         public string Name { get; set; }
@@ -25,18 +23,10 @@ namespace VHDLGenerator.Templates
 
         public List<PortModel> Ports { get; set; }
 
-        public List<ComponentModel> Components { get; set; }
-
-        public List<SignalModel> Signals { get; set; }
-
-        public List<string> MainPortsData
+        public List<string> CompPortsData
         {
-            get{return PortTranslation(this.Ports);}
-        }
-
-        public List<string> SignalData
-        {
-            get{ return SignalTranslation(this.Signals); }
+            get { return PortTranslation(this.Ports); }
+           
         }
 
         private List<string> PortTranslation(List<PortModel> ports)
@@ -61,38 +51,14 @@ namespace VHDLGenerator.Templates
                     {
                         templist.Add(temp + ";");
                     }
-                    else if(ports.Last() == port)
+                    else if (ports.Last() == port)
                     {
                         templist.Add("\t" + temp + ");");
                     }
                     else
                     {
-                        templist.Add("\t" +temp + ";");
+                        templist.Add("\t" + temp + ";");
                     }
-                }
-            }
-
-            return templist;
-        }
-
-        private List<string> SignalTranslation(List<SignalModel> signals)
-        {
-            List<string> templist = new List<string>();
-
-            if(signals.Count != 0)
-            {
-                foreach(SignalModel sig in signals)
-                {
-                    string tempsig = string.Empty;
-                    if (sig.Bus == true)
-                    {
-                        tempsig = $"signal {sig.Name} : STD_LOGIC_VECTOR({sig.MSB} downto {sig.LSB});";
-                    }
-                    else
-                    {
-                        tempsig = $"signal {sig.Name} : STD_LOGIC;";
-                    }
-                    templist.Add(tempsig);
                 }
             }
 

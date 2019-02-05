@@ -65,8 +65,8 @@ namespace VHDLGenerator.Views
                 #endregion
                 try
                 {
-                    DataPath = JsonConvert.DeserializeObject<DataPathModel>(window_Datapath.GetDataPJSON);
-                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"DatapathJSON.txt"), window_Datapath.GetDataPJSON);
+                    //DataPath = JsonConvert.DeserializeObject<DataPathModel>(window_Datapath.GetDataPJSON);
+                    //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"DatapathJSON.txt"), window_Datapath.GetDataPJSON);
                 }
                 catch (Exception) { }
 
@@ -101,7 +101,7 @@ namespace VHDLGenerator.Views
                     components.Add(JsonConvert.DeserializeObject<ComponentModel>(window_Component.GetCompJSON));
                     DataPath.Components = components;
 
-                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "ComponentJSON.txt"), window_Component.GetCompJSON);
+                    //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "ComponentJSON.txt"), window_Component.GetCompJSON);
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
                     System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathJSON.txt"), newDP_ResultJSON);
                 }
@@ -138,7 +138,7 @@ namespace VHDLGenerator.Views
                     signals.Add(JsonConvert.DeserializeObject<SignalModel>(window_Signal.GetSignalJSON));
                     DataPath.Components = components;
 
-                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
+                    //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
                     System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathw/sJSON.txt"), newDP_ResultJSON);
                 }
@@ -146,12 +146,22 @@ namespace VHDLGenerator.Views
             }
         }
 
+
+
         private void Generate_Click(object sender, RoutedEventArgs e)
         {
-            //GenerateCode(DataPath);
+            //Datapath File Generation
             DataPathTemplate DPTemplate = new DataPathTemplate(DataPath);
-            String s = DPTemplate.TransformText();
-            File.WriteAllText("GeneratedCode.txt", s);
+            String DPText = DPTemplate.TransformText();
+            File.WriteAllText(DataPath.Name + ".txt", DPText);
+
+            //Component File Generation
+            foreach(ComponentModel comp in DataPath.Components)
+            {
+                ComponentTemplate CompTemplate = new ComponentTemplate(comp);
+                String CompText = CompTemplate.TransformText();
+                File.WriteAllText(comp.Name+".txt", CompText);
+            }
 
             TextBlock_test.Text = "Code Generated";
         }

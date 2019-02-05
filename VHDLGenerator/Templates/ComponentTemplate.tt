@@ -3,7 +3,6 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@import namespace="VHDLGenerator.Models" #>
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -12,42 +11,14 @@ entity <#if(Name != null){#><#=Name #> <#;} #> is
   Port(<# 
 			if(Ports!= null)
 			{
-				foreach(string port in MainPortsData)
+				foreach(string port in CompPortsData)
 				{#> <#= port #> 
 <#				}
 			}#>
 end <#=Name #>;
 
 architecture <#= ArchName #> of <#=Name #> is
-
-<#
-	foreach(ComponentModel component in Components)
-	{
-#>
-component <#= component.Name #>
-  Port(<#
-		foreach(string port in PortTranslation(component.Ports))
-		{
-#> <#=port#>
-<#
-		}
-#>
-end component;
-<#
-	}
-#>
-
-<#
-	foreach(string signal in SignalData)
-	{
-#>
-<#=signal#>
-<#
-	}
-#>
-
 begin
 
-PortMapping.....
 
-end <#=ArchName#>;
+end <#= ArchName #>;
