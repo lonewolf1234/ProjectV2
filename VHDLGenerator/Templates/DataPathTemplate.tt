@@ -3,7 +3,30 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@import namespace="VHDLGenerator.Models" #>
 Datapath Name : "<#= Name #>"
 Datapath ArchName : "<#= ArchName #>"
 
 library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity <#    if(Name != null){#> <#=Name #> <#;} #> is
+    Port(<# 
+    if(Ports!= null)
+    {
+        foreach(PortModel port in Ports)
+        { 
+            if(Ports.Last() == port)
+            {#>
+    <#= port.Name #> : <#=port.Direction #> STD_LOGIC);
+          <#}
+            else
+            {#>
+    <#= port.Name #> : <#=port.Direction #> STD_LOGIC;
+          <#}
+      }
+    }#>
+
+end <#=Name #>;
+
+architecture <#= ArchName #> of <#=Name #> is
