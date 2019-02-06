@@ -65,7 +65,7 @@ namespace VHDLGenerator.Views
                 #endregion
                 try
                 {
-                    //DataPath = JsonConvert.DeserializeObject<DataPathModel>(window_Datapath.GetDataPJSON);
+                    DataPath = JsonConvert.DeserializeObject<DataPathModel>(window_Datapath.GetDataPJSON);
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"DatapathJSON.txt"), window_Datapath.GetDataPJSON);
                 }
                 catch (Exception) { }
@@ -138,7 +138,7 @@ namespace VHDLGenerator.Views
                     signals.Add(JsonConvert.DeserializeObject<SignalModel>(window_Signal.GetSignalJSON));
                     DataPath.Components = components;
 
-                    //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
                     System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathw/sJSON.txt"), newDP_ResultJSON);
                 }
