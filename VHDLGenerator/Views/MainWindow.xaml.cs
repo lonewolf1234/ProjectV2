@@ -136,17 +136,15 @@ namespace VHDLGenerator.Views
                 try
                 {
                     signals.Add(JsonConvert.DeserializeObject<SignalModel>(window_Signal.GetSignalJSON));
-                    DataPath.Components = components;
+                    DataPath.Signals = signals;
 
                     System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
-                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathw/sJSON.txt"), newDP_ResultJSON);
+                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathwsJSON.txt"), newDP_ResultJSON);
                 }
                 catch (Exception) { }
             }
         }
-
-
 
         private void Generate_Click(object sender, RoutedEventArgs e)
         {

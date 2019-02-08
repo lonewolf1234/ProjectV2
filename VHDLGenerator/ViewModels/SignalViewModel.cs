@@ -28,6 +28,7 @@ namespace VHDLGenerator.ViewModels
         private DataPathModel _Datapath = new DataPathModel();
         private List<string> SPorts = new List<string>();
         private List<string> TPorts = new List<string>();
+        private bool _GridEnable;
         #endregion
 
         public SignalViewModel(string datapath)
@@ -56,22 +57,26 @@ namespace VHDLGenerator.ViewModels
             get { return Signal.LSB; }
             set { Signal.LSB = value; }
         }
-        //public bool prop { get; set; }
-
-        //public bool PropChanged
-        //{
-        //    get { return this.prop; }
-        //    set
-        //    {
-        //        this.prop = value;
-        //        if(value == true)
-        //        {
-        //            SCompPorts = GetPortNames(SCompName);
-        //            TCompPorts = GetPortNames(TCompName);
-        //            this.prop = false;
-        //        }
-        //    }
-        //}
+        public bool GridEnable
+        {
+            get
+            {
+                if (this.SCompName == _Datapath.Name || this.TCompName == _Datapath.Name)
+                {
+                    this._GridEnable = false;
+                }
+                else
+                {
+                    this._GridEnable = true;
+                }
+                return this._GridEnable;
+            }
+            set
+            {
+                this._GridEnable = value;
+                
+            }
+        }
 
         //item source - components
         //use as source for the combobox items
@@ -87,7 +92,7 @@ namespace VHDLGenerator.ViewModels
             get { return this.Signal; }
         }
 
-        //item selectedh
+        //item selected
         //for selected item in source catsx
         public string SCompName
         {
@@ -96,8 +101,9 @@ namespace VHDLGenerator.ViewModels
             {
                 this.Signal.Source_Comp = value;
 
-                this.SPorts = GetPortNames(this.Signal.Source_Comp);
+                this.SPorts = GetPortNames(this.Signal.Source_Comp, "source");
                 OnPropertyChanged("SCompPorts");
+                OnPropertyChanged("GridEnable");
             }
         }
         //for selected item in traget cat
@@ -107,11 +113,11 @@ namespace VHDLGenerator.ViewModels
             set
             {
                 this.Signal.Target_Comp = value;
-                this.TPorts = GetPortNames(this.Signal.Target_Comp);
+                this.TPorts = GetPortNames(this.Signal.Target_Comp, "target");
                 OnPropertyChanged("TCompPorts");
+                OnPropertyChanged("GridEnable");
             }
         }
-
 
         //item source - source ports
         public List<string> SCompPorts
@@ -121,7 +127,6 @@ namespace VHDLGenerator.ViewModels
                 return this.SPorts;
             }
         }
-
         //item source - target ports
         public List<string> TCompPorts
         {
@@ -155,28 +160,56 @@ namespace VHDLGenerator.ViewModels
                 {
                     names.Add(comp.Name);
                 }
+                names.Add(_Datapath.Name);
             }
             catch(Exception) { }
             
             return names;
         }
 
-        private List<string> GetPortNames(string selectedComponent)
+        private List<string> GetPortNames(string selectedComponent, string filter)
         {
+
             List<string> names = new List<string>();
 
             try
             {
-                foreach (ComponentModel comp in _Datapath.Components)
+                if (_Datapath.Name == selectedComponent)
                 {
-                    if (comp.Name == selectedComponent)
+                    foreach (PortModel port in _Datapath.Ports)
                     {
-                        foreach (PortModel port in comp.Ports)
+                        if (filter == "source" && port.Direction == "in")
+                        {
+                            names.Add(port.Name);
+                        }
+                        else if (filter == "target" && (port.Direction == "out" || port.Direction == "inout"))
                         {
                             names.Add(port.Name);
                         }
                     }
                 }
+                else
+                {
+                    foreach (ComponentModel comp in _Datapath.Components)
+                    {
+                        if (comp.Name == selectedComponent)
+                        {
+                            foreach (PortModel port in comp.Ports)
+                            {
+                                if (filter == "source" && (port.Direction == "out" || port.Direction == "inout"))
+                                {
+                                    names.Add(port.Name);
+                                }
+                                else if (filter == "target" && port.Direction == "in")
+                                {
+                                    names.Add(port.Name);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                
             }
             catch (Exception) { };
             
