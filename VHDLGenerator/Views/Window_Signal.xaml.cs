@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using VHDLGenerator.ViewModels;
+using VHDLGenerator.Models;
 using Newtonsoft.Json;
 
 namespace VHDLGenerator.Views
@@ -22,13 +23,15 @@ namespace VHDLGenerator.Views
     /// </summary>
     public partial class Window_Signal : Window
     {
-        public string GetSignalJSON
-        {
-            get
-            {
-                return JsonConvert.SerializeObject(this.Data.GetSignal, Formatting.Indented);
-            }
-        }
+        //public string GetSignalJSON
+        //{
+        //    get
+        //    {
+        //        return JsonConvert.SerializeObject(this.Data.GetSignal, Formatting.Indented);
+        //    }
+        //}
+
+        public SignalModel GetSignalModel { get { return this.Data.GetSignal; } }
         private SignalViewModel Data;
 
         public Window_Signal(string DataPathJSON)

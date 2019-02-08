@@ -98,6 +98,5 @@ namespace VHDLGenerator.Templates
 
             return templist;
         }
-
     }
 }

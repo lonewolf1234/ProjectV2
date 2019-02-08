@@ -55,17 +55,10 @@ namespace VHDLGenerator.Views
             
             if( window_Datapath.ShowDialog()== true)
             {
-                #region
-                //var InputJSON = window_Datapath.DP_ResultJSON;
-                //DataPath = JsonConvert.DeserializeObject<DataPathModel>(InputJSON);
-
-                //Debug.WriteLine(InputJSON);
-
-                //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"DatapathJSON.txt"), InputJSON);
-                #endregion
                 try
                 {
-                    DataPath = JsonConvert.DeserializeObject<DataPathModel>(window_Datapath.GetDataPJSON);
+                    DataPath = window_Datapath.GetDataPathModel;
+                    //DataPath = JsonConvert.DeserializeObject<DataPathModel>(window_Datapath.GetDataPJSON);
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"DatapathJSON.txt"), window_Datapath.GetDataPJSON);
                 }
                 catch (Exception) { }
@@ -98,7 +91,8 @@ namespace VHDLGenerator.Views
                 #endregion
                 try
                 {
-                    components.Add(JsonConvert.DeserializeObject<ComponentModel>(window_Component.GetCompJSON));
+                    //components.Add(JsonConvert.DeserializeObject<ComponentModel>(window_Component.GetCompJSON));
+                    components.Add(window_Component.GetComponentModel);
                     DataPath.Components = components;
 
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "ComponentJSON.txt"), window_Component.GetCompJSON);
@@ -135,10 +129,11 @@ namespace VHDLGenerator.Views
                 #endregion
                 try
                 {
-                    signals.Add(JsonConvert.DeserializeObject<SignalModel>(window_Signal.GetSignalJSON));
+                    //signals.Add(JsonConvert.DeserializeObject<SignalModel>(window_Signal.GetSignalJSON));
+                    signals.Add(window_Signal.GetSignalModel);
                     DataPath.Signals = signals;
 
-                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
+                    //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
                     System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathwsJSON.txt"), newDP_ResultJSON);
                 }

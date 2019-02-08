@@ -23,24 +23,26 @@ namespace VHDLGenerator.Views
     public partial class Window_Datapath : Window
     {
         //JSON that contains the data entered in the datapath window
-        public string GetDataPJSON
+        //public string GetDataPJSON
+        //{
+        //    get
+        //    {
+        //        return JsonConvert.SerializeObject(this.Data.GetDataPath, Formatting.Indented);
+        //    }
+        //}
+
+        public DataPathModel GetDataPathModel
         {
             get
             {
-                return JsonConvert.SerializeObject(this.Data.GetDataPath, Formatting.Indented);
+                return this.Data.GetDataPath;
             }
         }
-
         private DataPathViewModel Data;
-        //Unique ID of each port created
-        //private int UID;
-        //List of all ports created
-        //private List<PortModel> ports = new List<PortModel>();
        
         public Window_Datapath()
         {
             InitializeComponent();
-            //ArchNameTB.Text = "Behavioural";
             Data = new DataPathViewModel();
             this.DataContext = Data;
         }
@@ -48,23 +50,6 @@ namespace VHDLGenerator.Views
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
             #region old code
-            //UID = UID + 1;
-
-            ////adding data into port model
-            //PortModel tempPort = new PortModel
-            //{
-            //    Name = PortName_TB.Text,
-            //    Direction = Direction_CB.Text,
-            //    Bus = (bool)Bus_CB.IsChecked,
-            //    MSB = MSB_TB.Text,
-            //    LSB = LSB_TB.Text
-            //};
-
-            ////add port to the data grid
-            //PortDataGrid.Items.Add(tempPort);
-            ////Add Port to list
-            //ports.Add(tempPort);
-
             ////Clear data present in the port dat fields
             ////Resets it to default
             //PortName_TB.Text = String.Empty;
@@ -73,9 +58,8 @@ namespace VHDLGenerator.Views
             //MSB_TB.Text = String.Empty;
             //LSB_TB.Text = String.Empty;
             #endregion
-
-            Data.AddPortSel = true;
             PortDataGrid.Items.Add(Data.GetPortData);
+            Data.AddPortSel = true;
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -85,18 +69,6 @@ namespace VHDLGenerator.Views
 
         private void Finish_Click(object sender, RoutedEventArgs e)
         {
-            #region old code
-            //DataPathModel dataPathObj = new DataPathModel()
-            //{
-            //    ID = 001,
-            //    Name = EntityNameTB.Text,
-            //    ArchName = ArchNameTB.Text,
-            //    Ports = ports
-            //};
-
-            //DP_ResultJSON = JsonConvert.SerializeObject(dataPathObj, Formatting.Indented);
-            #endregion
-
             this.DialogResult = true;
             this.Close();
         }

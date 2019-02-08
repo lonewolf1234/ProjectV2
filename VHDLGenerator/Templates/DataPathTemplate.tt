@@ -49,5 +49,13 @@ end component;
 begin
 
 PortMapping.....
+<#
+    foreach(ComponentModel component in Components)
+    {
+#>
+cop 
+<#
+    }
+ #>
 
 end <#=ArchName#>;

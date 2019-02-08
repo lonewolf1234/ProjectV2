@@ -178,9 +178,7 @@
                 
         <!-- DataGrid to display the port data -->
             <DataGrid Name="PortDataGrid" HorizontalAlignment="Center" 
-                      VerticalAlignment="Top" Height="175" Width="405"
-                     
-                      >
+                      VerticalAlignment="Top" Height="175" Width="405">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Port Name" IsReadOnly="True" Width="100" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="Direction" Width="100" Binding="{Binding Direction}"/>

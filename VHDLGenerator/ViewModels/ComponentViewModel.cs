@@ -4,12 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VHDLGenerator.Models;
+using System.ComponentModel;
 
 namespace VHDLGenerator.ViewModels
 {
-    class ComponentViewModel
+    class ComponentViewModel : INotifyPropertyChanged
     {
-       
+
+        #region Property Changed Interface
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        #endregion
+
         private ComponentModel Component = new ComponentModel();
         private List<PortModel> Ports = new List<PortModel>();
         private PortModel Port = new PortModel();
@@ -72,6 +85,13 @@ namespace VHDLGenerator.ViewModels
                     Ports.Add(GetPortData);
                     Component.Ports = Ports;
                     this.AddPort = false;
+
+                    this.Port.Clear();
+                    OnPropertyChanged("PortNameTxt");
+                    OnPropertyChanged("DirectionSel");
+                    OnPropertyChanged("BusSel");
+                    OnPropertyChanged("MsbTxt");
+                    OnPropertyChanged("LsbTxt");
                 }
             }
         }

@@ -23,13 +23,15 @@ namespace VHDLGenerator.Views
     public partial class Window_Component : Window
     {
         //JSON that contains the data entered in the datapath window
-        public string GetCompJSON
-        {
-            get
-            {
-                return JsonConvert.SerializeObject(this.Data.GetComponent, Formatting.Indented);
-            }
-        }
+        //public string GetCompJSON
+        //{
+        //    get
+        //    {
+        //        return JsonConvert.SerializeObject(this.Data.GetComponent, Formatting.Indented);
+        //    }
+        //}
+
+        public ComponentModel GetComponentModel { get { return this.Data.GetComponent; } }
 
         private ComponentViewModel Data;
 
@@ -68,8 +70,9 @@ namespace VHDLGenerator.Views
             //LSB_TB.Text = String.Empty;
             #endregion
 
-            Data.AddPortSel = true;
             PortDataGrid.Items.Add(Data.GetPortData);
+            Data.AddPortSel = true;
+            
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

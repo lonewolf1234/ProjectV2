@@ -4,11 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VHDLGenerator.Models;
+using System.ComponentModel;
 
 namespace VHDLGenerator.ViewModels
 {
-    class DataPathViewModel
+    class DataPathViewModel : INotifyPropertyChanged
     {
+        #region Property Changed Interface
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        #endregion
+
         private DataPathModel DataPath = new DataPathModel();
         private List<PortModel> Ports = new List<PortModel>();
         private PortModel Port = new PortModel();
@@ -70,6 +83,13 @@ namespace VHDLGenerator.ViewModels
                     Ports.Add(GetPortData);
                     DataPath.Ports = Ports;
                     this.AddPort = false;
+
+                    this.Port.Clear();
+                    OnPropertyChanged("PortNameTxt");
+                    OnPropertyChanged("DirectionSel");
+                    OnPropertyChanged("BusSel");
+                    OnPropertyChanged("MsbTxt");
+                    OnPropertyChanged("LsbTxt");
                 }
             }
         }
