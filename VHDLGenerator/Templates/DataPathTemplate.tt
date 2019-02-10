@@ -4,7 +4,6 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@import namespace="VHDLGenerator.Models" #>
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -48,12 +47,22 @@ end component;
 
 begin
 
-PortMapping.....
 <#
     foreach(ComponentModel component in Components)
     {
+        if(component.ID != null)
+        {
 #>
-cop 
+cop<#=component.ID #> : <#=component.Name #>
+ port map(<#
+            foreach(string s in PortMappingProcess(component,Signals,Name))
+            {
+#> <#=s #>
+<#
+            }
+        }
+#>
+
 <#
     }
  #>

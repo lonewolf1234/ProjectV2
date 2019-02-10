@@ -37,12 +37,14 @@ namespace VHDLGenerator.Views
 
         public string DebugPath { get; set; }
 
+        private int ID;
+
         ////////////////////////////////////////////////////////////////
 
         public MainWindow()
         {
             InitializeComponent();
-
+            ID = 1;
             DebugPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         }
@@ -70,6 +72,7 @@ namespace VHDLGenerator.Views
         {
             TextBlock_test.Text = "Create Component Selected";
             Window_Component window_Component = new Window_Component();
+            ComponentModel model = new ComponentModel();
 
             if (window_Component.ShowDialog() == true)
             {
@@ -92,7 +95,11 @@ namespace VHDLGenerator.Views
                 try
                 {
                     //components.Add(JsonConvert.DeserializeObject<ComponentModel>(window_Component.GetCompJSON));
-                    components.Add(window_Component.GetComponentModel);
+                    model = window_Component.GetComponentModel;
+                    model.ID = ID.ToString();
+                    ID++;
+
+                    components.Add(model);
                     DataPath.Components = components;
 
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "ComponentJSON.txt"), window_Component.GetCompJSON);

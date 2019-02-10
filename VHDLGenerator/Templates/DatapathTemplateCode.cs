@@ -84,19 +84,117 @@ namespace VHDLGenerator.Templates
                 foreach(SignalModel sig in signals)
                 {
                     string tempsig = string.Empty;
-                    if (sig.Bus == true)
+                    if (sig.Name != null)
                     {
-                        tempsig = $"signal {sig.Name} : STD_LOGIC_VECTOR({sig.MSB} downto {sig.LSB});";
+                        if (sig.Bus == true)
+                        {
+                            tempsig = $"signal {sig.Name} : STD_LOGIC_VECTOR({sig.MSB} downto {sig.LSB});";
+                        }
+                        else
+                        {
+                            tempsig = $"signal {sig.Name} : STD_LOGIC;";
+                        }
+                        templist.Add(tempsig);
                     }
-                    else
-                    {
-                        tempsig = $"signal {sig.Name} : STD_LOGIC;";
-                    }
-                    templist.Add(tempsig);
                 }
             }
 
             return templist;
+        }
+
+        private List<string> PortMappingProcess(ComponentModel comp, List<SignalModel> signals, string datapathname)
+        {
+            List<string> Mapping = new List<string>();
+            string temp = "";
+            foreach(PortModel port in comp.Ports)
+            {
+                foreach(SignalModel signal in signals)
+                {
+                    #region
+                    //if ((comp.Name == signal.Source_Comp || comp.Name == signal.Target_Comp) && (port.Name == signal.Source_port || port.Name == signal.Target_port) && comp.Name != datapathname)
+                    //{
+                    //    if(signal.Source_Comp == datapathname)
+                    //    {
+                    //        temp = $"{port.Name} => {signal.Source_port}";
+                    //    }
+                    //    else if(signal.Target_Comp == datapathname)
+                    //    {
+                    //        temp = $"{port.Name} => {signal.Target_port}";
+                    //    }
+                    //    else
+                    //    {
+                    //        temp = $"{port.Name} => {signal.Name}";
+                    //    }
+
+                    //    if (comp.Ports.First() == port)
+                    //    {
+                    //        Mapping.Add(temp + ",");
+                    //    }
+                    //    else if (comp.Ports.Last() == port)
+                    //    {
+                    //        Mapping.Add("\t" + temp + ");");
+                    //    }
+                    //    else
+                    //    {
+                    //        Mapping.Add("\t" + temp + ",");
+                    //    }
+
+                    //    //Mapping.Add(temp);
+                    //}
+                    #endregion
+
+                    if (comp.Name != datapathname)
+                    {
+                        if (comp.Name == signal.Source_Comp && port.Name == signal.Source_port)
+                        {
+                            //if (signal.Source_Comp == datapathname)
+                            //{
+                            //    temp = $"{port.Name} => {signal.Source_port}";
+                            //}
+                            if (signal.Target_Comp == datapathname)
+                            {
+                                temp = $"{port.Name} => {signal.Target_port}";
+                            }
+                            else
+                            {
+                                temp = $"{port.Name} => {signal.Name}";
+                            }
+                        }
+                        else if (comp.Name == signal.Target_Comp && port.Name == signal.Target_port)
+                        {
+                            if (signal.Source_Comp == datapathname)
+                            {
+                                temp = $"{port.Name} => {signal.Source_port}";
+                            }
+                            //else if (signal.Target_Comp == datapathname)
+                            //{
+                            //    temp = $"{port.Name} => {signal.Target_port}";
+                            //}
+                            else
+                            {
+                                temp = $"{port.Name} => {signal.Name}";
+                            }
+                        }
+                    }
+                }
+                if (comp.Name != datapathname)
+                {
+                    if (comp.Ports.First() == port)
+                    {
+                        Mapping.Add(temp + ",");
+                    }
+                    else if (comp.Ports.Last() == port)
+                    {
+                        Mapping.Add("\t" + temp + ");");
+                    }
+                    else
+                    {
+                        Mapping.Add("\t" + temp + ",");
+                    }
+                }
+            }
+
+            return Mapping;
         }
     }
 }

@@ -10,6 +10,8 @@ namespace VHDLGenerator.Models
     {
         public ComponentModel() { }
 
+        public string ID { get; set; }
+
         public string Name { get; set; }
 
         public string ArchName { get; set; }
