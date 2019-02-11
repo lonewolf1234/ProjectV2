@@ -3,7 +3,6 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 

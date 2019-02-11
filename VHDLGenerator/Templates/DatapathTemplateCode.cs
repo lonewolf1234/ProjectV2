@@ -147,10 +147,6 @@ namespace VHDLGenerator.Templates
                     {
                         if (comp.Name == signal.Source_Comp && port.Name == signal.Source_port)
                         {
-                            //if (signal.Source_Comp == datapathname)
-                            //{
-                            //    temp = $"{port.Name} => {signal.Source_port}";
-                            //}
                             if (signal.Target_Comp == datapathname)
                             {
                                 temp = $"{port.Name} => {signal.Target_port}";
@@ -166,10 +162,6 @@ namespace VHDLGenerator.Templates
                             {
                                 temp = $"{port.Name} => {signal.Source_port}";
                             }
-                            //else if (signal.Target_Comp == datapathname)
-                            //{
-                            //    temp = $"{port.Name} => {signal.Target_port}";
-                            //}
                             else
                             {
                                 temp = $"{port.Name} => {signal.Name}";
@@ -185,15 +177,14 @@ namespace VHDLGenerator.Templates
                     }
                     else if (comp.Ports.Last() == port)
                     {
-                        Mapping.Add("\t" + temp + ");");
+                        Mapping.Add("\t\t" + temp + ");");
                     }
                     else
                     {
-                        Mapping.Add("\t" + temp + ",");
+                        Mapping.Add("\t\t" + temp + ",");
                     }
                 }
             }
-
             return Mapping;
         }
     }

@@ -49,7 +49,7 @@ if(Name != null){
             
             #line default
             #line hidden
-            this.Write(" is\r\n  Port(");
+            this.Write("is\r\n  Port(");
             
             #line 11 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
  
@@ -139,16 +139,15 @@ if(Name != null){
             
             #line default
             #line hidden
-            this.Write("end component;\r\n");
+            this.Write("end component;\r\n\r\n");
             
-            #line 35 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 36 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
 
 	}
 
             
             #line default
             #line hidden
-            this.Write("\r\n");
             
             #line 39 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
 
