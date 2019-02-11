@@ -165,115 +165,116 @@ namespace VHDLGenerator.Views
 
             TextBlock_test.Text = "Code Generated";
         }
+        #region
+        //private void GenerateCode(DataPathModel Data)
+        //{
+        //    List<string> port = new List<string>();
 
-        private void GenerateCode(DataPathModel Data)
-        {
-            List<string> port = new List<string>();
+        //    if(DataPath != null)
+        //    {
+        //        //Library Code
+        //        string[] Libraries_txt =
+        //        {
+        //        "library IEEE;",
+        //        "use IEEE.STD_LOGIC_1164.ALL;",
+        //        "use IEEE.STD_LOGIC_ARITH.ALL;",
+        //        "use IEEE.STD_LOGIC_UNSIGNED.ALL;",
+        //        "",
+        //    };
 
-            if(DataPath != null)
-            {
-                //Library Code
-                string[] Libraries_txt =
-                {
-                "library IEEE;",
-                "use IEEE.STD_LOGIC_1164.ALL;",
-                "use IEEE.STD_LOGIC_ARITH.ALL;",
-                "use IEEE.STD_LOGIC_UNSIGNED.ALL;",
-                "",
-            };
+        //        //Entity Begin code
+        //        string EntityBegin_txt = $"entity {DataPath.Name} is";
 
-                //Entity Begin code
-                string EntityBegin_txt = $"entity {DataPath.Name} is";
+        //        //Port Code
+        //        List<string> ports_txt = new List<string>();
 
-                //Port Code
-                List<string> ports_txt = new List<string>();
+        //        if (DataPath.Ports.Count > 0)
+        //        {
 
-                if (DataPath.Ports.Count > 0)
-                {
+        //            foreach (PortModel p in DataPath.Ports)
+        //            {
+        //                string vector = "";
 
-                    foreach (PortModel p in DataPath.Ports)
-                    {
-                        string vector = "";
+        //                if (p.Bus == true)
+        //                {
+        //                    vector = $"_vector({p.MSB} downto {p.LSB})";
+        //                }
 
-                        if (p.Bus == true)
-                        {
-                            vector = $"_vector({p.MSB} downto {p.LSB})";
-                        }
-
-                        string s = $"\t{p.Name} : {p.Direction} std_logic{vector}";
-
-
-                        if (DataPath.Ports.First() == p)
-                        {
-                            ports_txt.Add("\tPort(" + s + ";");
-                        }
-                        else if (DataPath.Ports.Last() == p)
-                        {
-                            ports_txt.Add("\t" + s + ");");
-                        }
-                        else
-                        {
-                            ports_txt.Add("\t" + s + ";");
-                        }
-                    }
-                }
-                else
-                {
-                    ports_txt.Add("\tPort(\n);");
-                }
-
-                //Entity End Code
-                string EntityEnd_txt = $"end {DataPath.Name};";
-
-                //Behavioral Begin code
-                string BehavioralBegin_txt = $"architecture {DataPath.ArchName} of {DataPath.Name} is";
-
-                string Begin_txt = "\nbegin";
-
-                //Component Code
+        //                string s = $"\t{p.Name} : {p.Direction} std_logic{vector}";
 
 
-                //Behavioral End Code
-                string BehavioralEnd_txt = $"\nend {DataPath.ArchName};";
+        //                if (DataPath.Ports.First() == p)
+        //                {
+        //                    ports_txt.Add("\tPort(" + s + ";");
+        //                }
+        //                else if (DataPath.Ports.Last() == p)
+        //                {
+        //                    ports_txt.Add("\t" + s + ");");
+        //                }
+        //                else
+        //                {
+        //                    ports_txt.Add("\t" + s + ";");
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ports_txt.Add("\tPort(\n);");
+        //        }
+
+        //        //Entity End Code
+        //        string EntityEnd_txt = $"end {DataPath.Name};";
+
+        //        //Behavioral Begin code
+        //        string BehavioralBegin_txt = $"architecture {DataPath.ArchName} of {DataPath.Name} is";
+
+        //        string Begin_txt = "\nbegin";
+
+        //        //Component Code
 
 
-                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //        //Behavioral End Code
+        //        string BehavioralEnd_txt = $"\nend {DataPath.ArchName};";
+
+
+        //        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-                using (StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine(DebugPath, "VHDLFile.txt")))
+        //        using (StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine(DebugPath, "VHDLFile.txt")))
 
-                {
-                    //outputFile.WriteLine(DebugPath);
+        //        {
+        //            //outputFile.WriteLine(DebugPath);
 
-                    //libraries
-                    foreach (string line in Libraries_txt)
-                        outputFile.WriteLine(line);
+        //            //libraries
+        //            foreach (string line in Libraries_txt)
+        //                outputFile.WriteLine(line);
 
-                    //Entity begin
-                    outputFile.WriteLine(EntityBegin_txt);
+        //            //Entity begin
+        //            outputFile.WriteLine(EntityBegin_txt);
 
-                    //Ports
-                    foreach (string line in ports_txt)
-                        outputFile.WriteLine(line);
+        //            //Ports
+        //            foreach (string line in ports_txt)
+        //                outputFile.WriteLine(line);
 
-                    //Entity End
-                    outputFile.WriteLine(EntityEnd_txt);
-                    outputFile.WriteLine("");
+        //            //Entity End
+        //            outputFile.WriteLine(EntityEnd_txt);
+        //            outputFile.WriteLine("");
 
-                    //Behaviourial Begin
-                    outputFile.WriteLine(BehavioralBegin_txt);
-                    outputFile.WriteLine(Begin_txt);
-                    outputFile.WriteLine("");
-                    outputFile.WriteLine("");
+        //            //Behaviourial Begin
+        //            outputFile.WriteLine(BehavioralBegin_txt);
+        //            outputFile.WriteLine(Begin_txt);
+        //            outputFile.WriteLine("");
+        //            outputFile.WriteLine("");
 
-                    //Behaviourial End
-                    outputFile.WriteLine(BehavioralEnd_txt);
-                }
-            }
+        //            //Behaviourial End
+        //            outputFile.WriteLine(BehavioralEnd_txt);
+        //        }
+        //    }
 
            
-        }
-        
+        //}
+        #endregion
+
     }
 }
