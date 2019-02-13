@@ -46,7 +46,9 @@ namespace VHDLGenerator.Views
             InitializeComponent();
             ID = 1;
             DebugPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-
+            Btn_Component.IsEnabled = false;
+            Btn_Signal.IsEnabled = false;
+            Btn_Datapath.IsEnabled = true;
         }
 
         private void Btn_Datapath_Click(object sender, RoutedEventArgs e)
@@ -64,8 +66,10 @@ namespace VHDLGenerator.Views
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"DatapathJSON.txt"), window_Datapath.GetDataPJSON);
                 }
                 catch (Exception) { }
-
             }
+            Btn_Component.IsEnabled = true;
+            Btn_Signal.IsEnabled = true;
+            Btn_Datapath.IsEnabled = false;
         }
 
         private void Btn_Component_Click(object sender, RoutedEventArgs e)
