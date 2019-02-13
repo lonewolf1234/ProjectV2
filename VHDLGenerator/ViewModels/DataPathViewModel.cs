@@ -75,10 +75,7 @@ namespace VHDLGenerator.ViewModels
         }
         public string MsbTxt
         {
-            get
-            {
-                return this.Port.MSB;
-            }
+            get { return this.Port.MSB;}
             set { this.Port.MSB = value; }
         }
         public string LsbTxt
@@ -100,7 +97,6 @@ namespace VHDLGenerator.ViewModels
                     Ports.Add(GetPortData);
                     DataPath.Ports = Ports;
                     this.AddPort = false;
-
 
                     this.Port.Clear();
                     this.Port.Direction = null;
