@@ -30,7 +30,7 @@ namespace VHDLGenerator.ViewModels
 
         public DataPathViewModel()
         {
-            ArchNameTxt = "Behavioural";
+            ArchNameTxt = "Behavioural"; 
             this._BitsEnable = false;
         }
 
