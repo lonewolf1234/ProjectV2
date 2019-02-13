@@ -30,13 +30,9 @@ namespace VHDLGenerator.Views
         /// Main Data Produced by the windows
         /// </summary>
         DataPathModel DataPath = new DataPathModel();
-
         List<ComponentModel> components = new List<ComponentModel>();
-
         List<SignalModel> signals = new List<SignalModel>();
-
         public string DebugPath { get; set; }
-
         private int ID;
 
         ////////////////////////////////////////////////////////////////
@@ -64,12 +60,13 @@ namespace VHDLGenerator.Views
                     DataPath = window_Datapath.GetDataPathModel;
                     //DataPath = JsonConvert.DeserializeObject<DataPathModel>(window_Datapath.GetDataPJSON);
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath,"DatapathJSON.txt"), window_Datapath.GetDataPJSON);
+                    Btn_Component.IsEnabled = true;
+                    Btn_Signal.IsEnabled = true;
+                    Btn_Datapath.IsEnabled = false;
                 }
                 catch (Exception) { }
             }
-            Btn_Component.IsEnabled = true;
-            Btn_Signal.IsEnabled = true;
-            Btn_Datapath.IsEnabled = false;
+           
         }
 
         private void Btn_Component_Click(object sender, RoutedEventArgs e)

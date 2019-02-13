@@ -32,8 +32,13 @@ namespace VHDLGenerator.ViewModels
         {
             ArchNameTxt = "Behavioural"; 
             this._BitsEnable = false;
+
+            ErrorCollection.Add("MsbTxt", null);
+            ErrorCollection.Add("LsbTxt", null);
         }
 
+
+        #region Main Properties
         // Main Component Properties
         public string EntityNameTxt
         {
@@ -45,7 +50,6 @@ namespace VHDLGenerator.ViewModels
             get { return this.DataPath.ArchName; }
             set { this.DataPath.ArchName = value; }
         }
-        public bool _FinishEnable { get; set; }
 
         //Port Properties
         public string PortNameTxt
@@ -65,11 +69,16 @@ namespace VHDLGenerator.ViewModels
             {
                 this.Port.Bus = value;
                 OnPropertyChanged("BitsEnable");
+                OnPropertyChanged("MsbTxt");
+                OnPropertyChanged("LsbTxt");
             }
         }
         public string MsbTxt
         {
-            get { return this.Port.MSB; }
+            get
+            {
+                return this.Port.MSB;
+            }
             set { this.Port.MSB = value; }
         }
         public string LsbTxt
@@ -77,9 +86,7 @@ namespace VHDLGenerator.ViewModels
             get { return this.Port.LSB; }
             set { this.Port.LSB = value; }
         }
-        public bool _BitsEnable { get; set; }
-       
-
+        #endregion
 
         //Add Port Selected
         public bool AddPortSel
@@ -94,7 +101,9 @@ namespace VHDLGenerator.ViewModels
                     DataPath.Ports = Ports;
                     this.AddPort = false;
 
+
                     this.Port.Clear();
+                    this.Port.Direction = null;
                     OnPropertyChanged("PortNameTxt");
                     OnPropertyChanged("DirectionSel");
                     OnPropertyChanged("BusSel");
@@ -149,7 +158,7 @@ namespace VHDLGenerator.ViewModels
             get { return this.DataPath; }
         }
 
-        //finish button enable
+        private bool _FinishEnable { get; set; }
         public bool FinishEnable
         {
             get
@@ -163,6 +172,7 @@ namespace VHDLGenerator.ViewModels
             set{this._FinishEnable = value;}
         }
 
+        public bool _BitsEnable { get; set; }
         public bool BitsEnable
         {
             get
@@ -170,11 +180,17 @@ namespace VHDLGenerator.ViewModels
                 if (BusSel == true)
                 {
                     this._BitsEnable = true;
+                    //this.MsbTxt = "0";
+                    //this.LsbTxt = "0";
+                    //OnPropertyChanged("MsbTxt");
+                    //OnPropertyChanged("LsbTxt");
                 }
                 else
                 {
-                    this._BitsEnable = false;
-                    if(ErrorCollection.ContainsKey("MsbTxt"))
+                    this.Port.MSB = null;
+                    this.Port.LSB = null;
+
+                    if (ErrorCollection.ContainsKey("MsbTxt"))
                     {
                         ErrorCollection["MsbTxt"] = null;
                     }
@@ -183,6 +199,7 @@ namespace VHDLGenerator.ViewModels
                         ErrorCollection["LsbTxt"] = null;
                     }
                     OnPropertyChanged("ErrorCollection");
+                    this._BitsEnable = false;
                 }
                 return this._BitsEnable;
             }
@@ -199,18 +216,24 @@ namespace VHDLGenerator.ViewModels
         {
             get
             {
-                if (ErrorCollection["PortNameTxt"] == null && ErrorCollection["DirectionSel"] == null &&
-                    ErrorCollection["MsbTxt"] == null && ErrorCollection["LsbTxt"] == null)
-                    this._AddPortEnable = true;
+                if (BusSel == true && BitsEnable == true)
+                {
+                    if (ErrorCollection["PortNameTxt"] == null && ErrorCollection["DirectionSel"] == null && ErrorCollection["MsbTxt"] == null && ErrorCollection["LsbTxt"] == null)
+                        this._AddPortEnable = true;
+                    else
+                        this._AddPortEnable = false;
+                }
                 else
-                    this._AddPortEnable = false;
+                {
+                    if (ErrorCollection["PortNameTxt"] == null && ErrorCollection["DirectionSel"] == null)
+                        this._AddPortEnable = true;
+                    else
+                        this._AddPortEnable = false;
+                }
                 return this._AddPortEnable;
             }
             set { this._AddPortEnable = value; }
         }
-
-      
-
 
 
         #region Validation
@@ -307,6 +330,7 @@ namespace VHDLGenerator.ViewModels
 
                 OnPropertyChanged("ErrorCollection");
                 OnPropertyChanged("FinishEnable");
+                OnPropertyChanged("AddPortEnable");
                 return result;
             }
         }

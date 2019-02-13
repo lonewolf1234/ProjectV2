@@ -72,6 +72,5 @@ namespace VHDLGenerator.Views
             this.DialogResult = true;
             this.Close();
         }
-
     }
 }

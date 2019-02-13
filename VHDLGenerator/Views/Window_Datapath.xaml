@@ -100,7 +100,7 @@
                        Width="200"
                        Margin="30,5"
                        Text="{Binding Path=PortNameTxt , ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
-                       ToolTip="{Binding Path=ErrorCollection[PortName_TB]}"
+                       ToolTip="{Binding Path=ErrorCollection[PortNameTxt]}"
                     />
                 </StackPanel>
 
@@ -115,7 +115,7 @@
                     <ComboBox Name="Direction_CB" Width="100" Margin="30,5" 
                               SelectedValue="{Binding Path=DirectionSel , ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
                               ItemsSource="{Binding Path=GetDirections}"
-                              ToolTip="{Binding Path=ErrorCollection[Direction_CB]}"
+                              ToolTip="{Binding Path=ErrorCollection[DirectionSel]}"
                     />
                 </StackPanel>
 
@@ -145,7 +145,7 @@
                        Width="55"
                        Margin="30,5"
                        Text="{Binding Path=MsbTxt , ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
-                       ToolTip="{Binding Path=ErrorCollection[MSB_TB]}"
+                       ToolTip="{Binding Path=ErrorCollection[MsbTxt]}"
                        IsEnabled="{Binding Path=BitsEnable}"
                     />
                 </StackPanel>
@@ -162,8 +162,8 @@
                        Width="55"
                        Margin="30,5"
                        Text="{Binding Path=LsbTxt , ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
-                       ToolTip="{Binding Path=ErrorCollection[LSB_TB]}"
-                        IsEnabled="{Binding Path=BitsEnable}"
+                       ToolTip="{Binding Path=ErrorCollection[LsbTxt]}"
+                       IsEnabled="{Binding Path=BitsEnable}"
                     />
                 </StackPanel>
 
