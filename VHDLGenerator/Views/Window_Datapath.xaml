@@ -173,6 +173,7 @@
                     Height="20"
                     Content="Add Port"
                     Click="AddPort_Click"
+                    IsEnabled="{Binding Path=AddPortEnable}"
                 />
 
             </StackPanel>

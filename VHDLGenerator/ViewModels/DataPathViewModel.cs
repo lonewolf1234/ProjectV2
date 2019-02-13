@@ -154,21 +154,13 @@ namespace VHDLGenerator.ViewModels
         {
             get
             {
-                if (ErrorCollection.Count == 0)
-                {
+                if (ErrorCollection["EntityNameTxt"] == null)
                     this._FinishEnable = true;
-                }
                 else
-                {
                     this._FinishEnable = false;
-                }
                 return this._FinishEnable;
             }
-            set
-            {
-                this._FinishEnable = value;
-
-            }
+            set{this._FinishEnable = value;}
         }
 
         public bool BitsEnable
@@ -184,11 +176,11 @@ namespace VHDLGenerator.ViewModels
                     this._BitsEnable = false;
                     if(ErrorCollection.ContainsKey("MsbTxt"))
                     {
-                        ErrorCollection.Remove("MsbTxt");
+                        ErrorCollection["MsbTxt"] = null;
                     }
                     if (ErrorCollection.ContainsKey("LsbTxt"))
                     {
-                        ErrorCollection.Remove("LsbTxt");
+                        ErrorCollection["LsbTxt"] = null;
                     }
                     OnPropertyChanged("ErrorCollection");
                 }
@@ -199,6 +191,22 @@ namespace VHDLGenerator.ViewModels
                 this._BitsEnable = value;
 
             }
+        }
+
+        //continue here
+        private bool _AddPortEnable { get; set; }
+        public bool AddPortEnable
+        {
+            get
+            {
+                if (ErrorCollection["PortNameTxt"] == null && ErrorCollection["DirectionSel"] == null &&
+                    ErrorCollection["MsbTxt"] == null && ErrorCollection["LsbTxt"] == null)
+                    this._AddPortEnable = true;
+                else
+                    this._AddPortEnable = false;
+                return this._AddPortEnable;
+            }
+            set { this._AddPortEnable = value; }
         }
 
       
@@ -298,6 +306,7 @@ namespace VHDLGenerator.ViewModels
                     ErrorCollection.Add(propertyname, result);
 
                 OnPropertyChanged("ErrorCollection");
+                OnPropertyChanged("FinishEnable");
                 return result;
             }
         }
