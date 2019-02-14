@@ -43,11 +43,6 @@ namespace VHDLGenerator.ViewModels
             get { return Signal.Name; }
             set { Signal.Name = value; }
         }
-        //public bool SigBusCB
-        //{
-        //    get { return Signal.Bus;}
-        //    set { Signal.Bus = value;}
-        //}
         public string MsbTxt
         {
             get {return Signal.MSB; }
@@ -316,6 +311,24 @@ namespace VHDLGenerator.ViewModels
                 string result = null;
                 switch (propertyname)
                 {
+                    case "SCompName":
+                        if (!IsDirectionSel(SCompName))
+                            result = "No Component Selected";
+                        break;
+                    case "TCompName":
+                        if (!IsDirectionSel(TCompName))
+                            result = "No Component Selected";
+                        break;
+
+                    //case "SCompName":
+                    //    if (!IsDirectionSel(SCompName))
+                    //        result = "No Component Selected";
+                    //    break;
+                    //case "TCompName":
+                    //    if (!IsDirectionSel(TCompName))
+                    //        result = "No Component Selected";
+                    //    break;
+
                     case "SigEntityNameTxt":
                         if (string.IsNullOrWhiteSpace(SigEntityNameTxt))
                             result = "Entity Name cannot be empty";
