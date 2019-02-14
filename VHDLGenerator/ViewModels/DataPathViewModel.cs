@@ -154,6 +154,32 @@ namespace VHDLGenerator.ViewModels
             get { return this.DataPath; }
         }
 
+        private bool _AddPortEnable { get; set; }
+        public bool AddPortEnable
+        {
+            get
+            {
+                if (BusSel == true && BitsEnable == true)
+                {
+                    if (ErrorCollection["PortNameTxt"] == null && ErrorCollection["DirectionSel"] == null && ErrorCollection["MsbTxt"] == null && ErrorCollection["LsbTxt"] == null)
+                        this._AddPortEnable = true;
+                    else
+                        this._AddPortEnable = false;
+                }
+                else
+                {
+                    if (ErrorCollection["PortNameTxt"] == null && ErrorCollection["DirectionSel"] == null)
+                        this._AddPortEnable = true;
+                    else
+                        this._AddPortEnable = false;
+                }
+                return this._AddPortEnable;
+            }
+            set { this._AddPortEnable = value; }
+        }
+
+
+        #region Validation
         private bool _FinishEnable { get; set; }
         public bool FinishEnable
         {
@@ -165,7 +191,7 @@ namespace VHDLGenerator.ViewModels
                     this._FinishEnable = false;
                 return this._FinishEnable;
             }
-            set{this._FinishEnable = value;}
+            set { this._FinishEnable = value; }
         }
 
         public bool _BitsEnable { get; set; }
@@ -205,34 +231,6 @@ namespace VHDLGenerator.ViewModels
 
             }
         }
-
-        //continue here
-        private bool _AddPortEnable { get; set; }
-        public bool AddPortEnable
-        {
-            get
-            {
-                if (BusSel == true && BitsEnable == true)
-                {
-                    if (ErrorCollection["PortNameTxt"] == null && ErrorCollection["DirectionSel"] == null && ErrorCollection["MsbTxt"] == null && ErrorCollection["LsbTxt"] == null)
-                        this._AddPortEnable = true;
-                    else
-                        this._AddPortEnable = false;
-                }
-                else
-                {
-                    if (ErrorCollection["PortNameTxt"] == null && ErrorCollection["DirectionSel"] == null)
-                        this._AddPortEnable = true;
-                    else
-                        this._AddPortEnable = false;
-                }
-                return this._AddPortEnable;
-            }
-            set { this._AddPortEnable = value; }
-        }
-
-
-        #region Validation
 
         public Dictionary<string, string> ErrorCollection { get; private set; } = new Dictionary<string, string>();
         public List<string> ReservedWords = new List<string>
@@ -371,8 +369,6 @@ namespace VHDLGenerator.ViewModels
             else
                 return true;
         }
-
-
         #endregion
     }
 }

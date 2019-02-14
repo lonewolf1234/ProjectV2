@@ -57,7 +57,8 @@
                 Grid.Column="2"
                 Margin="60,15,250,15"
                 Background="WhiteSmoke"
-                Text="{Binding Path=EntityNameTxt}"
+                Text="{Binding Path=EntityNameTxt , ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
+                ToolTip="{Binding Path=ErrorCollection[EntityNameTxt]}"
             />
 
             <TextBox
@@ -98,7 +99,8 @@
                        Name="PortName_TB"
                        Width="200"
                        Margin="30,5"
-                       Text="{Binding Path=PortNameTxt}"
+                       Text="{Binding Path=PortNameTxt, ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
+                       ToolTip="{Binding Path=ErrorCollection[PortNameTxt]}"
                     />
                 </StackPanel>
 
@@ -111,8 +113,9 @@
                     />
                     <ComboBox Name="Direction_CB" Width="100" Margin="30,5" 
                               ItemsSource="{Binding Path=GetDirections}" 
-                              SelectedValue="{Binding Path=DirectionSel}">
-                        
+                              SelectedValue="{Binding Path=DirectionSel , ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
+                              ToolTip="{Binding Path=ErrorCollection[DirectionSel]}"
+                              >
                     </ComboBox>
                 </StackPanel>
 
@@ -141,7 +144,9 @@
                        Name="MSB_TB"
                        Width="55"
                        Margin="30,5"
-                       Text="{Binding Path=MsbTxt, Mode=TwoWay}"
+                       Text="{Binding Path=MsbTxt , ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
+                       ToolTip="{Binding Path=ErrorCollection[MsbTxt]}"
+                       IsEnabled="{Binding Path=BitsEnable}"
                     />
                 </StackPanel>
 
@@ -156,7 +161,9 @@
                        Name="LSB_TB"
                        Width="55"
                        Margin="30,5"
-                        Text="{Binding Path=LsbTxt, Mode=TwoWay}"
+                       Text="{Binding Path=LsbTxt , ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
+                       ToolTip="{Binding Path=ErrorCollection[LsbTxt]}"
+                       IsEnabled="{Binding Path=BitsEnable}"
                     />
                 </StackPanel>
 
@@ -166,6 +173,7 @@
                     Height="20"
                     Content="Add Port"
                     Click="AddPort_Click"
+                    IsEnabled="{Binding Path=AddPortEnable}"
                 />
 
             </StackPanel>
@@ -208,6 +216,7 @@
                 Content="Finish"
                 Margin="670,10,55,22"
                 Click="Finish_Click"
+                IsEnabled="{Binding Path=FinishEnable}"
             />
         </Grid>
 

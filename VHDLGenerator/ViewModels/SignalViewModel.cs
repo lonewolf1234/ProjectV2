@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using VHDLGenerator.Models;
 using Newtonsoft.Json;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace VHDLGenerator.ViewModels
 {
-    class SignalViewModel : INotifyPropertyChanged
+    class SignalViewModel : INotifyPropertyChanged , IDataErrorInfo
     {
         #region Property Changed Interface
         public event PropertyChangedEventHandler PropertyChanged;
@@ -42,11 +43,11 @@ namespace VHDLGenerator.ViewModels
             get { return Signal.Name; }
             set { Signal.Name = value; }
         }
-        public bool SigBusCB
-        {
-            get { return Signal.Bus;}
-            set { Signal.Bus = value;}
-        }
+        //public bool SigBusCB
+        //{
+        //    get { return Signal.Bus;}
+        //    set { Signal.Bus = value;}
+        //}
         public string MsbTxt
         {
             get {return Signal.MSB; }
@@ -75,6 +76,17 @@ namespace VHDLGenerator.ViewModels
             {
                 this._GridEnable = value;
                 
+            }
+        }
+        public bool SigBusSel
+        {
+            get { return this.Signal.Bus; }
+            set
+            {
+                this.Signal.Bus = value;
+                OnPropertyChanged("BitsEnable");
+                OnPropertyChanged("MsbTxt");
+                OnPropertyChanged("LsbTxt");
             }
         }
 
@@ -215,6 +227,184 @@ namespace VHDLGenerator.ViewModels
             
             return names;
         }
+        #endregion
+
+        #region Validation
+        //this needs to be changed
+        private bool _FinishEnable { get; set; }
+        public bool FinishEnable
+        {
+            get
+            {
+                if (ErrorCollection["SigEntityNameTxt"] == null)
+                    this._FinishEnable = true;
+                else
+                    this._FinishEnable = false;
+                return this._FinishEnable;
+            }
+            set { this._FinishEnable = value; }
+        }
+
+
+        public bool _BitsEnable { get; set; }
+        public bool BitsEnable
+        {
+            get
+            {
+                if (SigBusSel == true)
+                {
+                    this._BitsEnable = true;
+                    //this.MsbTxt = "0";
+                    //this.LsbTxt = "0";
+                    //OnPropertyChanged("MsbTxt");
+                    //OnPropertyChanged("LsbTxt");
+                }
+                else
+                {
+                    this.Signal.MSB = null;
+                    this.Signal.LSB = null;
+
+                    if (ErrorCollection.ContainsKey("MsbTxt"))
+                    {
+                        ErrorCollection["MsbTxt"] = null;
+                    }
+                    if (ErrorCollection.ContainsKey("LsbTxt"))
+                    {
+                        ErrorCollection["LsbTxt"] = null;
+                    }
+                    OnPropertyChanged("ErrorCollection");
+                    this._BitsEnable = false;
+                }
+                return this._BitsEnable;
+            }
+            set
+            {
+                this._BitsEnable = value;
+
+            }
+        }
+
+        public Dictionary<string, string> ErrorCollection { get; private set; } = new Dictionary<string, string>();
+        public List<string> ReservedWords = new List<string>
+        {
+            "abs", "access","after","alias","all","and","architecture","array","assert","attribute",
+            "begin","block","body","buffer","bus",
+            "case","component","configuration","constant",
+            "disconnect","downto",
+            "else","elsif","end","entity","exit",
+            "file","for","function",
+            "generate","generic","group","guarded",
+            "if","impure","in","internal","inout","is",
+            "label","library","linkage","loop",
+            "map","mod",
+            "nand","new","next","nor","not","null",
+            "of","on","open","or","others","out",
+            "package","port","postponed","procedure","process","pure",
+            "range","record","register","reject","rem","report","return","rol","ror",
+            "select","severity","signal","shared","sla","sll","sra","srl","subtype",
+            "then","to","transport","type",
+            "unaffected","units","use",
+            "variable",
+            "wait","when","while","with",
+            "xnor","xor"
+        };
+        public string Error { get; }
+        public string this[string propertyname]
+        {
+            get
+            {
+                string result = null;
+                switch (propertyname)
+                {
+                    case "SigEntityNameTxt":
+                        if (string.IsNullOrWhiteSpace(SigEntityNameTxt))
+                            result = "Entity Name cannot be empty";
+                        else if (IsBeginWNum(SigEntityNameTxt))
+                            result = "Cannot begin with a number";
+                        else if (IsValidName(SigEntityNameTxt))
+                            result = "Not a valid name. Only Letters, Numbers or underscore are allowed";
+                        else if (IsReservedWord(SigEntityNameTxt))
+                            result = "This is a Reserved Word";
+                        break;
+
+                    case "MsbTxt":
+                        if (BitsEnable == true)
+                        {
+                            if (string.IsNullOrWhiteSpace(MsbTxt))
+                                result = "MSB cannot be empty";
+                            else if (IsInterger(MsbTxt))
+                                result = "Only Integers are allowed";
+                            break;
+                        }
+                        else
+                            break;
+
+                    case "LsbTxt":
+                        if (BitsEnable == true)
+                        {
+                            if (string.IsNullOrWhiteSpace(LsbTxt))
+                                result = "LSB cannot be empty";
+                            else if (IsInterger(LsbTxt))
+                                result = "Only Integers are allowed";
+                            break;
+                        }
+                        else
+                            break;
+                }
+
+                if (ErrorCollection.ContainsKey(propertyname))
+                    ErrorCollection[propertyname] = result;
+                else if (result != null)
+                    ErrorCollection.Add(propertyname, result);
+
+                OnPropertyChanged("ErrorCollection");
+                OnPropertyChanged("FinishEnable");
+                OnPropertyChanged("AddPortEnable");
+                return result;
+            }
+        }
+
+        public bool IsReservedWord(string word)
+        {
+            bool result = false;
+
+            foreach (string s in ReservedWords)
+            {
+                if (s.ToLower() == word.ToLower())
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        public bool IsInterger(string word)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            return (regex.IsMatch(word));
+        }
+
+        public bool IsValidName(string word)
+        {
+            Regex regex = new Regex("[^A-Za-z0-9_]+");
+            return (regex.IsMatch(word));
+        }
+
+        public bool IsBeginWNum(string word)
+        {
+            Regex regex = new Regex("^[0-9]");
+            return (regex.IsMatch(word));
+        }
+
+        public bool IsDirectionSel(string word)
+        {
+            if (word == null)
+                return false;
+            else
+                return true;
+        }
+
         #endregion
 
     }

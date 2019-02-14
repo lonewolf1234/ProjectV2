@@ -86,8 +86,6 @@
 
         <Grid Grid.Row="1" IsEnabled="{Binding Path=GridEnable}">
 
-           
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -107,7 +105,9 @@
 
             <Grid Grid.Row="0" Grid.Column="1">
                 <TextBox Name="EntityNameTB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke"
-                         Text="{Binding Path=SigEntityNameTxt}"/>
+                         Text="{Binding Path=SigEntityNameTxt , ValidatesOnDataErrors=True , UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{Binding Path=ErrorCollection[SigEntityNameTxt]}"
+                         />
             </Grid>
             
             <!---->
@@ -117,7 +117,8 @@
 
             <Grid Grid.Row="1" Grid.Column="1">
                 <CheckBox Name ="Bus_CB" HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="60,5" Checked="Bus_CB_Checked" Unchecked="Bus_CB_Unchecked"
-                          IsChecked="{Binding Path=SigBusCB}"/>
+                          IsChecked="{Binding Path=SigBusSel}"
+                />
             </Grid>
 
             <!---->
@@ -127,7 +128,10 @@
 
             <Grid Grid.Column="1" Grid.Row="2">
                 <TextBox Name ="MSB_TB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke" PreviewTextInput="MSB_TB_PreviewTextInput"
-                         Text="{Binding Path=MsbTxt}"/>
+                         Text="{Binding Path=MsbTxt, ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{Binding Path=ErrorCollection[MsbTxt]}"
+                         IsEnabled="{Binding Path=BitsEnable}"
+                />
             </Grid>
 
             <!---->
@@ -137,7 +141,10 @@
 
             <Grid Grid.Row="3" Grid.Column="1">
                 <TextBox Name="LSB_TB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke" PreviewTextInput="LSB_TB_PreviewTextInput"
-                         Text="{Binding Path=LsbTxt}"/>
+                         Text="{Binding Path=LsbTxt, ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{Binding Path=ErrorCollection[LsbTxt]}"
+                         IsEnabled="{Binding Path=BitsEnable}"
+                />
             </Grid>
 
         </Grid>
@@ -157,6 +164,7 @@
                 Content="Finish"
                 Margin="670,10,55,22"
                 Click="Finish_Click"
+                IsEnabled="{Binding Path=FinishEnable}"
             />
         </Grid>
 
