@@ -29,7 +29,7 @@ namespace VHDLGenerator.ViewModels
         private DataPathModel _Datapath = new DataPathModel();
         private List<string> SPorts = new List<string>();
         private List<string> TPorts = new List<string>();
-        private bool _GridEnable;
+        private bool _GridEnable { get; set; }
         #endregion
 
         public SignalViewModel(string datapath)
@@ -59,19 +59,26 @@ namespace VHDLGenerator.ViewModels
             {
                 if (this.SCompName == _Datapath.Name || this.TCompName == _Datapath.Name)
                 {
+                    if (ErrorCollection.ContainsKey("SigEntityNameTxt"))
+                    {
+                        ErrorCollection["SigEntityNameTxt"] = null;
+                    }
+                    if (ErrorCollection.ContainsKey("MsbTxt"))
+                    {
+                        ErrorCollection["MsbTxt"] = null;
+                    }
+                    if (ErrorCollection.ContainsKey("LsbTxt"))
+                    {
+                        ErrorCollection["LsbTxt"] = null;
+                    }
+                    OnPropertyChanged("ErrorCollection");
                     this._GridEnable = false;
                 }
                 else
-                {
                     this._GridEnable = true;
-                }
                 return this._GridEnable;
             }
-            set
-            {
-                this._GridEnable = value;
-                
-            }
+            set{ this._GridEnable = value;}
         }
         public bool SigBusSel
         {
@@ -147,13 +154,13 @@ namespace VHDLGenerator.ViewModels
         public string SCompPortName
         {
             get { return Signal.Source_port; }
-            set { this.Signal.Source_port = value; }
+            set { this.Signal.Source_port = value; OnPropertyChanged("FinishEnable"); }
         }
         //for selected item in traget cat - port
         public string TCompPortName
         {
             get { return Signal.Target_port; }
-            set { this.Signal.Target_port = value; }
+            set { this.Signal.Target_port = value; OnPropertyChanged("FinishEnable"); }
         }
         #endregion
 
@@ -231,13 +238,34 @@ namespace VHDLGenerator.ViewModels
         {
             get
             {
-                if (ErrorCollection["SigEntityNameTxt"] == null)
-                    this._FinishEnable = true;
+                if (SCompName != null && TCompName != null && SCompPortName != null && TCompPortName != null)
+                {
+                    if (GridEnable == true && BitsEnable == true)
+                    {
+                        if (ErrorCollection["SigEntityNameTxt"] == null && ErrorCollection["MsbTxt"] == null && ErrorCollection["LsbTxt"] == null)
+                            this._FinishEnable = true;
+                        else
+                            this._FinishEnable = false;
+                    }
+                    else if (GridEnable == true)
+                    {
+                        if (ErrorCollection["SigEntityNameTxt"] == null)
+                            this._FinishEnable = true;
+                        else
+                            this._FinishEnable = false;
+                    }
+                    else
+                    {
+                        this._FinishEnable = true;
+                    }
+                }
                 else
                     this._FinishEnable = false;
+
                 return this._FinishEnable;
             }
             set { this._FinishEnable = value; }
+            
         }
 
 
@@ -249,10 +277,6 @@ namespace VHDLGenerator.ViewModels
                 if (SigBusSel == true)
                 {
                     this._BitsEnable = true;
-                    //this.MsbTxt = "0";
-                    //this.LsbTxt = "0";
-                    //OnPropertyChanged("MsbTxt");
-                    //OnPropertyChanged("LsbTxt");
                 }
                 else
                 {
@@ -311,24 +335,6 @@ namespace VHDLGenerator.ViewModels
                 string result = null;
                 switch (propertyname)
                 {
-                    case "SCompName":
-                        if (!IsDirectionSel(SCompName))
-                            result = "No Component Selected";
-                        break;
-                    case "TCompName":
-                        if (!IsDirectionSel(TCompName))
-                            result = "No Component Selected";
-                        break;
-
-                    //case "SCompName":
-                    //    if (!IsDirectionSel(SCompName))
-                    //        result = "No Component Selected";
-                    //    break;
-                    //case "TCompName":
-                    //    if (!IsDirectionSel(TCompName))
-                    //        result = "No Component Selected";
-                    //    break;
-
                     case "SigEntityNameTxt":
                         if (string.IsNullOrWhiteSpace(SigEntityNameTxt))
                             result = "Entity Name cannot be empty";
@@ -372,7 +378,7 @@ namespace VHDLGenerator.ViewModels
 
                 OnPropertyChanged("ErrorCollection");
                 OnPropertyChanged("FinishEnable");
-                OnPropertyChanged("AddPortEnable");
+                //OnPropertyChanged("AddPortEnable");
                 return result;
             }
         }
