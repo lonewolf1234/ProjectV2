@@ -29,12 +29,13 @@ namespace VHDLGenerator.ViewModels
         private DataPathModel _Datapath = new DataPathModel();
         private List<string> SPorts = new List<string>();
         private List<string> TPorts = new List<string>();
-        private bool _GridEnable;
+        
         #endregion
 
         public SignalViewModel(string datapath)
         {
            _Datapath = JsonConvert.DeserializeObject<DataPathModel>(datapath);
+            GridEnable = false;
         }
 
         #region Properties
@@ -53,6 +54,8 @@ namespace VHDLGenerator.ViewModels
             get { return Signal.LSB; }
             set { Signal.LSB = value; }
         }
+
+        private bool _GridEnable;
         public bool GridEnable
         {
             get
@@ -73,6 +76,7 @@ namespace VHDLGenerator.ViewModels
                 
             }
         }
+
         public bool SigBusSel
         {
             get { return this.Signal.Bus; }
@@ -320,15 +324,6 @@ namespace VHDLGenerator.ViewModels
                             result = "No Component Selected";
                         break;
 
-                    //case "SCompName":
-                    //    if (!IsDirectionSel(SCompName))
-                    //        result = "No Component Selected";
-                    //    break;
-                    //case "TCompName":
-                    //    if (!IsDirectionSel(TCompName))
-                    //        result = "No Component Selected";
-                    //    break;
-
                     case "SigEntityNameTxt":
                         if (string.IsNullOrWhiteSpace(SigEntityNameTxt))
                             result = "Entity Name cannot be empty";
@@ -372,7 +367,7 @@ namespace VHDLGenerator.ViewModels
 
                 OnPropertyChanged("ErrorCollection");
                 OnPropertyChanged("FinishEnable");
-                OnPropertyChanged("AddPortEnable");
+                //OnPropertyChanged("AddPortEnable");
                 return result;
             }
         }
