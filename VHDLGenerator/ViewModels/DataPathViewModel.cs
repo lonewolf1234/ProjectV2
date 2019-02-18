@@ -202,10 +202,6 @@ namespace VHDLGenerator.ViewModels
                 if (BusSel == true)
                 {
                     this._BitsEnable = true;
-                    //this.MsbTxt = "0";
-                    //this.LsbTxt = "0";
-                    //OnPropertyChanged("MsbTxt");
-                    //OnPropertyChanged("LsbTxt");
                 }
                 else
                 {
@@ -228,7 +224,6 @@ namespace VHDLGenerator.ViewModels
             set
             {
                 this._BitsEnable = value;
-
             }
         }
 
