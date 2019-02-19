@@ -29,7 +29,7 @@ namespace VHDLGenerator.Views
         /// <summary>
         /// Main Data Produced by the windows
         /// </summary>
-        DataPathModel DataPath = new DataPathModel();
+        public DataPathModel DataPath = new DataPathModel();
         List<ComponentModel> components = new List<ComponentModel>();
         List<SignalModel> signals = new List<SignalModel>();
         public string DebugPath { get; set; }
@@ -40,6 +40,7 @@ namespace VHDLGenerator.Views
         public MainWindow()
         {
             InitializeComponent();
+            DataPath.Name = "test1";
             ID = 1;
             DebugPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             Btn_Component.IsEnabled = false;

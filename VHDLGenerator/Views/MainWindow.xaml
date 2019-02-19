@@ -69,12 +69,57 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" Background="LightSlateGray">
-                <Label
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="Project Files View"
-                    FontSize="16"
-                    />
+                
+                <StackPanel Orientation="Vertical">
+                    
+                    <TreeView Name="myTreeViewEvent" >
+                        
+                        <TreeViewItem Header="Datapath" IsSelected="True">
+                            <TreeViewItem Header="Jesper Aaberg"/>
+                            <TreeViewItem Header="Employee Number">
+                                <TreeViewItem Header="12345"/>
+                            </TreeViewItem>
+                            <TreeViewItem Header="Work Days">
+                                <TreeViewItem Header="Monday"/>
+                                <TreeViewItem Header="Tuesday"/>
+                                <TreeViewItem Header="Thursday"/>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        
+                        <TreeViewItem Header="Components">
+                            <TreeViewItem Header="Dominik Paiha"/>
+                            <TreeViewItem Header="Employee Number">
+                                <TreeViewItem Header="98765"/>
+                            </TreeViewItem>
+                            <TreeViewItem Header="Work Days">
+                                <TreeViewItem Header="Tuesday"/>
+                                <TreeViewItem Header="Wednesday"/>
+                                <TreeViewItem Header="Friday"/>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        
+                        <TreeViewItem Header="Signals">
+                            <TreeViewItem Header="Dominik Paiha"/>
+                            <TreeViewItem Header="Employee Number">
+                                <TreeViewItem Header="98765"/>
+                            </TreeViewItem>
+                            <TreeViewItem Header="Work Days">
+                                <TreeViewItem Header="Tuesday"/>
+                                <TreeViewItem Header="Wednesday"/>
+                                <TreeViewItem Header="Friday"/>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                    </TreeView>
+
+                    <TreeView Name="CustomTreeView">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding DataPath}">
+                                <TextBlock Text="{Binding Name}"/>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+
+                </StackPanel>
             </Grid>
 
             <Grid Grid.Column="1" Background="LightGray">
