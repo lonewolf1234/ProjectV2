@@ -113,10 +113,12 @@
 
                     <TreeView Name="CustomTreeView">
                         <TreeView.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding DataPath}">
-                                <TextBlock Text="{Binding Name}"/>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Items}">
+                                <TextBlock Text="{Binding Title}" />
                             </HierarchicalDataTemplate>
+                            
                         </TreeView.ItemTemplate>
+                        
                     </TreeView>
 
                 </StackPanel>

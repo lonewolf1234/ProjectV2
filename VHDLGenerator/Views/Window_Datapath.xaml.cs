@@ -22,14 +22,6 @@ namespace VHDLGenerator.Views
     /// </summary>
     public partial class Window_Datapath : Window
     {
-        //JSON that contains the data entered in the datapath window
-        //public string GetDataPJSON
-        //{
-        //    get
-        //    {
-        //        return JsonConvert.SerializeObject(this.Data.GetDataPath, Formatting.Indented);
-        //    }
-        //}
 
         public DataPathModel GetDataPathModel
         {

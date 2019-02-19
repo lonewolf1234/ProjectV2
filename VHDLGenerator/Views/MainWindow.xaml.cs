@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using VHDLGenerator.Templates;
+using VHDLGenerator.ViewModels;
 
 namespace VHDLGenerator.Views
 {
@@ -29,18 +30,26 @@ namespace VHDLGenerator.Views
         /// <summary>
         /// Main Data Produced by the windows
         /// </summary>
-        public DataPathModel DataPath = new DataPathModel();
-        List<ComponentModel> components = new List<ComponentModel>();
-        List<SignalModel> signals = new List<SignalModel>();
+        private DataPathModel DataPath = new DataPathModel();
+        private List<ComponentModel> components = new List<ComponentModel>();
+        private List<SignalModel> signals = new List<SignalModel>();
         public string DebugPath { get; set; }
         private int ID;
+        private MainViewModel Data;
+
+      
+        //public List<string> Title { get { return this._Title; } }
+
 
         ////////////////////////////////////////////////////////////////
 
         public MainWindow()
         {
             InitializeComponent();
-            DataPath.Name = "test1";
+
+            Data = new MainViewModel(DataPath);
+            this.DataContext = Data;
+
             ID = 1;
             DebugPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             Btn_Component.IsEnabled = false;
@@ -64,6 +73,8 @@ namespace VHDLGenerator.Views
                     Btn_Component.IsEnabled = true;
                     Btn_Signal.IsEnabled = true;
                     Btn_Datapath.IsEnabled = false;
+                    Data.MainWinData = DataPath;
+                    LoadTree();
                 }
                 catch (Exception) { }
             }
@@ -274,9 +285,49 @@ namespace VHDLGenerator.Views
         //        }
         //    }
 
-           
+
         //}
         #endregion
 
+        public class TreeViewData1
+        {
+            public TreeViewData1()
+            {
+                this.Items = new List<TreeViewData1>();
+            }
+            public string Title { get; set; }
+            public List<TreeViewData1> Items { get; set; }
+        }
+
+        public void LoadTree()
+        {
+            TreeViewData1 maintv = new TreeViewData1();
+
+            if (DataPath.Name != null)
+            {
+                TreeViewData tv = new TreeViewData();
+                maintv.Title = "Ports";
+            }
+
+            if (DataPath.Ports != null)
+            {
+                TreeViewData1 tv = new TreeViewData1();
+                tv.Title = "Ports";
+                maintv.Items.Add(tv);
+               
+            }
+
+            if (DataPath.Signals != null)
+            {
+                TreeViewData1 tv = new TreeViewData1();
+                tv.Title = "Signal";
+                maintv.Items.Add(tv);
+
+            }
+
+            CustomTreeView.Items.Add(maintv);
+        }
     }
+
+   
 }
