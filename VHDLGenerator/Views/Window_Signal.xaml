@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VHDLGenerator.Views"
         mc:Ignorable="d"
-        Title="Create Signal" Height="450" Width="801" ResizeMode="NoResize">
+        WindowStartupLocation="CenterScreen"
+        Title="Create Signal" Height="450" Width="800" MinHeight="450" MinWidth="800">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -104,7 +105,7 @@
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1">
-                <TextBox Name="EntityNameTB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke"
+                <TextBox Name="EntityNameTB" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60,0" Height="20" Width="150" Background="WhiteSmoke"
                          Text="{Binding Path=SigEntityNameTxt , ValidatesOnDataErrors=True , UpdateSourceTrigger=PropertyChanged}"
                          ToolTip="{Binding Path=ErrorCollection[SigEntityNameTxt]}"
                          />
@@ -127,7 +128,7 @@
             </Grid>
 
             <Grid Grid.Column="1" Grid.Row="2">
-                <TextBox Name ="MSB_TB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke" PreviewTextInput="MSB_TB_PreviewTextInput"
+                <TextBox Name ="MSB_TB" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60,0" Height="20" Width="50" Background="WhiteSmoke" PreviewTextInput="MSB_TB_PreviewTextInput"
                          Text="{Binding Path=MsbTxt, ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
                          ToolTip="{Binding Path=ErrorCollection[MsbTxt]}"
                          IsEnabled="{Binding Path=BitsEnable}"
@@ -140,7 +141,7 @@
             </Grid>
 
             <Grid Grid.Row="3" Grid.Column="1">
-                <TextBox Name="LSB_TB" Grid.Row="0" Grid.Column="2" Margin="60,15,250,15" Background="WhiteSmoke" PreviewTextInput="LSB_TB_PreviewTextInput"
+                <TextBox Name="LSB_TB" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="60,0" Height="20" Width="50" Background="WhiteSmoke" PreviewTextInput="LSB_TB_PreviewTextInput"
                          Text="{Binding Path=LsbTxt, ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
                          ToolTip="{Binding Path=ErrorCollection[LsbTxt]}"
                          IsEnabled="{Binding Path=BitsEnable}"
@@ -151,18 +152,24 @@
 
         <Grid Grid.Row="2">
             <Button
-                Grid.Row="3"
+                 Grid.Row="3"
                 Name="Cancel"
                 Content="Cancel"
-                Margin="575,10,150,22"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Width="70"
+                Margin="0,0,150,0"
                 Click="Cancel_Click"
             />
 
             <Button
                 Grid.Row="3"
-                Name="Finish"
+                 Name="Finish"
                 Content="Finish"
-                Margin="670,10,55,22"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Width="70"
+                Margin="0,0,50,0"
                 Click="Finish_Click"
                 IsEnabled="{Binding Path=FinishEnable}"
             />

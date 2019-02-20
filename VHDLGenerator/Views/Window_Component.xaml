@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VHDLGenerator.Views"
         mc:Ignorable="d"
-        Title="Create Component" Height="600" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="Create Component" Height="600" Width="600" MinHeight="600" MinWidth="600">
 
     <Grid>
 
@@ -27,16 +28,15 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150*"/>
-                <ColumnDefinition Width="115*"/>
-                <ColumnDefinition Width="529*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
 
 
             <!-- Left side of the first Grid -->
             <Label
                 Grid.Row="0"
-                Grid.Column="1"
+                Grid.Column="0"
                 Content="Entity Name"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Right"
@@ -44,7 +44,7 @@
 
             <Label
                 Grid.Row="1"
-                Grid.Column="1"
+                Grid.Column="0"
                 Content="Architecture Name"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center" 
@@ -54,18 +54,24 @@
             <TextBox 
                 Name="EntityNameTB"
                 Grid.Row="0"
-                Grid.Column="2"
-                Margin="60,15,250,15"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                Width="150"
+                Margin="35,0"
                 Background="WhiteSmoke"
                 Text="{Binding Path=EntityNameTxt , ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
                 ToolTip="{Binding Path=ErrorCollection[EntityNameTxt]}"
             />
 
             <TextBox
-                Name="ArchNameTB"
+                 Name="ArchNameTB"
                 Grid.Row="1"
-                Grid.Column="2"
-                Margin="60,15,250,15"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                Width="150"
+                Margin="35,0"
                 Background="WhiteSmoke"
                 Text="{Binding Path=ArchNameTxt}"
             />
@@ -75,7 +81,7 @@
         <!-- For Port Definitions-->
         <Grid Grid.Row="1">
             <!-- Port Definition Stack Panel -->
-            <StackPanel Orientation="Vertical" Margin="200,0">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
 
                 <!-- Main Stack Panel -->
 
@@ -97,7 +103,7 @@
                     />
                     <TextBox
                        Name="PortName_TB"
-                       Width="200"
+                       Width="150"
                        Margin="30,5"
                        Text="{Binding Path=PortNameTxt, ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
                        ToolTip="{Binding Path=ErrorCollection[PortNameTxt]}"
@@ -111,7 +117,7 @@
                         Width="150"
                         HorizontalContentAlignment="Right"
                     />
-                    <ComboBox Name="Direction_CB" Width="100" Margin="30,5" 
+                    <ComboBox Name="Direction_CB" Width="55" Margin="30,5" 
                               ItemsSource="{Binding Path=GetDirections}" 
                               SelectedValue="{Binding Path=DirectionSel , ValidatesOnDataErrors=True ,UpdateSourceTrigger=PropertyChanged}"
                               ToolTip="{Binding Path=ErrorCollection[DirectionSel]}"
@@ -169,10 +175,10 @@
 
                 <Button
                     Name="AddPort"
-                    Margin="150,12"
+                    Width="70"
                     Height="20"
+                    Margin="0,10"
                     Content="Add Port"
-                    Click="AddPort_Click"
                     IsEnabled="{Binding Path=AddPortEnable}"
                 />
 
@@ -205,18 +211,23 @@
                 Grid.Row="3"
                 Name="Cancel"
                 Content="Cancel"
-                Margin="575,10,150,22"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Width="70"
+                Margin="0,0,150,0"
                 Click="Cancel_Click"
-                
             />
 
             <Button
-                Grid.Row="3"
                 Name="Finish"
                 Content="Finish"
-                Margin="670,10,55,22"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Width="70"
+                Margin="0,0,50,0"
                 Click="Finish_Click"
-                IsEnabled="{Binding Path=FinishEnable}"
+                IsEnabled="{Binding Path=FinishEnable}" 
+                
             />
         </Grid>
 

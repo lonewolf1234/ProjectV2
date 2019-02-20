@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:VHDLGenerator.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="1110">
     <Grid>
-        <Grid Height="30" VerticalAlignment="Top" Background="#eee">
+        <Grid Height="30" VerticalAlignment="Top" Background="DarkGray">
 
             <Grid HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="331">
 
@@ -18,6 +18,7 @@
                     VerticalAlignment="Top" 
                     Width="110" 
                     Height="30"
+                    Background="DarkGray"
                     Click="Btn_Datapath_Click"/>
 
                 <Button Name="Btn_Component"
@@ -27,6 +28,7 @@
                     Width="110" 
                     Height="30" 
                     Margin="110,0,0,0"
+                    Background="DarkGray"
                     Click="Btn_Component_Click"/>
 
                 <Button Name="Btn_Signal"
@@ -36,25 +38,18 @@
                     Width="110" 
                     Height="30" 
                     Margin="220,0,0,0"
+                    Background="DarkGray"
                     Click="Btn_Signal_Click"/>
             </Grid>
-            
-            <TextBlock x:Name="TextBlock_test"
-                TextWrapping="Wrap" 
-                Text="Status Bar"
-                Background="WhiteSmoke" 
-                TextAlignment="Center"
-                Width="250" 
-                Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                Margin="331,0,212.6,0" 
-            />
+
             <Button 
                 Name="Generate"
                 Content="Generate" 
-                HorizontalAlignment="Left" 
-                Margin="707,5,0,0" 
+                HorizontalAlignment="Right" 
+                Width="110" 
+                Height="30" 
                 VerticalAlignment="Top" 
-                Width="75"
+                Background="DarkGray"
                 Click="Generate_Click"/>
 
 
@@ -68,63 +63,35 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Background="LightSlateGray">
+            <Grid Grid.Column="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <StackPanel>
+                        <Label Content="Project File View" HorizontalAlignment="Stretch" FontSize="16" FontWeight="Bold" Background="LightGray" HorizontalContentAlignment="Center"/>
+
+                        <TreeView Name="CustomTreeView" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0">
+                            <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Items}">
+                                    <TextBlock Text="{Binding Title}" />
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                    </StackPanel>
+                </Grid>
                 
-                <StackPanel Orientation="Vertical">
-                    
-                    <TreeView Name="myTreeViewEvent" >
-                        
-                        <TreeViewItem Header="Datapath" IsSelected="True">
-                            <TreeViewItem Header="Jesper Aaberg"/>
-                            <TreeViewItem Header="Employee Number">
-                                <TreeViewItem Header="12345"/>
-                            </TreeViewItem>
-                            <TreeViewItem Header="Work Days">
-                                <TreeViewItem Header="Monday"/>
-                                <TreeViewItem Header="Tuesday"/>
-                                <TreeViewItem Header="Thursday"/>
-                            </TreeViewItem>
-                        </TreeViewItem>
-                        
-                        <TreeViewItem Header="Components">
-                            <TreeViewItem Header="Dominik Paiha"/>
-                            <TreeViewItem Header="Employee Number">
-                                <TreeViewItem Header="98765"/>
-                            </TreeViewItem>
-                            <TreeViewItem Header="Work Days">
-                                <TreeViewItem Header="Tuesday"/>
-                                <TreeViewItem Header="Wednesday"/>
-                                <TreeViewItem Header="Friday"/>
-                            </TreeViewItem>
-                        </TreeViewItem>
-                        
-                        <TreeViewItem Header="Signals">
-                            <TreeViewItem Header="Dominik Paiha"/>
-                            <TreeViewItem Header="Employee Number">
-                                <TreeViewItem Header="98765"/>
-                            </TreeViewItem>
-                            <TreeViewItem Header="Work Days">
-                                <TreeViewItem Header="Tuesday"/>
-                                <TreeViewItem Header="Wednesday"/>
-                                <TreeViewItem Header="Friday"/>
-                            </TreeViewItem>
-                        </TreeViewItem>
-                    </TreeView>
+                <Grid Grid.Row="1">
+                    <StackPanel>
+                        <Label Content="Generated File View" HorizontalAlignment="Stretch" FontSize="16" FontWeight="Bold" Background="LightGray" HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                </Grid> 
 
-                    <TreeView Name="CustomTreeView">
-                        <TreeView.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding Items}">
-                                <TextBlock Text="{Binding Title}" />
-                            </HierarchicalDataTemplate>
-                            
-                        </TreeView.ItemTemplate>
-                        
-                    </TreeView>
-
-                </StackPanel>
             </Grid>
 
-            <Grid Grid.Column="1" Background="LightGray">
+            <Grid Grid.Column="1" Background="#eee">
                 <Label
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
