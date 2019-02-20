@@ -64,9 +64,9 @@ namespace VHDLGenerator.Views
                     Btn_Component.IsEnabled = true;
                     Btn_Signal.IsEnabled = true;
                     Btn_Datapath.IsEnabled = false;
-                   
-                    CustomTreeView.Items.Clear();
-                    LoadTree();
+                    
+                    LoadDataTree();
+                    LoadFileTree();
                 }
                 catch (Exception) { }
             }
@@ -86,9 +86,9 @@ namespace VHDLGenerator.Views
 
                     components.Add(model);
                     DataPath.Components = components;
-                    CustomTreeView.Items.Clear();
-                    LoadTree();
-                   
+                    LoadDataTree();
+                    LoadFileTree();
+
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
                     System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathJSON.txt"), newDP_ResultJSON);
                 }
@@ -105,7 +105,10 @@ namespace VHDLGenerator.Views
                     //signals.Add(JsonConvert.DeserializeObject<SignalModel>(window_Signal.GetSignalJSON));
                     signals.Add(window_Signal.GetSignalModel);
                     DataPath.Signals = signals;
-                    LoadTree();
+
+                    LoadDataTree();
+                    LoadFileTree();
+
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
                     System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathwsJSON.txt"), newDP_ResultJSON);
@@ -143,8 +146,10 @@ namespace VHDLGenerator.Views
                 }
             }
         }
-        public void LoadTree()
+        public void LoadDataTree()
         {
+            CustomTreeView.Items.Clear();
+
             TreeViewData1 maintv = new TreeViewData1();
 
             if (DataPath.Name != null)
@@ -187,6 +192,10 @@ namespace VHDLGenerator.Views
             }
 
             CustomTreeView.Items.Add(maintv);
+        }
+        public void LoadFileTree()
+        {
+
         }
     }
 

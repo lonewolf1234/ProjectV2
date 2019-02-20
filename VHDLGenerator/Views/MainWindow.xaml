@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="650" Width="1110">
     <Grid>
-        <Grid Height="30" VerticalAlignment="Top" Background="DarkGray">
+        <Grid Height="30" VerticalAlignment="Top" Background="LightSlateGray">
 
             <Grid HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="331">
 
@@ -18,7 +18,7 @@
                     VerticalAlignment="Top" 
                     Width="110" 
                     Height="30"
-                    Background="DarkGray"
+                    Background="LightSlateGray"
                     Click="Btn_Datapath_Click"/>
 
                 <Button Name="Btn_Component"
@@ -28,7 +28,7 @@
                     Width="110" 
                     Height="30" 
                     Margin="110,0,0,0"
-                    Background="DarkGray"
+                    Background="LightSlateGray"
                     Click="Btn_Component_Click"/>
 
                 <Button Name="Btn_Signal"
@@ -38,7 +38,7 @@
                     Width="110" 
                     Height="30" 
                     Margin="220,0,0,0"
-                    Background="DarkGray"
+                    Background="LightSlateGray"
                     Click="Btn_Signal_Click"/>
             </Grid>
 
@@ -49,7 +49,7 @@
                 Width="110" 
                 Height="30" 
                 VerticalAlignment="Top" 
-                Background="DarkGray"
+                Background="LightSlateGray"
                 Click="Generate_Click"/>
 
 
@@ -71,7 +71,7 @@
 
                 <Grid Grid.Row="0">
                     <StackPanel>
-                        <Label Content="Project File View" HorizontalAlignment="Stretch" FontSize="16" FontWeight="Bold" Background="LightGray" HorizontalContentAlignment="Center"/>
+                        <Label Content="Project File View" HorizontalAlignment="Stretch" FontSize="16" FontStyle="Normal" Background="LightGray" HorizontalContentAlignment="Center"/>
 
                         <TreeView Name="CustomTreeView" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0">
                             <TreeView.ItemTemplate>
@@ -85,7 +85,15 @@
                 
                 <Grid Grid.Row="1">
                     <StackPanel>
-                        <Label Content="Generated File View" HorizontalAlignment="Stretch" FontSize="16" FontWeight="Bold" Background="LightGray" HorizontalContentAlignment="Center"/>
+                        <Label Content="Generated File View" HorizontalAlignment="Stretch"  FontSize="16" FontStyle="Normal" Background="LightGray" HorizontalContentAlignment="Center"/>
+
+                        <TreeView Name="GenerateTreeView" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0">
+                            <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Items}">
+                                    <TextBlock Text="{Binding Title}" />
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
                     </StackPanel>
                 </Grid> 
 
