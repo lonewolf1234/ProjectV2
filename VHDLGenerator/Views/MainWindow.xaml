@@ -41,18 +41,6 @@
                     Background="LightSlateGray"
                     Click="Btn_Signal_Click"/>
             </Grid>
-
-            <Button 
-                Name="Generate"
-                Content="Generate" 
-                HorizontalAlignment="Right" 
-                Width="110" 
-                Height="30" 
-                VerticalAlignment="Top" 
-                Background="LightSlateGray"
-                Click="Generate_Click"/>
-
-
         </Grid>
 
         <Grid  Margin="0,30,0,0"  >

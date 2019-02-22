@@ -34,6 +34,7 @@ namespace VHDLGenerator.Views
         private List<ComponentModel> components = new List<ComponentModel>();
         private List<SignalModel> signals = new List<SignalModel>();
         private string DebugPath { get; set; }
+        private string FolderPath { get; set; }
         private int ID;
        
         ////////////////////////////////////////////////////////////////
@@ -45,7 +46,18 @@ namespace VHDLGenerator.Views
             //this.DataContext = Data;
 
             ID = 1;
-            DebugPath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+            //Path to the location of the executable
+            DebugPath = (string)System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            //Path to the location of the executable moved one folder up
+            string temp = "";
+            
+            Uri uri = new Uri((string)System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            temp = uri.Segments[uri.Segments.Length - 1];
+            FolderPath = DebugPath.Substring(0, DebugPath.Length - temp.Length - 1);
+            string pathString = System.IO.Path.Combine(FolderPath, "SubFolder");
+            System.IO.Directory.CreateDirectory(pathString);
+
             Btn_Component.IsEnabled = false;
             Btn_Signal.IsEnabled = false;
             Btn_Datapath.IsEnabled = true;
@@ -67,6 +79,9 @@ namespace VHDLGenerator.Views
                     
                     LoadDataTree();
                     LoadFileTree();
+
+                    //Datapath File Generation
+                    GenerateDatapath(DataPath);
                 }
                 catch (Exception) { }
             }
@@ -86,8 +101,14 @@ namespace VHDLGenerator.Views
 
                     components.Add(model);
                     DataPath.Components = components;
+
                     LoadDataTree();
                     LoadFileTree();
+
+                    //Datapath File Generation
+                    GenerateDatapath(DataPath);
+                    //Component File Generation
+                    GenerateComponents(DataPath);
 
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
                     System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathJSON.txt"), newDP_ResultJSON);
@@ -109,20 +130,17 @@ namespace VHDLGenerator.Views
                     LoadDataTree();
                     LoadFileTree();
 
+                    //Datapath File Generation
+                    GenerateDatapath(DataPath);
+                    //Component File Generation
+                    GenerateComponents(DataPath);
+
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
                     System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathwsJSON.txt"), newDP_ResultJSON);
                 }
                 catch (Exception) { }
             }
-        }
-        private void Generate_Click(object sender, RoutedEventArgs e)
-        {
-            //Datapath File Generation
-            GenerateDatapath(DataPath);
-
-            //Component File Generation
-            GenerateComponents(DataPath);
         }
 
         private void GenerateDatapath(DataPathModel Data)
