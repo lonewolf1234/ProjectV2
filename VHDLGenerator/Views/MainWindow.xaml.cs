@@ -34,7 +34,7 @@ namespace VHDLGenerator.Views
         private List<ComponentModel> components = new List<ComponentModel>();
         private List<SignalModel> signals = new List<SignalModel>();
         private string DebugPath { get; set; }
-        private string FolderPath { get; set; }
+        private string NewFolderPath { get; set; }
         private int ID;
        
         ////////////////////////////////////////////////////////////////
@@ -50,13 +50,7 @@ namespace VHDLGenerator.Views
             //Path to the location of the executable
             DebugPath = (string)System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             //Path to the location of the executable moved one folder up
-            string temp = "";
-            
-            Uri uri = new Uri((string)System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
-            temp = uri.Segments[uri.Segments.Length - 1];
-            FolderPath = DebugPath.Substring(0, DebugPath.Length - temp.Length - 1);
-            string pathString = System.IO.Path.Combine(FolderPath, "SubFolder");
-            System.IO.Directory.CreateDirectory(pathString);
+            CreateFolder();
 
             Btn_Component.IsEnabled = false;
             Btn_Signal.IsEnabled = false;
@@ -145,12 +139,19 @@ namespace VHDLGenerator.Views
 
         private void GenerateDatapath(DataPathModel Data)
         {
-            if (Data != null && Data.Name != null)
+            try
             {
-                DataPathTemplate DPTemplate = new DataPathTemplate(Data);
-                String DPText = DPTemplate.TransformText();
-                File.WriteAllText(DataPath.Name + ".txt", DPText);
+                if (Data != null && Data.Name != null)
+                {
+                    DataPathTemplate DPTemplate = new DataPathTemplate(Data);
+                    String DPText = DPTemplate.TransformText();
+                    //string newpath = System.IO.Path.Combine(NewFolderPath, Data.Name + ".txt");
+                    //File.WriteAllText(newpath, DPText);
+
+                    File.WriteAllText(Data.Name + ".txt", DPText);
+                }
             }
+            catch (Exception) { }
         }
         public void GenerateComponents(DataPathModel Data)
         {
@@ -214,6 +215,17 @@ namespace VHDLGenerator.Views
         public void LoadFileTree()
         {
 
+        }
+        public void CreateFolder()
+        {
+            string temp = "";
+            string FolderPath = "";
+            Uri uri = new Uri((string)System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+            temp = uri.Segments[uri.Segments.Length - 1];
+            FolderPath = DebugPath.Substring(0, DebugPath.Length - temp.Length - 1);
+            string pathString = System.IO.Path.Combine(FolderPath, "GeneratedCode");
+            NewFolderPath = pathString;
+            System.IO.Directory.CreateDirectory(pathString);
         }
     }
 
