@@ -70,12 +70,12 @@ namespace VHDLGenerator.Views
                     Btn_Component.IsEnabled = true;
                     Btn_Signal.IsEnabled = true;
                     Btn_Datapath.IsEnabled = false;
-                    
-                    LoadDataTree();
-                    LoadFileTree();
 
                     //Datapath File Generation
                     GenerateDatapath(DataPath);
+
+                    LoadDataTree();
+                    LoadFileTree();
                 }
                 catch (Exception) { }
             }
@@ -96,13 +96,13 @@ namespace VHDLGenerator.Views
                     components.Add(model);
                     DataPath.Components = components;
 
-                    LoadDataTree();
-                    LoadFileTree();
-
                     //Datapath File Generation
                     GenerateDatapath(DataPath);
                     //Component File Generation
                     GenerateComponents(DataPath);
+
+                    LoadDataTree();
+                    LoadFileTree();
 
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
                     System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathJSON.txt"), newDP_ResultJSON);
@@ -121,13 +121,13 @@ namespace VHDLGenerator.Views
                     signals.Add(window_Signal.GetSignalModel);
                     DataPath.Signals = signals;
 
-                    LoadDataTree();
-                    LoadFileTree();
-
                     //Datapath File Generation
                     GenerateDatapath(DataPath);
                     //Component File Generation
                     GenerateComponents(DataPath);
+
+                    LoadDataTree();
+                    LoadFileTree();
 
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
@@ -146,9 +146,9 @@ namespace VHDLGenerator.Views
                     DataPathTemplate DPTemplate = new DataPathTemplate(Data);
                     String DPText = DPTemplate.TransformText();
                     
-                    string textpath = Data.Name + ".txt";
-                    string newpath = System.IO.Path.Combine(NewFolderPath, textpath);
-                    File.WriteAllText(newpath, DPText);
+                    //string textpath = Data.Name + ".txt";
+                    //string newpath = System.IO.Path.Combine(NewFolderPath, textpath);
+                    File.WriteAllText(System.IO.Path.Combine(NewFolderPath, Data.Name + ".txt"), DPText);
 
                    //File.WriteAllText(Data.Name + ".txt", DPText);
                 }
@@ -163,7 +163,8 @@ namespace VHDLGenerator.Views
                 {
                     ComponentTemplate CompTemplate = new ComponentTemplate(comp);
                     String CompText = CompTemplate.TransformText();
-                    File.WriteAllText(comp.Name + ".txt", CompText);
+                    //File.WriteAllText(comp.Name + ".txt", CompText);
+                    File.WriteAllText(System.IO.Path.Combine(NewFolderPath, comp.Name + ".txt"), CompText);
                 }
             }
         }
@@ -216,6 +217,19 @@ namespace VHDLGenerator.Views
         }
         public void LoadFileTree()
         {
+            CodeTreeView.Items.Clear();
+
+            List<string> FileNames = new List<string>(Directory.GetFiles(NewFolderPath));
+            
+            foreach(string Path in FileNames)
+            {
+                string FileName = "";
+                Uri uri = new Uri(Path);
+                FileName = uri.Segments[uri.Segments.Length -1];
+                TreeViewData1 tv = new TreeViewData1();
+                tv.Title = FileName;
+                CodeTreeView.Items.Add(tv);
+            }
 
         }
         public void CreateFolder()
@@ -227,7 +241,30 @@ namespace VHDLGenerator.Views
             FolderPath = DebugPath.Substring(0, DebugPath.Length - temp.Length - 1);
             string pathString = System.IO.Path.Combine(FolderPath, "GeneratedCode");
             NewFolderPath = pathString;
-            System.IO.Directory.CreateDirectory(pathString);
+            //checks to see if the folder "GenerateCode exists"
+            if (Directory.Exists(pathString))
+            {
+                //delets folder and creates a new empty one
+                Directory.Delete(pathString, true);
+                Directory.CreateDirectory(pathString);
+            }
+            else
+            {
+                //creates a new folder if it doesnot exist
+                Directory.CreateDirectory(pathString);
+            }
+        }
+
+        private void Btn_OpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            if (CodeTreeView.SelectedItem != null)
+            {
+                var item = CodeTreeView.SelectedItem as TreeViewData1;
+                var itempath = System.IO.Path.Combine(NewFolderPath, item.Title);
+                Process.Start(itempath);
+            }
+           
+            //MessageBox.Show(item.Title);
         }
     }
 

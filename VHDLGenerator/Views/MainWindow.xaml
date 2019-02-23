@@ -73,16 +73,22 @@
                 
                 <Grid Grid.Row="1">
                     <StackPanel>
-                        <Label Content="Generated File View" HorizontalAlignment="Stretch"  FontSize="16" FontStyle="Normal" Background="LightGray" HorizontalContentAlignment="Center"/>
+                        <Label Content="Generated File View" HorizontalAlignment="Stretch"  FontSize="16" FontStyle="Normal" 
+                               Background="LightGray" HorizontalContentAlignment="Center"/>
 
-                        <TreeView Name="GenerateTreeView" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0">
-                            <TreeView.ItemTemplate>
+                        <TreeView Name="CodeTreeView" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" 
+                                 
+                                  >
+                            <TreeView.ItemTemplate >
                                 <HierarchicalDataTemplate ItemsSource="{Binding Items}">
                                     <TextBlock Text="{Binding Title}" />
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
                         </TreeView>
+
+                        
                     </StackPanel>
+                    <Button Name="Btn_OpenFile" Content="Open File" Height="25" VerticalAlignment="Bottom" Click="Btn_OpenFile_Click"/>
                 </Grid> 
 
             </Grid>
