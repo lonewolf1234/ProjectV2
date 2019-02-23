@@ -100,109 +100,26 @@ if(Name != null){
             
             #line 22 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
 
-	foreach(ComponentModel component in Components)
-	{
+    if(Components!= null)
+    {
+        foreach(ComponentModel component in Components)
+        {
 
             
             #line default
             #line hidden
             this.Write("component ");
             
-            #line 26 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 28 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(component.Name));
             
             #line default
             #line hidden
             this.Write("\r\n  Port(");
             
-            #line 27 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 29 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
 
-		foreach(string port in PortTranslation(component.Ports))
-		{
-
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 30 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(port));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 31 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-		}
-
-            
-            #line default
-            #line hidden
-            this.Write("end component;\r\n\r\n");
-            
-            #line 36 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-	}
-
-            
-            #line default
-            #line hidden
-            
-            #line 39 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-	foreach(string signal in SignalData)
-	{
-
-            
-            #line default
-            #line hidden
-            
-            #line 43 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(signal));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n");
-            
-            #line 44 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-	}
-
-            
-            #line default
-            #line hidden
-            this.Write("\r\nbegin\r\n\r\n");
-            
-            #line 50 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-    foreach(ComponentModel component in Components)
-    {
-        if(component.ID != null)
-        {
-
-            
-            #line default
-            #line hidden
-            this.Write("cop");
-            
-            #line 56 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(component.ID));
-            
-            #line default
-            #line hidden
-            this.Write(" : ");
-            
-            #line 56 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(component.Name));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n port map(");
-            
-            #line 57 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
-
-            foreach(string s in PortMappingProcess(component,Signals,Name))
+            foreach(string port in PortTranslation(component.Ports))
             {
 
             
@@ -210,25 +127,117 @@ if(Name != null){
             #line hidden
             this.Write(" ");
             
-            #line 60 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 32 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(port));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 33 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+
+            }
+
+            
+            #line default
+            #line hidden
+            this.Write("end component;\r\n\r\n");
+            
+            #line 38 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+
+        }
+    }
+
+            
+            #line default
+            #line hidden
+            
+            #line 42 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+
+    if(SignalData!= null)
+    {
+        foreach(string signal in SignalData)
+        {
+
+            
+            #line default
+            #line hidden
+            
+            #line 48 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(signal));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 49 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+
+        }
+    }
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\nbegin\r\n\r\n");
+            
+            #line 56 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+
+    if(Components!= null)
+    {
+        foreach(ComponentModel component in Components)
+        {
+            if(component.ID != null)
+            {
+
+            
+            #line default
+            #line hidden
+            this.Write("cop");
+            
+            #line 64 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(component.ID));
+            
+            #line default
+            #line hidden
+            this.Write(" : ");
+            
+            #line 64 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(component.Name));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n port map(");
+            
+            #line 65 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+
+                foreach(string s in PortMappingProcess(component,Signals,Name))
+                {
+
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 68 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(s));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 61 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 69 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
 
+                }
             }
-        }
 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 66 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 74 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
 
+        }
     }
  
             
@@ -236,7 +245,7 @@ if(Name != null){
             #line hidden
             this.Write("\r\nend ");
             
-            #line 70 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
+            #line 79 "C:\Users\avide\Desktop\ECNG 3020\repos\ProjectV2\VHDLGenerator\Templates\DataPathTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ArchName));
             
             #line default

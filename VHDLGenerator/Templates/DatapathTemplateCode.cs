@@ -79,9 +79,10 @@ namespace VHDLGenerator.Templates
         {
             List<string> templist = new List<string>();
 
-            if(signals.Count != 0)
+
+            if (signals != null)
             {
-                foreach(SignalModel sig in signals)
+                foreach (SignalModel sig in signals)
                 {
                     string tempsig = string.Empty;
                     if (sig.Name != null)
@@ -98,6 +99,8 @@ namespace VHDLGenerator.Templates
                     }
                 }
             }
+            else
+                templist = null; 
 
             return templist;
         }

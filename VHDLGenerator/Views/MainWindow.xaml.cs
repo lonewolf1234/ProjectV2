@@ -145,10 +145,12 @@ namespace VHDLGenerator.Views
                 {
                     DataPathTemplate DPTemplate = new DataPathTemplate(Data);
                     String DPText = DPTemplate.TransformText();
-                    //string newpath = System.IO.Path.Combine(NewFolderPath, Data.Name + ".txt");
-                    //File.WriteAllText(newpath, DPText);
+                    
+                    string textpath = Data.Name + ".txt";
+                    string newpath = System.IO.Path.Combine(NewFolderPath, textpath);
+                    File.WriteAllText(newpath, DPText);
 
-                    File.WriteAllText(Data.Name + ".txt", DPText);
+                   //File.WriteAllText(Data.Name + ".txt", DPText);
                 }
             }
             catch (Exception) { }
