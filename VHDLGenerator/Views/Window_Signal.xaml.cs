@@ -34,10 +34,10 @@ namespace VHDLGenerator.Views
         public SignalModel GetSignalModel { get { return this.Data.GetSignal; } }
         private SignalViewModel Data;
 
-        public Window_Signal(string DataPathJSON)
+        public Window_Signal(DataPathModel _DataPath)
         {
             InitializeComponent();
-            Data = new SignalViewModel(DataPathJSON);
+            Data = new SignalViewModel(_DataPath);
             this.DataContext = Data;
             
 

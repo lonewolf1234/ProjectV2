@@ -112,7 +112,7 @@ namespace VHDLGenerator.Views
         }
         private void Btn_Signal_Click(object sender, RoutedEventArgs e)
         {
-            Window_Signal window_Signal = new Window_Signal(JsonConvert.SerializeObject(DataPath, Formatting.Indented));
+            Window_Signal window_Signal = new Window_Signal(DataPath);
             if (window_Signal.ShowDialog() == true)
             {
                 try
@@ -124,7 +124,7 @@ namespace VHDLGenerator.Views
                     //Datapath File Generation
                     GenerateDatapath(DataPath);
                     //Component File Generation
-                    GenerateComponents(DataPath);
+                    //GenerateComponents(DataPath);
 
                     LoadDataTree();
                     LoadFileTree();

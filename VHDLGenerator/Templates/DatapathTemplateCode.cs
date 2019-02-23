@@ -120,7 +120,7 @@ namespace VHDLGenerator.Templates
                 {
                     foreach (PortModel port in comp.Ports)
                     {
-                        if (signals != null)
+                        if (signals != null && comp.Name != datapathname)
                         {
                             foreach (SignalModel signal in signals)
                             {
@@ -157,57 +157,59 @@ namespace VHDLGenerator.Templates
                                 //}
                                 #endregion
 
-                                if (comp.Name != datapathname)
+                               
+                                if (comp.Name == signal.Source_Comp && port.Name == signal.Source_port)
                                 {
-                                    if (comp.Name == signal.Source_Comp && port.Name == signal.Source_port)
+                                    if (signal.Target_Comp == datapathname)
                                     {
-                                        if (signal.Target_Comp == datapathname)
-                                        {
-                                            temp = $"{port.Name} => {signal.Target_port}";
-                                        }
-                                        else
-                                        {
-                                            temp = $"{port.Name} => {signal.Name}";
-                                        }
-                                    }
-                                    else if (comp.Name == signal.Target_Comp && port.Name == signal.Target_port)
-                                    {
-                                        if (signal.Source_Comp == datapathname)
-                                        {
-                                            temp = $"{port.Name} => {signal.Source_port}";
-                                        }
-                                        else
-                                        {
-                                            temp = $"{port.Name} => {signal.Name}";
-                                        }
+                                        temp = $"{port.Name} => {signal.Target_port}";
+                                        break;
                                     }
                                     else
                                     {
-                                        temp = $"{port.Name} =>     ";
-                                        
+                                        temp = $"{port.Name} => {signal.Name}";
+                                        break;
                                     }
                                 }
-                            }
-                            if (comp.Name != datapathname)
-                            {
-                                if (comp.Ports.Count > 1)
+                                else if (comp.Name == signal.Target_Comp && port.Name == signal.Target_port)
                                 {
-                                    if (comp.Ports.First() == port)
+                                    if (signal.Source_Comp == datapathname)
                                     {
-                                        Mapping.Add(temp + ",");
-                                    }
-                                    else if (comp.Ports.Last() == port)
-                                    {
-                                        Mapping.Add("\t" + temp + ");");
+                                        temp = $"{port.Name} => {signal.Source_port}";
+                                        break;
                                     }
                                     else
                                     {
-                                        Mapping.Add("\t" + temp + ",");
+                                        temp = $"{port.Name} => {signal.Name}";
+                                        break;
                                     }
                                 }
                                 else
-                                    Mapping.Add( temp + ");");
+                                {
+                                    temp = $"{port.Name} =>     ";
+                                        
+                                }
+                               
                             }
+                           
+                            if (comp.Ports.Count > 1)
+                            {
+                                if (comp.Ports.First() == port)
+                                {
+                                    Mapping.Add(temp + ",");
+                                }
+                                else if (comp.Ports.Last() == port)
+                                {
+                                    Mapping.Add("\t" + temp + ");");
+                                }
+                                else
+                                {
+                                    Mapping.Add("\t" + temp + ",");
+                                }
+                            }
+                            else
+                                Mapping.Add( temp + ");");
+                           
                         }
                         else
                         {

@@ -32,9 +32,9 @@ namespace VHDLGenerator.ViewModels
         private bool _GridEnable { get; set; }
         #endregion
 
-        public SignalViewModel(string datapath)
+        public SignalViewModel(DataPathModel _datapath)
         {
-           _Datapath = JsonConvert.DeserializeObject<DataPathModel>(datapath);
+           _Datapath = _datapath;
         }
 
         #region Properties
@@ -240,24 +240,29 @@ namespace VHDLGenerator.ViewModels
             {
                 if (SCompName != null && TCompName != null && SCompPortName != null && TCompPortName != null)
                 {
-                    if (GridEnable == true && BitsEnable == true)
+                    if (!SignalExist(Signal, _Datapath))
                     {
-                        if (ErrorCollection["SigEntityNameTxt"] == null && ErrorCollection["MsbTxt"] == null && ErrorCollection["LsbTxt"] == null)
-                            this._FinishEnable = true;
+                        if (GridEnable == true && BitsEnable == true)
+                        {
+                            if (ErrorCollection["SigEntityNameTxt"] == null && ErrorCollection["MsbTxt"] == null && ErrorCollection["LsbTxt"] == null)
+                                this._FinishEnable = true;
+                            else
+                                this._FinishEnable = false;
+                        }
+                        else if (GridEnable == true)
+                        {
+                            if (ErrorCollection["SigEntityNameTxt"] == null)
+                                this._FinishEnable = true;
+                            else
+                                this._FinishEnable = false;
+                        }
                         else
-                            this._FinishEnable = false;
-                    }
-                    else if (GridEnable == true)
-                    {
-                        if (ErrorCollection["SigEntityNameTxt"] == null)
+                        {
                             this._FinishEnable = true;
-                        else
-                            this._FinishEnable = false;
+                        }
                     }
                     else
-                    {
-                        this._FinishEnable = true;
-                    }
+                        this._FinishEnable = false;
                 }
                 else
                     this._FinishEnable = false;
@@ -422,6 +427,49 @@ namespace VHDLGenerator.ViewModels
                 return false;
             else
                 return true;
+        }
+
+        public bool SignalExist(SignalModel signal, DataPathModel data)
+        {
+            bool result = false;
+
+            if (signal != null && data.Signals != null)
+            {
+                foreach (SignalModel sig in data.Signals)
+                {
+                    bool name = false;
+                    bool SComp = false;
+                    bool SCompPort = false;
+                    bool TComp = false;
+                    bool TCompPort = false;
+
+                    if (signal.Name == sig.Name)
+                        name = true;
+                    if (signal.Source_Comp == sig.Source_Comp)
+                        SComp = true;
+                    if (signal.Source_port == sig.Source_port)
+                        SCompPort = true;
+                    if (signal.Target_Comp == sig.Target_Comp)
+                        TComp = true;
+                    if (signal.Target_port == sig.Target_port)
+                        TCompPort = true;
+
+                    if (signal.Name == null && sig.Name == null)
+                    {
+                        if (SComp && SCompPort && TComp && TCompPort)
+                        {
+                            result = true;
+                        }
+                        else
+                            result = false;
+                    }
+                    else if (name || (SComp && SCompPort && TComp && TCompPort))
+                    {
+                        result = true;
+                    }
+                }
+            }
+            return result;
         }
 
         #endregion
