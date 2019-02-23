@@ -105,7 +105,7 @@ namespace VHDLGenerator.Views
                     LoadFileTree();
 
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
-                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathJSON.txt"), newDP_ResultJSON);
+                    File.WriteAllText(System.IO.Path.Combine(NewFolderPath, "DatapathJSON.txt"), newDP_ResultJSON);
                 }
                 catch (Exception) { }
             }
@@ -131,7 +131,8 @@ namespace VHDLGenerator.Views
 
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
-                    System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathwsJSON.txt"), newDP_ResultJSON);
+                    //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathwsJSON.txt"), newDP_ResultJSON);
+                    File.WriteAllText(System.IO.Path.Combine(NewFolderPath, "DatapathJSON.txt"), newDP_ResultJSON);
                 }
                 catch (Exception) { }
             }
