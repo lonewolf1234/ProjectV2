@@ -7,13 +7,17 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity <#if(Name != null){#><#=Name #> <#;} #> is
-  Port(<# 
+<# 
 			if(Ports!= null)
 			{
+#>
+  Port(<#
 				foreach(string port in CompPortsData)
-				{#> <#= port #> 
+				{
+#> <#= port #> 
 <#				}
-			}#>
+			}
+#>
 end <#=Name #>;
 
 architecture <#= ArchName #> of <#=Name #> is

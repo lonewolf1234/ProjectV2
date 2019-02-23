@@ -12,8 +12,7 @@ entity <#if(Name != null){#><#=Name #> <#;} #>is
 			if(Ports!= null)
 			{
 #>
-  Port(
-<#
+  Port(<#
 				foreach(string port in MainPortsData)
 				{#> <#= port #> 
 <#				}
@@ -66,10 +65,13 @@ begin
 #>
 cop<#=component.ID #> : <#=component.Name #>
  port map(<#
-                foreach(string s in PortMappingProcess(component,Signals,Name))
+                if(component.Ports != null)
                 {
-#> <#=              s #>
+                    foreach(string s in PortMappingProcess(component,Signals,Name))
+                    {
+#> <#=                            s #>
 <#
+                    }
                 }
             }
 #>
