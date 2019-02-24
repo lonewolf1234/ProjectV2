@@ -37,7 +37,7 @@ namespace VHDLGenerator.Views
         private string NewFolderPath { get; set; }
         private int ID;
        
-        ////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////
 
         public MainWindow()
         {
