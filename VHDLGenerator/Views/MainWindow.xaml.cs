@@ -173,21 +173,21 @@ namespace VHDLGenerator.Views
         {
             CustomTreeView.Items.Clear();
 
-            TreeViewData1 maintv = new TreeViewData1();
+            TreeViewData maintv = new TreeViewData();
 
             if (DataPath.Name != null)
             {
-                TreeViewData1 tv = new TreeViewData1();
+                TreeViewData tv = new TreeViewData();
                 maintv.Title = DataPath.Name;
             }
 
             if (DataPath.Ports != null)
             {
-                TreeViewData1 tv = new TreeViewData1();
+                TreeViewData tv = new TreeViewData();
                 tv.Title = "Ports";
                 foreach (PortModel port in DataPath.Ports)
                 {
-                    TreeViewData1 tv1 = new TreeViewData1();
+                    TreeViewData tv1 = new TreeViewData();
                     tv1.Title = port.Name;
                     tv.Items.Add(tv1);
                 }
@@ -196,11 +196,11 @@ namespace VHDLGenerator.Views
 
             if (DataPath.Components != null)
             {
-                TreeViewData1 tv = new TreeViewData1();
+                TreeViewData tv = new TreeViewData();
                 tv.Title = "Components";
                 foreach(ComponentModel comp in DataPath.Components)
                 {
-                    TreeViewData1 tv1 = new TreeViewData1();
+                    TreeViewData tv1 = new TreeViewData();
                     tv1.Title = comp.Name;
                     tv.Items.Add(tv1);
                 }
@@ -209,7 +209,7 @@ namespace VHDLGenerator.Views
 
             if (DataPath.Signals != null)
             {
-                TreeViewData1 tv = new TreeViewData1();
+                TreeViewData tv = new TreeViewData();
                 tv.Title = "Signal";
                 maintv.Items.Add(tv);
             }
@@ -227,7 +227,7 @@ namespace VHDLGenerator.Views
                 string FileName = "";
                 Uri uri = new Uri(Path);
                 FileName = uri.Segments[uri.Segments.Length -1];
-                TreeViewData1 tv = new TreeViewData1();
+                TreeViewData tv = new TreeViewData();
                 tv.Title = FileName;
                 CodeTreeView.Items.Add(tv);
             }
@@ -260,7 +260,7 @@ namespace VHDLGenerator.Views
         {
             if (CodeTreeView.SelectedItem != null)
             {
-                var item = CodeTreeView.SelectedItem as TreeViewData1;
+                var item = CodeTreeView.SelectedItem as TreeViewData;
                 var itempath = System.IO.Path.Combine(NewFolderPath, item.Title);
                 Process.Start(itempath);
             }
@@ -269,14 +269,14 @@ namespace VHDLGenerator.Views
         }
     }
 
-    public class TreeViewData1
+    public class TreeViewData
     {
-        public TreeViewData1()
+        public TreeViewData()
         {
-            this.Items = new List<TreeViewData1>();
+            this.Items = new List<TreeViewData>();
         }
         public string Title { get; set; }
-        public List<TreeViewData1> Items { get; set; }
+        public List<TreeViewData> Items { get; set; }
     }
 
 

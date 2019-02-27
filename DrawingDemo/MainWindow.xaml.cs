@@ -43,8 +43,17 @@ namespace DrawingDemo
 
         public void Drawrect1()
         {
-            Rectangle rectangle = new Rectangle();
-            
+            myrect = new Rectangle
+            {
+                Stroke = Brushes.Blue,
+                StrokeThickness = 2,
+                Height = newheight - 50,
+                Width = newwidth - 150,
+            };
+
+            Canvas.SetLeft(myrect, 75);
+            Canvas.SetTop(myrect, 25);
+            canvas.Children.Add(myrect);
         }
 
         #region
