@@ -210,6 +210,7 @@
         <Grid Grid.Row="3">
             <Button
                 Grid.Row="3"
+                Background="LightCoral"
                 Name="Cancel"
                 Content="Cancel"
                 VerticalAlignment="Center"
@@ -221,6 +222,7 @@
 
             <Button
                 Name="Finish"
+                Background="LightGreen"
                 Content="Finish"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Right"
