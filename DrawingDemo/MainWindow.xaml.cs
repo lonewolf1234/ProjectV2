@@ -41,21 +41,18 @@ namespace DrawingDemo
             //DrawRect();
             Drawrect1();
             Drawrect2();
+            Drawrect3();
 
-            myrect3 = new Rectangle
+            Point p = new Point() { X = 0, Y = 0 };
+            System.Windows.Rect Winrect = new Rect()
             {
-                Stroke = Brushes.Blue,
-                StrokeThickness = 1,
-                //Height = newheight - 50,
-                //Width = newwidth - 150,
-                Height = canvas.ActualHeight - 30,
-                Width = canvas.ActualWidth - 30
+                Height = 100,
+                Width = 150,
+                Location = p
             };
-
-            Point point = new Point(15, 15);
-            Canvas.SetLeft(myrect3, point.X);
-            Canvas.SetTop(myrect3,point.Y);
-            canvas.Children.Add(myrect3);
+            //canvas.Children.Add();
+            //canvas.Arrange();
+           
 
         }
 
@@ -74,6 +71,7 @@ namespace DrawingDemo
             Point point = new Point(75, 25);
             Canvas.SetLeft(myrect1, point.X);
             Canvas.SetTop(myrect1, point.Y);
+            
            
 
             TextBlock port1 = new TextBlock();
@@ -154,6 +152,24 @@ namespace DrawingDemo
             Canvas.SetLeft(myrect2, point.X);
             Canvas.SetTop(myrect2, point.Y);
             canvas.Children.Add(myrect2);
+        }
+
+        public void Drawrect3()
+        {
+            myrect3 = new Rectangle
+            {
+                Stroke = Brushes.Blue,
+                StrokeThickness = 1,
+                //Height = newheight - 50,
+                //Width = newwidth - 150,
+                Height = canvas.ActualHeight - 30,
+                Width = canvas.ActualWidth - 30
+            };
+
+            Point point = new Point(15, 15);
+            Canvas.SetLeft(myrect3, point.X);
+            Canvas.SetTop(myrect3, point.Y);
+            canvas.Children.Add(myrect3);
         }
 
         #region
