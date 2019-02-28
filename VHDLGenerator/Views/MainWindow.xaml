@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:VHDLGenerator.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
         Title="MainWindow" Height="650" Width="1110">
     <Grid>
         <Grid Height="30" VerticalAlignment="Top" Background="LightSlateGray">
@@ -94,13 +95,8 @@
             </Grid>
 
             <Grid Grid.Column="1" Background="#eee">
-                <Label
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Content="Workspace"
-                    FontSize="20"
-                    
-                    />
+                <Canvas x:Name="canvas" MouseDown="Canvas_MouseDown" MouseMove="Canvas_MouseMove" MouseUp="Canvas_MouseUp" Background="#eee"  />
+
             </Grid>
 
 

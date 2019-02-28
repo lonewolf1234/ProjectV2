@@ -22,7 +22,9 @@ namespace DrawingDemo
     {
         private Point startPoint;
         private Rectangle rect;
-        private Rectangle myrect;
+        private Rectangle myrect1;
+        private Rectangle myrect2;
+        private Rectangle myrect3;
 
         public MainWindow()
         {
@@ -38,22 +40,120 @@ namespace DrawingDemo
             newwidth = canvas.ActualWidth;
             //DrawRect();
             Drawrect1();
+            Drawrect2();
+
+            myrect3 = new Rectangle
+            {
+                Stroke = Brushes.Blue,
+                StrokeThickness = 1,
+                //Height = newheight - 50,
+                //Width = newwidth - 150,
+                Height = canvas.ActualHeight - 30,
+                Width = canvas.ActualWidth - 30
+            };
+
+            Point point = new Point(15, 15);
+            Canvas.SetLeft(myrect3, point.X);
+            Canvas.SetTop(myrect3,point.Y);
+            canvas.Children.Add(myrect3);
 
         }
 
         public void Drawrect1()
         {
-            myrect = new Rectangle
+            myrect1 = new Rectangle
             {
                 Stroke = Brushes.Blue,
-                StrokeThickness = 2,
-                Height = newheight - 50,
-                Width = newwidth - 150,
+                StrokeThickness = 1,
+                //Height = newheight - 50,
+                //Width = newwidth - 150,
+                //Height = 75,
+                Width = 100
             };
 
-            Canvas.SetLeft(myrect, 75);
-            Canvas.SetTop(myrect, 25);
-            canvas.Children.Add(myrect);
+            Point point = new Point(75, 25);
+            Canvas.SetLeft(myrect1, point.X);
+            Canvas.SetTop(myrect1, point.Y);
+           
+
+            TextBlock port1 = new TextBlock();
+            port1.Text = "Port 1";
+            Point TextPoint1 = new Point(point.X + 2, point.Y + 2);
+            Canvas.SetLeft(port1, TextPoint1.X);
+            Canvas.SetTop(port1, TextPoint1.Y);
+            canvas.Children.Add(port1);
+
+            TextBlock port2 = new TextBlock();
+            port2.Text = "Port 2";
+            Point TextPoint2 = new Point(point.X + 2, point.Y + 2 + 15);
+            Canvas.SetLeft(port2, TextPoint2.X);
+            Canvas.SetTop(port2, TextPoint2.Y);
+            canvas.Children.Add(port2);
+
+            Point point2 = new Point(275, 125);
+
+            TextBlock port3 = new TextBlock();
+            port3.Text = "Port 3";
+            Point TextPoint3 = new Point(point.X +100 - 32, point.Y + 2);
+            Canvas.SetLeft(port3, TextPoint3.X);
+            Canvas.SetTop(port3, TextPoint3.Y);
+            canvas.Children.Add(port3);
+
+            TextBlock port4 = new TextBlock();
+            port4.Text = "Port 4";
+            
+            Point TextPoint4 = new Point(point2.X + 2, point2.Y + 2 );
+            Canvas.SetLeft(port4, TextPoint4.X);
+            Canvas.SetTop(port4, TextPoint4.Y);
+            canvas.Children.Add(port4);
+
+            
+            Point[] points = new Point[4];
+            points[0] = new Point(TextPoint3.X + 32 , TextPoint3.Y + 10);
+            points[1] = new Point( (points[0].X + TextPoint4.X)/2 , points[0].Y);
+            points[2] = new Point(points[1].X, TextPoint4.Y + 10);
+            points[3] = new Point(TextPoint4.X  , points[2].Y);
+
+            for(int i = 0; i < 3;i++)
+            {
+                Line line = new Line() { X1 = points[i].X, Y1 = points[i].Y, X2 = points[i+1].X, Y2 = points[i+1].Y};
+                line.StrokeThickness = 1;
+                line.Stroke = Brushes.Black;
+                canvas.Children.Add(line);
+
+            }
+
+           
+
+            myrect1.Height = 12+12 + 10;
+            canvas.Children.Add(myrect1);
+            //Line line = new Line();
+            //line.Stroke = Brushes.Yellow;
+            //line.StrokeThickness = 1;
+
+            //line.X1 = TextPoint3.X + 32;
+            //line.Y1 = TextPoint3.Y + 10;
+            //line.X2 = TextPoint4.X;
+            //line.Y2 = TextPoint4.Y + 10;
+            //canvas.Children.Add(line);
+        }
+
+        public void Drawrect2()
+        {
+            myrect2 = new Rectangle
+            {
+                Stroke = Brushes.Blue,
+                StrokeThickness = 1,
+                //Height = newheight - 50,
+                //Width = newwidth - 150,
+                Height = 12 + 10,
+                Width = 100
+            };
+
+            Point point = new Point(275, 125);
+            Canvas.SetLeft(myrect2, point.X);
+            Canvas.SetTop(myrect2, point.Y);
+            canvas.Children.Add(myrect2);
         }
 
         #region
@@ -147,6 +247,7 @@ namespace DrawingDemo
 
             Canvas.SetLeft(rect, x);
             Canvas.SetTop(rect, y);
+            
         }
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)

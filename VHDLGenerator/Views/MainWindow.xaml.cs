@@ -30,13 +30,20 @@ namespace VHDLGenerator.Views
         /// <summary>
         /// Main Data Produced by the windows
         /// </summary>
+        /// 
+
+        #region
         private DataPathModel DataPath = new DataPathModel();
         private List<ComponentModel> components = new List<ComponentModel>();
         private List<SignalModel> signals = new List<SignalModel>();
         private string DebugPath { get; set; }
         private string NewFolderPath { get; set; }
         private int ID;
-       
+        #endregion
+
+        private Point startPoint;
+        private Rectangle rect;
+        private bool _loaded;
         ///////////////////////////////////////////////////////////////
 
         public MainWindow()
@@ -44,7 +51,7 @@ namespace VHDLGenerator.Views
             InitializeComponent();
             //Data = new MainViewModel(DataPath);
             //this.DataContext = Data;
-
+            _loaded = false;
             ID = 1;
 
             //Path to the location of the executable
@@ -57,16 +64,18 @@ namespace VHDLGenerator.Views
             Btn_Datapath.IsEnabled = true;
         }
 
+        #region Main Code
+
         private void Btn_Datapath_Click(object sender, RoutedEventArgs e)
         {
             Window_Datapath window_Datapath = new Window_Datapath();
-            
-            if( window_Datapath.ShowDialog()== true)
+
+            if (window_Datapath.ShowDialog() == true)
             {
                 try
                 {
                     DataPath = window_Datapath.GetDataPathModel;
-                   
+
                     Btn_Component.IsEnabled = true;
                     Btn_Signal.IsEnabled = true;
                     Btn_Datapath.IsEnabled = false;
@@ -76,6 +85,10 @@ namespace VHDLGenerator.Views
 
                     LoadDataTree();
                     LoadFileTree();
+
+                    ///////////////////////////////////Drawing code
+                    RenderDatapath(DataPath);
+                    ////////////////////////////////////
                 }
                 catch (Exception) { }
             }
@@ -103,6 +116,8 @@ namespace VHDLGenerator.Views
 
                     LoadDataTree();
                     LoadFileTree();
+
+                    RenderComponent(DataPath);
 
                     var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
                     File.WriteAllText(System.IO.Path.Combine(NewFolderPath, "DatapathJSON.txt"), newDP_ResultJSON);
@@ -146,12 +161,12 @@ namespace VHDLGenerator.Views
                 {
                     DataPathTemplate DPTemplate = new DataPathTemplate(Data);
                     String DPText = DPTemplate.TransformText();
-                    
+
                     //string textpath = Data.Name + ".txt";
                     //string newpath = System.IO.Path.Combine(NewFolderPath, textpath);
                     File.WriteAllText(System.IO.Path.Combine(NewFolderPath, Data.Name + ".txt"), DPText);
 
-                   //File.WriteAllText(Data.Name + ".txt", DPText);
+                    //File.WriteAllText(Data.Name + ".txt", DPText);
                 }
             }
             catch (Exception) { }
@@ -198,7 +213,7 @@ namespace VHDLGenerator.Views
             {
                 TreeViewData tv = new TreeViewData();
                 tv.Title = "Components";
-                foreach(ComponentModel comp in DataPath.Components)
+                foreach (ComponentModel comp in DataPath.Components)
                 {
                     TreeViewData tv1 = new TreeViewData();
                     tv1.Title = comp.Name;
@@ -221,12 +236,12 @@ namespace VHDLGenerator.Views
             CodeTreeView.Items.Clear();
 
             List<string> FileNames = new List<string>(Directory.GetFiles(NewFolderPath));
-            
-            foreach(string Path in FileNames)
+
+            foreach (string Path in FileNames)
             {
                 string FileName = "";
                 Uri uri = new Uri(Path);
-                FileName = uri.Segments[uri.Segments.Length -1];
+                FileName = uri.Segments[uri.Segments.Length - 1];
                 TreeViewData tv = new TreeViewData();
                 tv.Title = FileName;
                 CodeTreeView.Items.Add(tv);
@@ -264,19 +279,180 @@ namespace VHDLGenerator.Views
                 var itempath = System.IO.Path.Combine(NewFolderPath, item.Title);
                 Process.Start(itempath);
             }
-           
+
             //MessageBox.Show(item.Title);
         }
-    }
 
-    public class TreeViewData
-    {
-        public TreeViewData()
+        #endregion
+
+        #region
+        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.Items = new List<TreeViewData>();
+            startPoint = e.GetPosition(canvas);
+
+            rect = new Rectangle
+            {
+                Stroke = Brushes.LightBlue,
+                StrokeThickness = 2
+            };
+            Canvas.SetLeft(rect, startPoint.X);
+            Canvas.SetTop(rect, startPoint.Y);
+            canvas.Children.Add(rect);
         }
-        public string Title { get; set; }
-        public List<TreeViewData> Items { get; set; }
+
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Released || rect == null)
+                return;
+
+            var pos = e.GetPosition(canvas);
+
+            var x = Math.Min(pos.X, startPoint.X);
+            var y = Math.Min(pos.Y, startPoint.Y);
+
+            var w = Math.Max(pos.X, startPoint.X) - x;
+            var h = Math.Max(pos.Y, startPoint.Y) - y;
+
+            rect.Width = w;
+            rect.Height = h;
+
+            Canvas.SetLeft(rect, x);
+            Canvas.SetTop(rect, y);
+
+        }
+
+        private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            rect = null;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            _loaded = true;
+        }
+
+        private void RenderDatapath(DataPathModel _data)
+        {
+
+            if (_data.Name != null)
+            {
+                Rectangle dprect = new Rectangle
+                {
+                    Stroke = Brushes.Blue,
+                    StrokeThickness = 1,
+                    Height = canvas.ActualHeight - 100,
+                    Width = canvas.ActualWidth - 100
+                };
+
+                Point spoint = new Point(50, 50);
+                Canvas.SetLeft(dprect, spoint.X);
+                Canvas.SetTop(dprect, spoint.Y);
+                canvas.Children.Add(dprect);
+
+                if (_data.Ports != null)
+                {
+                    int incount = 1;
+                    int outcount = 1;
+                    
+                    foreach (PortModel port in _data.Ports)
+                    {
+                        TextBlock textBlock = new TextBlock() { Text = port.Name, FontSize = 10 };
+                        Point point = new Point();
+                        if (port.Direction == "in")
+                        {
+                            point.X = spoint.X + 5;
+                            point.Y = spoint.Y + (incount * 10);
+                            incount++;
+                        }
+                        else
+                        {
+
+                            point.X = spoint.X + dprect.Width - (textBlock.Text.Length * 5) - 5;
+                            point.Y = spoint.Y + (outcount * 10) ;
+                            outcount++;
+                        }
+                        Canvas.SetLeft(textBlock, point.X);
+                        Canvas.SetTop(textBlock, point.Y);
+                        canvas.Children.Add(textBlock);
+                    }
+                }
+            }
+        }
+
+        private void RenderComponent(DataPathModel _data)
+        {
+            if (_data.Components != null)
+            {
+                Point point = new Point(50, 50);
+                Point StartPoint = new Point() { X = 100, Y = 100 };
+                int count1 = 0;
+                int count2 = 0;
+                int height = 0;
+
+                foreach( PortModel port in _data.Components.Last().Ports)
+                {
+                    if (port.Direction == "in")
+                        count1++;
+                    else
+                        count2++;
+                }
+
+                if (count1 > count2)
+                    height = count1;
+                else
+                    height = count2;
+
+                Rectangle rectComp = new Rectangle()
+                {
+                    Stroke = Brushes.Black,
+                    StrokeThickness = 1,
+                    Height = (height * 10) + 20,
+                    Width = 100
+                };
+                Canvas.SetLeft(rectComp, StartPoint.X);
+                Canvas.SetTop(rectComp, StartPoint.Y);
+                canvas.Children.Add(rectComp);
+
+                RenderPortText(_data.Components.Last().Ports, StartPoint);
+            }
+        }
+
+        private void RenderPortText(List<PortModel> _data, Point _point)
+        {
+            int incount = 1;
+            int outcount = 1;
+            foreach (PortModel port in _data)
+            {
+                TextBlock textBlock = new TextBlock() { Text = port.Name, FontSize = 10 };
+                Point point = new Point();
+                if (port.Direction == "in")
+                {
+                    point.X = _point.X + 5;
+                    point.Y = _point.Y + (incount * 10) ;
+                    incount++;
+                }
+                else
+                {
+                    point.X = _point.X + rect.Width - (textBlock.Text.Length * 5) - 5;
+                    point.Y = _point.Y + (outcount * 10) ;
+                    outcount++;
+                }
+                Canvas.SetLeft(textBlock, point.X);
+                Canvas.SetTop(textBlock, point.Y);
+                canvas.Children.Add(textBlock);
+            }
+            #endregion
+        }
+
+        public class TreeViewData
+        {
+            public TreeViewData()
+            {
+                this.Items = new List<TreeViewData>();
+            }
+            public string Title { get; set; }
+            public List<TreeViewData> Items { get; set; }
+        }
     }
 
 
