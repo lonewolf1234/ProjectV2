@@ -125,6 +125,7 @@ namespace VHDLGenerator.ViewModels
                 return TempPort;
             }
         }
+
         public List<PortModel> GetPorts
         {
             get
@@ -176,6 +177,16 @@ namespace VHDLGenerator.ViewModels
                 return this._AddPortEnable;
             }
             set { this._AddPortEnable = value; }
+        }
+
+        public void DeletePort(PortModel port)
+        {
+            bool remove = false;
+            remove = Ports.Remove(port);
+            if(remove == true)
+            {
+                DataPath.Ports = Ports;
+            }
         }
 
 
