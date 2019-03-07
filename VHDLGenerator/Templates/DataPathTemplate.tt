@@ -9,7 +9,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity <#if(Name != null){#><#=Name #> <#;} #>is
 <# 
-			if(Ports!= null)
+			if(Ports.Count > 0)
 			{
 #>
   Port(<#
@@ -22,17 +22,22 @@ end <#=Name #>;
 architecture <#= ArchName #> of <#=Name #> is
 
 <#
-    if(Components!= null)
+    if(Components.Count > 0)
     {
         foreach(ComponentModel component in Components)
         {
 #>
 component <#=                component.Name #>
-  Port(<#
-            foreach(string port in PortTranslation(component.Ports))
-            {
-#> <#=                    port#>
 <#
+            if(component.Ports != null)
+            {
+#>
+  Port(<#
+                foreach(string port in PortTranslation(component.Ports))
+                {
+#> <#=                        port#>
+<#
+                }
             }
 #>
 end component;
@@ -42,7 +47,7 @@ end component;
     }
 #>
 <#
-    if(SignalData!= null)
+    if(SignalData.Count > 0)
     {
         foreach(string signal in SignalData)
         {
@@ -56,7 +61,7 @@ end component;
 begin
 
 <#
-    if(Components!= null)
+    if(Components.Count > 0)
     {
         foreach(ComponentModel component in Components)
         {
@@ -64,9 +69,11 @@ begin
             {
 #>
 cop<#=component.ID #> : <#=component.Name #>
- port map(<#
+<#
                 if(component.Ports != null)
                 {
+#>
+ port map(<# 
                     foreach(string s in PortMappingProcess(component,Signals,Name))
                     {
 #> <#=                            s #>

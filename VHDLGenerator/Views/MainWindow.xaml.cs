@@ -27,44 +27,53 @@ namespace VHDLGenerator.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Private Variables
         /// <summary>
         /// Main Data Produced by the windows
         /// </summary>
         /// 
+        private DataPathModel _dataPath;
 
-        #region
-        private DataPathModel DataPath = new DataPathModel();
-        private List<ComponentModel> components = new List<ComponentModel>();
-        private List<SignalModel> signals = new List<SignalModel>();
-        private string DebugPath { get; set; }
-        private string NewFolderPath { get; set; }
-        private int ID;
-        #endregion
+        /// <summary>
+        /// Path Location of the Debug Folder in Visual Studio IDE
+        /// </summary>
+        private string _debugPath;
+
+        /// <summary>
+        /// Path Loaction of the Generated Code Folder
+        /// </summary>
+        private string _newFolderPath;
+
+        /// <summary>
+        /// ID that is assigned on the creation of a new component. It is used in the Port Mapping Process
+        /// </summary>
+        private int _id;
 
         //private Point startPoint;
         //private Rectangle rect;
         //private bool _loaded;
-        ///////////////////////////////////////////////////////////////
+        #endregion
+
+        #region Main Code
+
+        #region Window Methods
 
         public MainWindow()
         {
             InitializeComponent();
-            //Data = new MainViewModel(DataPath);
-            //this.DataContext = Data;
-            //_loaded = false;
-            ID = 1;
-
-            //Path to the location of the executable
-            DebugPath = (string)System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            //Path to the location of the executable moved one folder up
-            CreateFolder();
+            _dataPath = new DataPathModel();
+            _debugPath = (string)System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);     //Path to the location of the executable
+            CreateFolder();                                                                                     //Path to the location of the executable moved one folder up
+            _id = 1;
 
             Btn_Component.IsEnabled = false;
             Btn_Signal.IsEnabled = false;
             Btn_Datapath.IsEnabled = true;
-        }
 
-        #region Main Code
+            //Data = new MainViewModel(DataPath);
+            //this.DataContext = Data;
+            //_loaded = false;
+        }
 
         private void Btn_Datapath_Click(object sender, RoutedEventArgs e)
         {
@@ -74,226 +83,217 @@ namespace VHDLGenerator.Views
             {
                 try
                 {
-                    DataPath = window_Datapath.GetDataPathModel;
+                    _dataPath = window_Datapath.GetDataPathModel;           //Gets the DataPath Object from the Datapath menu and passes it to _datapath
 
-                    Btn_Component.IsEnabled = true;
-                    Btn_Signal.IsEnabled = true;
+                    Btn_Component.IsEnabled = true;                         //Disables the Datapath button and enables the other buttons
+                    Btn_Signal.IsEnabled = false;
                     Btn_Datapath.IsEnabled = false;
+                    GenerateDatapath(_dataPath);                            //DataPath Code Generation
 
-                    //Datapath File Generation
-                    GenerateDatapath(DataPath);
-
-                    LoadDataTree();
-                    LoadFileTree();
-
-                    ///////////////////////////////////Drawing code
-                    //RenderDatapath(DataPath);
-                    ////////////////////////////////////
+                    LoadFileTree();                                         //Loads text into the Project file tree view using info in _dataPath
+                    LoadCodeTree();                                         //Loads generated code file names into the tree view using the _newfolderPath
                 }
                 catch (Exception) { }
             }
         }
         private void Btn_Component_Click(object sender, RoutedEventArgs e)
         {
-            Window_Component window_Component = new Window_Component();
+            Window_Component window_Component = new Window_Component();     //Creates new instance of component window 
             ComponentModel model = new ComponentModel();
 
-            if (window_Component.ShowDialog() == true)
+            if (window_Component.ShowDialog() == true)                      //Waits till the window is closed
             {
                 try
                 {
-                    model = window_Component.GetComponentModel;
-                    model.ID = ID.ToString();
-                    ID++;
+                    model = window_Component.GetComponentModel;             //Gets the component model produced by the component menu
+                    model.ID = _id.ToString();                              //Sets the component ID to an int _id
+                    _id++;                                                  //Increments _id everytime a component is created
+                    //models.Add(model);
+                    _dataPath.Components.Add(model);                       //Adds the Model data to _dataPath
 
-                    components.Add(model);
-                    DataPath.Components = components;
+                    GenerateDatapath(_dataPath);                            //Regenerates Datapath Code File
+                    GenerateComponents(_dataPath);                          //Generates Component Code File
 
-                    //Datapath File Generation
-                    GenerateDatapath(DataPath);
-                    //Component File Generation
-                    GenerateComponents(DataPath);
-
-                    LoadDataTree();
-                    LoadFileTree();
-
-                    //RenderComponent(DataPath);
-
-                    var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
-                    File.WriteAllText(System.IO.Path.Combine(NewFolderPath, "DatapathJSON.txt"), newDP_ResultJSON);
+                    LoadFileTree();                                         //Loads text into the Project file tree view using info in _dataPath
+                    LoadCodeTree();                                         //Loads generated code file names into the tree view using the _newfolderPath
+                    Btn_Signal.IsEnabled = true;
+                    #region Debug
+                    //var newDP_ResultJSON = JsonConvert.SerializeObject(_dataPath, Formatting.Indented);
+                    //File.WriteAllText(System.IO.Path.Combine(_newFolderPath, "DatapathJSON.txt"), newDP_ResultJSON);
+                    #endregion
                 }
                 catch (Exception) { }
             }
         }
         private void Btn_Signal_Click(object sender, RoutedEventArgs e)
         {
-            Window_Signal window_Signal = new Window_Signal(DataPath);
-            if (window_Signal.ShowDialog() == true)
+            Window_Signal window_Signal = new Window_Signal(_dataPath);     //Creates a new Window instance upon button click and passes the _dataPath into it
+
+            if (window_Signal.ShowDialog() == true)                         //Waits till the window is closed
             {
                 try
                 {
-                    //signals.Add(JsonConvert.DeserializeObject<SignalModel>(window_Signal.GetSignalJSON));
-                    signals.Add(window_Signal.GetSignalModel);
-                    DataPath.Signals = signals;
+                    _dataPath.Signals.Add(window_Signal.GetSignalModel);    //Gets the Signal model from the signal Menu and addds it to the _dataPath
 
-                    //Datapath File Generation
-                    GenerateDatapath(DataPath);
-                    //Component File Generation
-                    //GenerateComponents(DataPath);
+                    GenerateDatapath(_dataPath);                            //Regenerates the Datapath Code using the new data from the signal menu (Port Mapping)
 
-                    LoadDataTree();
-                    LoadFileTree();
+                    LoadFileTree();                                         //Loads text into the Project file tree view using info in _dataPath
+                    LoadCodeTree();                                         //Loads generated code file names into the tree view using the _newfolderPath
 
+                    #region Debug
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "SignalJSON.txt"), window_Signal.GetSignalJSON);
-                    var newDP_ResultJSON = JsonConvert.SerializeObject(DataPath, Formatting.Indented);
+                    //var newDP_ResultJSON = JsonConvert.SerializeObject(_dataPath, Formatting.Indented);
                     //System.IO.File.WriteAllText(System.IO.Path.Combine(DebugPath, "newDatapathwsJSON.txt"), newDP_ResultJSON);
-                    File.WriteAllText(System.IO.Path.Combine(NewFolderPath, "DatapathJSON.txt"), newDP_ResultJSON);
+                    //File.WriteAllText(System.IO.Path.Combine(_newFolderPath, "DatapathJSON.txt"), newDP_ResultJSON);
+                    #endregion
                 }
                 catch (Exception) { }
             }
         }
 
+        private void Btn_OpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            if (CodeTreeView.SelectedItem != null)                                  //Checks to see if anything is selected in the CodeTreeView
+            {
+                var item = CodeTreeView.SelectedItem as TreeViewData;               //Casts the selected item into a TreeViewData Class
+                var itempath = System.IO.Path.Combine(_newFolderPath, item.Title);  //combines the item name to the folder path to create the path for the code file
+                Process.Start(itempath);                                            //Opens the code file
+            }
+        }
+        #endregion
+
+        #region Other Methods
+
+        /// <summary>
+        /// Generates VHDL Code using a DataPathModel and DataPathTemplate 
+        /// </summary>
         private void GenerateDatapath(DataPathModel Data)
         {
             try
             {
                 if (Data != null && Data.Name != null)
                 {
-                    DataPathTemplate DPTemplate = new DataPathTemplate(Data);
-                    String DPText = DPTemplate.TransformText();
-
-                    //string textpath = Data.Name + ".txt";
-                    //string newpath = System.IO.Path.Combine(NewFolderPath, textpath);
-                    File.WriteAllText(System.IO.Path.Combine(NewFolderPath, Data.Name + ".txt"), DPText);
-
-                    //File.WriteAllText(Data.Name + ".txt", DPText);
+                    DataPathTemplate DPTemplate = new DataPathTemplate(Data);                               //Creates an instance of the datapath templates using the Data passed into the function
+                    String DPText = DPTemplate.TransformText();                                             //Generates the code into a string using the DataPath Template file
+                    
+                    File.WriteAllText(System.IO.Path.Combine(_newFolderPath, Data.Name + ".txt"), DPText);  //Combines the folder path and datapath name to create the code file and writes the string to it
                 }
             }
             catch (Exception) { }
         }
+
+        /// <summary>
+        /// Generates VHDL Code using the ComponentModel List in DataPathModel and ComponentTemplate
+        /// </summary>
         public void GenerateComponents(DataPathModel Data)
         {
             if (Data.Components != null)
             {
-                foreach (ComponentModel comp in Data.Components)
+                foreach (ComponentModel comp in Data.Components)                                            //Cycles through all components in data that was passed into the function
                 {
-                    ComponentTemplate CompTemplate = new ComponentTemplate(comp);
-                    String CompText = CompTemplate.TransformText();
-                    //File.WriteAllText(comp.Name + ".txt", CompText);
-                    File.WriteAllText(System.IO.Path.Combine(NewFolderPath, comp.Name + ".txt"), CompText);
+                    ComponentTemplate CompTemplate = new ComponentTemplate(comp);                           //Creates an instance of the Component template using the comp passed into the function
+                    String CompText = CompTemplate.TransformText();                                         //Generates the code into a string using the Component Template file
+                    File.WriteAllText(System.IO.Path.Combine(_newFolderPath,comp.Name+ ".txt"),CompText);   //Combines the folder path and comp name to create the code file and writes the string to it
                 }
             }
         }
-        public void LoadDataTree()
+
+        /// <summary>
+        /// Automatically populates the Project File TreeView based on the data contained _dataPath
+        /// </summary>
+        public void LoadFileTree()
         {
-            CustomTreeView.Items.Clear();
+            CustomTreeView.Items.Clear();                       //Clears all items from the existing TreeView
 
             TreeViewData maintv = new TreeViewData();
 
-            if (DataPath.Name != null)
+            if (_dataPath.Name != null)
             {
                 TreeViewData tv = new TreeViewData();
-                maintv.Title = DataPath.Name;
+                maintv.Title = _dataPath.Name;                  //Adds the main tree named after the datapath name                                               
             }
 
-            if (DataPath.Ports != null)
+            if (_dataPath.Ports != null)
             {
                 TreeViewData tv = new TreeViewData();
-                tv.Title = "Ports";
-                foreach (PortModel port in DataPath.Ports)
+                tv.Title = "Ports";                             //Add section named ports
+                foreach (PortModel port in _dataPath.Ports)
                 {
                     TreeViewData tv1 = new TreeViewData();
-                    tv1.Title = port.Name;
+                    tv1.Title = port.Name;                      //Add ports as children to the section
                     tv.Items.Add(tv1);
                 }
                 maintv.Items.Add(tv);
             }
 
-            if (DataPath.Components != null)
+            if (_dataPath.Components != null)
             {
                 TreeViewData tv = new TreeViewData();
-                tv.Title = "Components";
-                foreach (ComponentModel comp in DataPath.Components)
+                tv.Title = "Components";                        //Add section named components
+                foreach (ComponentModel comp in _dataPath.Components)
                 {
                     TreeViewData tv1 = new TreeViewData();
-                    tv1.Title = comp.Name;
+                    tv1.Title = comp.Name;                      //Add components as children to the section
                     tv.Items.Add(tv1);
                 }
                 maintv.Items.Add(tv);
             }
 
-            if (DataPath.Signals != null)
+            if (_dataPath.Signals != null)
             {
                 TreeViewData tv = new TreeViewData();
-                tv.Title = "Signal";
+                tv.Title = "Signal";                            //Add section named signals
                 maintv.Items.Add(tv);
             }
 
             CustomTreeView.Items.Add(maintv);
         }
-        public void LoadFileTree()
-        {
-            CodeTreeView.Items.Clear();
 
-            List<string> FileNames = new List<string>(Directory.GetFiles(NewFolderPath));
+        /// <summary>
+        /// Automatically populates the Generated Code File TreeView based on what is contained in the Generated Code Folder
+        /// </summary>
+        public void LoadCodeTree()
+        {
+            CodeTreeView.Items.Clear();                                                         //Clears all items in the CodeTreeView
+
+            List<string> FileNames = new List<string>(Directory.GetFiles(_newFolderPath));      //Gets all file names in the Generated Code Folder
 
             foreach (string Path in FileNames)
             {
                 string FileName = "";
-                Uri uri = new Uri(Path);
-                FileName = uri.Segments[uri.Segments.Length - 1];
+                Uri uri = new Uri(Path);                                                        //Gets the path of the item
+                FileName = uri.Segments[uri.Segments.Length - 1];                               //Takes the last segment of the item URI (File Name)
                 TreeViewData tv = new TreeViewData();
-                tv.Title = FileName;
+                tv.Title = FileName;                                                            //Adds the file name to the CodeTreeView
                 CodeTreeView.Items.Add(tv);
             }
-
         }
+
+        /// <summary>
+        /// Creates an empty folder to store the generated code outside the folder that contains the application's executable file
+        /// </summary>
         public void CreateFolder()
         {
             string temp = "";
             string FolderPath = "";
-            Uri uri = new Uri((string)System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
-            temp = uri.Segments[uri.Segments.Length - 1];
-            FolderPath = DebugPath.Substring(0, DebugPath.Length - temp.Length - 1);
-            string pathString = System.IO.Path.Combine(FolderPath, "GeneratedCode");
-            NewFolderPath = pathString;
-            //checks to see if the folder "GenerateCode exists"
-            if (Directory.Exists(pathString))
+
+            Uri uri = new Uri((string)System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));   //get the path of the executable application file
+            temp = uri.Segments[uri.Segments.Length - 1];                                                           //stores the last segment of the path
+            FolderPath = _debugPath.Substring(0, _debugPath.Length - temp.Length - 1);                              //grabs everything in the path except the last segment and the backslash
+            string pathString = System.IO.Path.Combine(FolderPath, "GeneratedCode");                                //combines the path with "Generated Code"
+            _newFolderPath = pathString;                                                                            //Sets the _newFolderPath to that of the desired folder path
+            
+            if (Directory.Exists(pathString))                                                                       //checks to see if the folder "GenerateCode exists"
             {
-                //delets folder and creates a new empty one
-                Directory.Delete(pathString, true);
+                Directory.Delete(pathString, true);                                                                 //delets folder and creates a new empty one
                 Directory.CreateDirectory(pathString);
             }
             else
-            {
-                //creates a new folder if it doesnot exist
-                Directory.CreateDirectory(pathString);
-            }
+                Directory.CreateDirectory(pathString);                                                              //creates a new folder if it doesnot exist
         }
-
-        private void Btn_OpenFile_Click(object sender, RoutedEventArgs e)
-        {
-            if (CodeTreeView.SelectedItem != null)
-            {
-                var item = CodeTreeView.SelectedItem as TreeViewData;
-                var itempath = System.IO.Path.Combine(NewFolderPath, item.Title);
-                Process.Start(itempath);
-            }
-
-            //MessageBox.Show(item.Title);
-        }
-
         #endregion
 
-        public class TreeViewData
-        {
-            public TreeViewData()
-            {
-                this.Items = new List<TreeViewData>();
-            }
-            public string Title { get; set; }
-            public List<TreeViewData> Items { get; set; }
-        }
+        #endregion
     }
 
 

@@ -8,7 +8,13 @@ namespace VHDLGenerator.Models
 {
     public class DataPathModel
     {
-        public DataPathModel() { }
+        public DataPathModel()
+        {
+            this.Ports = new List<PortModel>();
+            this.Components = new List<ComponentModel>();
+            this.Signals = new List<SignalModel>();
+
+        }
 
         public string Name { get; set; }
 
@@ -19,12 +25,5 @@ namespace VHDLGenerator.Models
         public List<ComponentModel> Components { get; set; }
 
         public List<SignalModel> Signals { get; set; }
-
-        //this.Name = data.Name;
-        //this.ArchName = data.ArchName;
-        //this.Ports = data.Ports;
-        //this.Components = data.Components;
-        //this.Signals = data.Signals;
-
     }
 }

@@ -19,86 +19,48 @@ namespace VHDLGenerator.Views
 {
     /// <summary>
     /// Interaction logic for Window_Component.xaml
+    /// Sets the DataContext of the Window to that of the Component ViewModel
+    /// To allow for Bindings
     /// </summary>
     public partial class Window_Component : Window
     {
-        //JSON that contains the data entered in the datapath window
-        //public string GetCompJSON
-        //{
-        //    get
-        //    {
-        //        return JsonConvert.SerializeObject(this.Data.GetComponent, Formatting.Indented);
-        //    }
-        //}
-
-        public ComponentModel GetComponentModel { get { return this.Data.GetComponent; } }
-
+        #region Private Varible
         private ComponentViewModel Data;
+        #endregion
 
+        #region Properties
+        //Allows for the MainWindow to retrive the Component Model created by the Component Menu
+        public ComponentModel GetComponentModel { get { return this.Data.GetComponent; } }
+        #endregion
+
+        #region Methods
+        //constructor
         public Window_Component()
         {
             InitializeComponent();
-            //ArchNameTB.Text = "Behavioural";
-            Data = new ComponentViewModel();
-            this.DataContext = Data;
+            Data = new ComponentViewModel();            //Creates an instance for the ComponentViewModel
+            this.DataContext = Data;                    //Sets the DataContext of the this Window to that of the ComponentViewModel
+                                                        //to allow for Binding of the VM properties to the XAML
         }
 
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
-            #region Old code that has been commented
-            ////adding data into port model
-            //PortModel tempPort = new PortModel
-            //{
-            //    Name = PortName_TB.Text,
-            //    Direction = Direction_CB.Text,
-            //    Bus = (bool)Bus_CB.IsChecked,
-            //    MSB = MSB_TB.Text,
-            //    LSB = LSB_TB.Text
-            //};
-
-            ////add port to the data grid
-            //PortDataGrid.Items.Add(tempPort);
-            ////Add Port to list
-            //ports.Add(tempPort);
-
-            ////Clear data present in the port dat fields
-            ////Resets it to default
-            //PortName_TB.Text = String.Empty;
-            //Direction_CB.Text = String.Empty;
-            //Bus_CB.IsChecked = false;
-            //MSB_TB.Text = String.Empty;
-            //LSB_TB.Text = String.Empty;
-            #endregion
-
-            PortDataGrid.Items.Add(Data.GetPortData);
-            Data.AddPortSel = true;
             
+            PortDataGrid.Items.Add(Data.GetPortData);   //Adds the Port created to the Datagrid 
+            Data.AddPortSel = true;                     //Set the AddPortSel prop to true when the AddPort button is clicked
+
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.Close();                               //Closes instance of window when Cancel is selected 
         }
 
         private void Finish_Click(object sender, RoutedEventArgs e)
         {
-            #region Old Code
-            //Guid guid = Guid.NewGuid();
-
-            //ComponentModel componentObj = new ComponentModel()
-            //{
-            //    //ID = guid.ToString(),
-            //    Name = EntityNameTB.Text,
-            //    ArchName = ArchNameTB.Text,
-            //    Ports = ports
-            //};
-
-            //Comp_ResultJSON = JsonConvert.SerializeObject(this.Data.GetComponent, Formatting.Indented);
-            //this.DataContext = Data.GetComponent;
-            #endregion
-
-            this.DialogResult = true;
-            this.Close();
+            this.DialogResult = true;                   //Set dialogResult to True to signify that data entry is finished
+            this.Close();                               //Closes instance of window when Finish is selected
         }
+        #endregion
     }
 }

@@ -47,18 +47,23 @@ namespace VHDLGenerator.Templates
                         temp = $"{port.Name} : {port.Direction} STD_LOGIC";
                     }
 
-                    if (ports.First() == port)
+                    if (ports.Count > 1)
                     {
-                        templist.Add(temp + ";");
-                    }
-                    else if (ports.Last() == port)
-                    {
-                        templist.Add("\t" + temp + ");");
+                        if (ports.First() == port)
+                        {
+                            templist.Add(temp + ";");
+                        }
+                        else if (ports.Last() == port)
+                        {
+                            templist.Add("\t" + temp + ");");
+                        }
+                        else
+                        {
+                            templist.Add("\t" + temp + ";");
+                        }
                     }
                     else
-                    {
-                        templist.Add("\t" + temp + ";");
-                    }
+                        templist.Add(temp + ");");
                 }
             }
 

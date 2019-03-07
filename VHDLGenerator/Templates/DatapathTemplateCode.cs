@@ -43,7 +43,7 @@ namespace VHDLGenerator.Templates
         {
             List<string> templist = new List<string>();
 
-            if (ports.Count != 0)
+            if (ports != null)
             {
                 foreach (PortModel port in ports)
                 {
@@ -120,11 +120,11 @@ namespace VHDLGenerator.Templates
                 {
                     foreach (PortModel port in comp.Ports)
                     {
-                        if (signals != null && comp.Name != datapathname)
+                        if (signals.Count > 0 && comp.Name != datapathname)
                         {
                             foreach (SignalModel signal in signals)
                             {
-                                #region
+                                #region commented code
                                 //if ((comp.Name == signal.Source_Comp || comp.Name == signal.Target_Comp) && (port.Name == signal.Source_port || port.Name == signal.Target_port) && comp.Name != datapathname)
                                 //{
                                 //    if(signal.Source_Comp == datapathname)

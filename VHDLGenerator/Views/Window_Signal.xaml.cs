@@ -23,80 +23,63 @@ namespace VHDLGenerator.Views
     /// </summary>
     public partial class Window_Signal : Window
     {
-        //public string GetSignalJSON
-        //{
-        //    get
-        //    {
-        //        return JsonConvert.SerializeObject(this.Data.GetSignal, Formatting.Indented);
-        //    }
-        //}
+        #region Properties
+        public SignalModel GetSignalModel { get { return this._Data.GetSignal; } }
+        #endregion
 
-        public SignalModel GetSignalModel { get { return this.Data.GetSignal; } }
-        private SignalViewModel Data;
+        #region Private Varibles
+        private SignalViewModel _Data;
+        #endregion
 
+        #region Window Methods
+        //constructor that accepts a DatapathModel object to be used in the combo Boxes
         public Window_Signal(DataPathModel _DataPath)
         {
             InitializeComponent();
-            Data = new SignalViewModel(_DataPath);
-            this.DataContext = Data;
-            
-
-            ////Default setting of the view items
-            //Bus_CB.IsChecked = false;
-            //MSB_TB.IsReadOnly = true;
-            //LSB_TB.IsReadOnly = true;
+            _Data = new SignalViewModel(_DataPath);          //creates an instance of the SignalViewModel and passes the datapath data from the window to the viewmodel
+            this.DataContext = _Data;                        //Sets the Window DataContext to that of the SignalViewModel to allow for binding
         }
 
         private void Bus_CB_Checked(object sender, RoutedEventArgs e)
         {
-            ////if CheckBox is checked the MSB and LLSB feilds are editable
-            //MSB_TB.IsReadOnly = false;
-            //LSB_TB.IsReadOnly = false;
-        }
 
-        //Create a is not checked CB function to erase data from the MSB and LSB and disable editing
+        }
+    
         private void Bus_CB_Unchecked(object sender, RoutedEventArgs e)
         {
-            //MSB_TB.Clear();
-            //LSB_TB.Clear();
-            //MSB_TB.IsReadOnly = true;
-            //LSB_TB.IsReadOnly = true;
 
         }
 
         private void MSB_TB_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            //Interger Validation
-            //Regex regex = new Regex("[^0-9]+");
-            //e.Handled = regex.IsMatch(e.Text);
-            e.Handled = Validate_Int(e);
+            e.Handled = Validate_Int(e);        //if result is true it accepts the text being entered
         }
 
         private void LSB_TB_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            //Interger Valdation
-            //Regex regex = new Regex("[^0-9]+");
-            //e.Handled = regex.IsMatch(e.Text);
-            e.Handled = Validate_Int(e);
+            e.Handled = Validate_Int(e);        //if result is true it accepts the text being entered
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.Close();                       //Closes instance of window when Cancel is selected 
         }
 
         private void Finish_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
-            this.Close();
+            this.DialogResult = true;           //Set dialogResult to True to signify that data entry is finished
+            this.Close();                       //Closes instance of window when Finish is selected
         }
+        #endregion
 
+        #region Validation Method
+        //Checks to determinde if the text entered in the textbox is and Int (0 to 9)
         private bool Validate_Int(TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
-            //e.Handled = regex.IsMatch(e.Text);
-            return (regex.IsMatch(e.Text));
+            return (regex.IsMatch(e.Text));         //if it matches 0 to 9 it returns true
         }
-     
+        #endregion
+
     }
 }

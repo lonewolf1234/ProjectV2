@@ -19,50 +19,49 @@ namespace VHDLGenerator.Views
 {
     /// <summary>
     /// Interaction logic for Window_Datapath.xaml
+    /// Sets the DataContext of the Window to that of the Datapath ViewModel
+    /// To allow for Bindings
     /// </summary>
     public partial class Window_Datapath : Window
     {
+        #region Private Variables
+        private DataPathViewModel _Data;
+        #endregion
 
+        #region Properties
+        //Allows for the MainWindow to retrive the DataPath Model created by the Datapath Menu
         public DataPathModel GetDataPathModel
         {
-            get
-            {
-                return this.Data.GetDataPath;
-            }
+            get{return this._Data.GetDataPath;}
         }
-        private DataPathViewModel Data;
-       
+        #endregion
+
+        #region Methods
+        //constructor
         public Window_Datapath()
         {
             InitializeComponent();
-            Data = new DataPathViewModel();
-            this.DataContext = Data;
+            _Data = new DataPathViewModel();            //Creates an instance for the DataPathViewModel
+            this.DataContext = _Data;                   //Sets the DataContext of the this Window to that of the DataPathViewModel 
+                                                        //to allow for Binding of the VM properties to the XAML
         }
 
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
-            #region old code
-            ////Clear data present in the port dat fields
-            ////Resets it to default
-            //PortName_TB.Text = String.Empty;
-            //Direction_CB.Text = String.Empty;
-            //Bus_CB.IsChecked = false;
-            //MSB_TB.Text = String.Empty;
-            //LSB_TB.Text = String.Empty;
-            #endregion
-            PortDataGrid.Items.Add(Data.GetPortData);
-            Data.AddPortSel = true;
+            PortDataGrid.Items.Add(_Data.GetPortData);  //Adds the Port created to the Datagrid 
+            _Data.AddPortSel = true;                    //Set the AddPortSel prop to true when the AddPort button is clicked
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.Close();                               //Closes instance of window when Cancel is selected 
         }
 
         private void Finish_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = true;
-            this.Close();
+            this.DialogResult = true;                   //Set dialogResult to True to signify that data entry is finished
+            this.Close();                               //Closes instance of window when Finish is selected
         }
+        #endregion
     }
 }
