@@ -37,7 +37,7 @@ namespace VHDLGenerator.ViewModels
             ErrorCollection.Add("LsbTxt", null);
         }
 
-
+        //
         #region Main Properties
         // Main Component Properties
         public string EntityNameTxt
