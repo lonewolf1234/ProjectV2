@@ -193,7 +193,7 @@
 
             <!-- DataGrid to display the port data -->
             <DataGrid Name="PortDataGrid" HorizontalAlignment="Center" 
-                      VerticalAlignment="Top" Height="175" Width="405" IsReadOnly="True" AutoGenerateColumns="False" ItemsSource="{Binding Path=GetPorts}" >
+                      VerticalAlignment="Top" Height="175" Width="405" IsReadOnly="True" AutoGenerateColumns="False" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Port Name" Width="100" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="Direction" Width="100" Binding="{Binding Direction}"/>
