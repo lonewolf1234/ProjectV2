@@ -48,13 +48,13 @@ namespace VHDLGenerator.Views
 
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
-            PortDataGrid.Items.Clear();
+            //PortDataGrid.Items.Clear();
             _Data.AddPortSel = true;                    //Set the AddPortSel prop to true when the AddPort button is clicked
 
-            foreach (PortModel port in _Data.GetPorts)
-            {
-                PortDataGrid.Items.Add(port);  //Adds the Port created to the Datagrid 
-            }
+            //foreach (PortModel port in _Data.GetPorts)
+            //{
+            //    PortDataGrid.Items.Add(port);  //Adds the Port created to the Datagrid 
+            //}
             //PortDataGrid.Items.Add(_Data.GetPortData);  //Adds the Port created to the Datagrid 
            
         }
@@ -93,13 +93,13 @@ namespace VHDLGenerator.Views
         {
             try
             {
-                var port = PortDataGrid.SelectedItem as PortModel;
-                _Data.DeletePort(port);
-                PortDataGrid.Items.Clear();
-                foreach (PortModel aport in _Data.GetPorts)
-                {
-                    PortDataGrid.Items.Add(aport);  //Adds the Port created to the Datagrid 
-                }
+                //var port = PortDataGrid.SelectedItem as PortModel;
+                //_Data.DeletePort(port);
+                //PortDataGrid.Items.Clear();
+                //foreach (PortModel aport in _Data.GetPorts)
+                //{
+                //    PortDataGrid.Items.Add(aport);  //Adds the Port created to the Datagrid 
+                //}
             }
             catch (Exception) { }
         }

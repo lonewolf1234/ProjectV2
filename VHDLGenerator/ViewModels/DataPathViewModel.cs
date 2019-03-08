@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using VHDLGenerator.Models;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 
 namespace VHDLGenerator.ViewModels
 {
@@ -35,6 +36,15 @@ namespace VHDLGenerator.ViewModels
 
             ErrorCollection.Add("MsbTxt", null);
             ErrorCollection.Add("LsbTxt", null);
+        }
+        private ObservableCollection<PortModel> _datagrid = new ObservableCollection<PortModel>();
+        public ObservableCollection<PortModel> Datagrid
+        {
+            get
+            {
+               return _datagrid;
+            }
+            set { _datagrid = value; OnPropertyChanged("Datagrid"); }
         }
 
         //
@@ -95,7 +105,10 @@ namespace VHDLGenerator.ViewModels
                 if (AddPortSel == true)
                 {
                     Ports.Add(GetPortData);
+                    Datagrid.Add(GetPortData);
                     DataPath.Ports = Ports;
+                    
+
                     this.AddPort = false;
 
                     this.Port.Clear();
