@@ -106,8 +106,7 @@ namespace VHDLGenerator.ViewModels
                 {
                     Ports.Add(GetPortData);
                     Datagrid.Add(GetPortData);
-                    DataPath.Ports = Ports;
-                    
+                    DataPath.Ports = Datagrid.ToList();
 
                     this.AddPort = false;
 
