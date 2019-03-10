@@ -99,6 +99,7 @@ namespace VHDLGenerator.ViewModels
 
                     this.Port.Clear();
                     this.Port.Direction = null;
+                    this.BusSel = false;
                     OnPropertyChanged("PortNameTxt");
                     OnPropertyChanged("DirectionSel");
                     OnPropertyChanged("BusSel");
