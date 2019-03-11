@@ -35,10 +35,10 @@ namespace VHDLGenerator.Views
 
         #region Methods
         //constructor
-        public Window_Component()
+        public Window_Component(DataPathModel data)
         {
             InitializeComponent();
-            Data = new ComponentViewModel();            //Creates an instance for the ComponentViewModel
+            Data = new ComponentViewModel(data);            //Creates an instance for the ComponentViewModel
             this.DataContext = Data;                    //Sets the DataContext of the this Window to that of the ComponentViewModel
                                                         //to allow for Binding of the VM properties to the XAML
         }

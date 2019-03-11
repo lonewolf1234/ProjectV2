@@ -305,6 +305,8 @@ namespace VHDLGenerator.ViewModels
                             result = "Not a valid name. Only Letters, Numbers or underscore are allowed";
                         else if (IsReservedWord(PortNameTxt))
                             result = "This is a Reserved Word";
+                        else if (PNameExist(PortNameTxt))
+                            result = "Port Name Exists";
                         break;
 
                     case "DirectionSel":
@@ -388,6 +390,14 @@ namespace VHDLGenerator.ViewModels
                 return false;
             else
                 return true;
+        }
+
+        public bool PNameExist(string name)
+        {
+            if (DataPath.Ports.Exists(x => x.Name == name))
+                return true;
+            else
+                return false;
         }
         #endregion
     }

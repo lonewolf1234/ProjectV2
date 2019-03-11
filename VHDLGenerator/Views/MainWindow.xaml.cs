@@ -98,7 +98,7 @@ namespace VHDLGenerator.Views
         }
         private void Btn_Component_Click(object sender, RoutedEventArgs e)
         {
-            Window_Component window_Component = new Window_Component();     //Creates new instance of component window 
+            Window_Component window_Component = new Window_Component(_dataPath);     //Creates new instance of component window 
             ComponentModel model = new ComponentModel();
 
             if (window_Component.ShowDialog() == true)                      //Waits till the window is closed
