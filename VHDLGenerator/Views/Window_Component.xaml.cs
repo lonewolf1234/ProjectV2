@@ -46,7 +46,7 @@ namespace VHDLGenerator.Views
         private void AddPort_Click(object sender, RoutedEventArgs e)
         {
             
-            PortDataGrid.Items.Add(Data.GetPortData);   //Adds the Port created to the Datagrid 
+            //PortDataGrid.Items.Add(Data.GetPortData);   //Adds the Port created to the Datagrid 
             Data.AddPortSel = true;                     //Set the AddPortSel prop to true when the AddPort button is clicked
 
         }
@@ -60,6 +60,16 @@ namespace VHDLGenerator.Views
         {
             this.DialogResult = true;                   //Set dialogResult to True to signify that data entry is finished
             this.Close();                               //Closes instance of window when Finish is selected
+        }
+
+        private void EditPort_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeletePort_Click(object sender, RoutedEventArgs e)
+        {
+
         }
         #endregion
     }
