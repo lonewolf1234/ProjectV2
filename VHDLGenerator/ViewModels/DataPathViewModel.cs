@@ -37,6 +37,7 @@ namespace VHDLGenerator.ViewModels
             ErrorCollection.Add("MsbTxt", null);
             ErrorCollection.Add("LsbTxt", null);
         }
+
         private ObservableCollection<PortModel> _datagrid = new ObservableCollection<PortModel>();
         public ObservableCollection<PortModel> Datagrid
         {
