@@ -242,7 +242,7 @@ namespace VHDLGenerator.Views
             if (_dataPath.Signals != null)
             {
                 TreeViewData tv = new TreeViewData();
-                tv.Title = "Signal";                            //Add section named signals
+                tv.Title = "Signal";                            //Add section named signalss
                 maintv.Items.Add(tv);
             }
 
